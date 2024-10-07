@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subir Objeto Perdido</title>
+</head>
+<body>
+    <h1>Subir Objeto Perdido</h1>
+    <form action="{{ url_for('objeto.subir_objeto') }}" method="POST" enctype="multipart/form-data">
+        <label for="nombre">Nombre del objeto:</label>
+        <input type="text" id="nombre" name="nombre" required><br>
+
+        <label for="descripcion">Descripción:</label>
+        <textarea id="descripcion" name="descripcion" required></textarea><br>
+
+        <label for="foto">Foto (opcional):</label>
+        <input type="file" id="foto" name="foto"><br>
+
+        <label for="sala_encontrada">Sala donde se encontró:</label>
+        <input type="text" id="sala_encontrada" name="sala_encontrada"><br>
+
+        <label for="hora_encontrada">Hora en la que se encontró:</label>
+        <input type="time" id="hora_encontrada" name="hora_encontrada"><br>
+
+        <label for="fecha_encontrada">Fecha en la que se encontró:</label>
+        <input type="date" id="fecha_encontrada" name="fecha_encontrada"><br>
+
+        <button type="submit">Subir Objeto</button>
+    </form>
+</body>
+</html>
