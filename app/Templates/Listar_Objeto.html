@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Objetos Perdidos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Objetos Perdidos</h1>
+    <ul>
+        {% for objeto in objetos %}
+        <li>
+            <strong>Nombre:</strong> {{ objeto.nombre }}<br>
+            <strong>Descripción:</strong> {{ objeto.descripcion }}<br>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
