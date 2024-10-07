@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for
 from app import db
 from app.Modelo.Objeto_Perdido import ObjetoPerdido  
 
+
 objeto_bp = Blueprint('objeto', __name__)
 
 @objeto_bp.route('/subir_objeto', methods=['GET', 'POST'])
@@ -34,4 +35,4 @@ def subir_objeto():
 
         return redirect(url_for('objeto.subir_objeto'))
 
-    return render_template('../app/Templates/Subir_Objeto.html')
+    return render_template('../Templates/Subir_Objeto.html')
