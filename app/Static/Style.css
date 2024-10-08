@@ -1,42 +1,106 @@
+/* General styles */
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f0f0f0;
-  margin: 20px;
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f9;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 h1 {
-  color: #333;
-  text-align: center;
+  color: #0044cc;
+  margin-bottom: 20px;
 }
 
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 5px;
-  box-shadow:   
- 0 2px 5px rgba(0, 0, 0, 0.1);
+p {
+  line-height: 1.6;
 }
-ul.object-list {
+
+/* Container for both forms and lists */
+.container {
+  width: 90%;
+  max-width: 800px;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+/* Form styles */
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+form input[type="text"],
+form input[type="time"],
+form input[type="date"],
+form input[type="file"],
+form textarea {
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+form input[type="submit"] {
+  background-color: #0044cc;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+form input[type="submit"]:hover {
+  background-color: #003399;
+}
+
+/* Object list styles */
+ul {
   list-style-type: none;
   padding: 0;
 }
 
-li.object-item {
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
-  padding: 15px;
+ul li {
+  background: #f8f8f8;
   margin-bottom: 10px;
-  border-radius: 5px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-li.object-item strong {
-  color: #333;
+ul li h3 {
+  margin: 0 0 10px;
+  font-size: 20px;
 }
 
-li.object-item:hover {
-  background-color: #f1f1f1;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+ul li img {
+  width: 200px;
+  height: auto;
+  margin-top: 10px;
+}
+
+ul li p {
+  margin: 0;
+  font-size: 14px;
+}
+
+@media (max-width: 600px) {
+  ul li img {
+      width: 100%;
+  }
+
+  .container {
+      width: 95%;
+  }
 }

@@ -6,7 +6,7 @@ class ObjetoPerdido(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(100), nullable=False)
     descripcion = db.Column(db.String(255), nullable=True)
-    foto = db.Column(db.String(255), nullable=True)
+    foto = db.Column(db.LargeBinary, nullable=True)  
     sala_encontrada = db.Column(db.String(100), nullable=False)
     hora_encontrada = db.Column(db.Time, nullable=False)
     fecha_encontrada = db.Column(db.Date, nullable=False)

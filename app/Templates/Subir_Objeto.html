@@ -8,26 +8,26 @@
 </head>
 <body>
     <h1>Subir Objeto Perdido</h1>
-    <form action="{{ url_for('objeto.subir_objeto') }}" method="POST" enctype="multipart/form-data">
-        <label for="nombre">Nombre del objeto:</label>
+    <form action="/subir_objeto" method="POST" enctype="multipart/form-data">
+        <label for="nombre">Nombre:</label>
         <input type="text" id="nombre" name="nombre" required><br>
-
+    
         <label for="descripcion">Descripción:</label>
-        <textarea id="descripcion" name="descripcion" required></textarea><br>
-
-        <label for="foto">Foto (opcional):</label>
+        <input type="text" id="descripcion" name="descripcion"><br>
+    
+        <label for="foto">Foto:</label>
         <input type="file" id="foto" name="foto"><br>
-
-        <label for="sala_encontrada">Sala donde se encontró:</label>
-        <input type="text" id="sala_encontrada" name="sala_encontrada"><br>
-
-        <label for="hora_encontrada">Hora en la que se encontró:</label>
-        <input type="time" id="hora_encontrada" name="hora_encontrada"><br>
-
-        <label for="fecha_encontrada">Fecha en la que se encontró:</label>
-        <input type="date" id="fecha_encontrada" name="fecha_encontrada"><br>
-
+    
+        <label for="sala_encontrada">Sala Encontrada:</label>
+        <input type="text" id="sala_encontrada" name="sala_encontrada" required><br>
+    
+        <label for="hora_encontrada">Hora Encontrada:</label>
+        <input type="time" id="hora_encontrada" name="hora_encontrada" required><br>
+    
+        <label for="fecha_encontrada">Fecha Encontrada:</label>
+        <input type="date" id="fecha_encontrada" name="fecha_encontrada" required><br>
+    
         <button type="submit">Subir Objeto</button>
-    </form>
+    </form>    
 </body>
 </html>

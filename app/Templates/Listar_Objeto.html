@@ -2,22 +2,30 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Objetos Perdidos</title>
-    <link rel="stylesheet"  href="{{ url_for('static', filename='style.css') }}">
+    <title>Lista de Objetos Perdidos</title>
+    <link rel="stylesheet" href="{{ url_for('Static', filename='Style.css') }}">
 </head>
 <body>
-    <div class="container">
-        <h1>Objetos Perdidos</h1>
-        <ul class="object-list">
-            {% for objeto in objetos %}
-            <li class="object-item">
-                <strong>Nombre:</strong> {{ objeto.nombre }}<br>
-                <strong>Descripción:</strong> {{ objeto.descripcion }}<br>
-                <strong>Sala encontrada:</strong> {{ objeto.sala_encontrada }}<br>
+    <h1>Objetos Perdidos</h1>
+    <ul>
+        {% for objeto in objetos %}
+            <li>
+                <h3>{{ objeto.nombre }}</h3>
+                <p>{{ objeto.descripcion }}</p>
+                <p>Sala: {{ objeto.sala_encontrada }}</p>
+                <p>Fecha encontrada: {{ objeto.fecha_encontrada }}</p>
+                <p>Hora encontrada: {{ objeto.hora_encontrada }}</p>
+                
+                <!-- Verifica si existe una foto -->
+                {% if objeto.foto %}
+                    <img src="data:image/jpeg;base64,{{ objeto.foto | b64encode }}" alt="Imagen de {{ objeto.nombre }}" width="200">
+                {% else %}
+                    <p>No hay imagen</p>
+                {% endif %}
             </li>
-            {% endfor %}
-        </ul>
-    </div>
+        {% else %}
+            <li>No se encontraron objetos perdidos.</li>
+        {% endfor %}
+    </ul>
 </body>
 </html>
