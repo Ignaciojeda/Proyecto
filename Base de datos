@@ -1,0 +1,15 @@
+CREATE DATABASE IF NOT EXISTS search;
+
+
+USE search;
+
+
+CREATE TABLE IF NOT EXISTS objetos_perdidos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    descripcion VARCHAR(255),
+    foto BLOB, -- Columna para almacenar la imagen como blob
+    sala_encontrada VARCHAR(100) NOT NULL,
+    hora_encontrada TIME NOT NULL,
+    fecha_encontrada DATE NOT NULL
+);
