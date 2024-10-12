@@ -31,3 +31,21 @@ def subir_objeto():
         return redirect(url_for('objeto.subir_objeto'))
 
     return render_template('Subir_Objeto.html')
+
+@objeto_bp.route('/eliminar_objeto/<int:id>', methods=['POST'])
+def eliminar_objeto(id):
+    # Buscar el objeto en la base de datos por su id
+    objeto = ObjetoPerdido.query.get_or_404(id)
+    
+    try:
+        # Eliminar el objeto de la base de datos
+        db.session.delete(objeto)
+        db.session.commit()
+        
+        flash('El objeto ha sido eliminado exitosamente.', 'success')
+    except Exception as e:
+        db.session.rollback()
+        flash(f'Error al eliminar el objeto: {str(e)}', 'danger')
+    
+    # Redirigir a la lista de objetos después de eliminar
+    return redirect(url_for('listar.lista_objetos'))

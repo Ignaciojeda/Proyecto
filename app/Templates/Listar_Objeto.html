@@ -9,22 +9,23 @@
     <h1>Objetos Perdidos</h1>
     <ul>
         {% for objeto in objetos %}
-            <li>
-                <h3>{{ objeto.nombre }}</h3>
-                <p>{{ objeto.descripcion }}</p>
-                <p>Sala: {{ objeto.sala_encontrada }}</p>
-                <p>Fecha encontrada: {{ objeto.fecha_encontrada }}</p>
-                <p>Hora encontrada: {{ objeto.hora_encontrada }}</p>
-                
-                <!-- Verifica si existe una foto -->
-                {% if objeto.foto %}
-                    <img src="data:image/jpeg;base64,{{ objeto.foto | b64encode }}" alt="Imagen de {{ objeto.nombre }}" width="200">
-                {% else %}
-                    <p>No hay imagen</p>
-                {% endif %}
-            </li>
-        {% else %}
-            <li>No se encontraron objetos perdidos.</li>
+        <li>
+            <h3>{{ objeto.nombre }}</h3>
+            <p>{{ objeto.descripcion }}</p>
+            {% if objeto.foto %}
+                <img src="data:image/jpeg;base64,{{ objeto.foto | b64encode }}" alt="Imagen de {{ objeto.nombre }}" width="200">
+            {% else %}
+                <p>No hay imagen</p>
+            {% endif %}
+            <p>Sala: {{ objeto.sala_encontrada }}</p>
+            <p>Hora: {{ objeto.hora_encontrada }}</p>
+            <p>Fecha: {{ objeto.fecha_encontrada }}</p>
+    
+            <!-- Botón de eliminar con método POST -->
+            <form action="{{ url_for('objeto.eliminar_objeto', id=objeto.id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este objeto?');">
+                <input type="submit" value="Eliminar" class="btn btn-danger">
+            </form>
+        </li>
         {% endfor %}
     </ul>
 </body>
