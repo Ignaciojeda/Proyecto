@@ -6,21 +6,14 @@ import base64
 
 db = SQLAlchemy()
 
-
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
 
-    db.init_app(app) 
+    db.init_app(app)
 
-
-    # Inicializar Migrate y ejecutar migraciones
+    # Inicializar migraciones
     migrate = Migrate(app, db)
-    with app.app_context():
-        try:
-            migrate.init_app(app)
-        except Exception as e:
-            print(f"Error al inicializar las migraciones: {e}")
 
     # Registrar blueprints
     from .Controlador.Objeto_Controlador import objeto_bp
@@ -28,6 +21,10 @@ def create_app():
 
     from .Controlador.Listar_Objeto import listar_bp
     app.register_blueprint(listar_bp)
+
+   
+    from .Controlador.Rutas import home_bp  
+    app.register_blueprint(home_bp) 
 
     @app.template_filter('b64encode')
     def b64encode_filter(data):

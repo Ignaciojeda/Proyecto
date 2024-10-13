@@ -31,3 +31,4 @@ def subir_objeto():
         return redirect(url_for('objeto.subir_objeto'))
 
     return render_template('Subir_Objeto.html')
+
