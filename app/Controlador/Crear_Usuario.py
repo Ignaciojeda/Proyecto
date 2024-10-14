@@ -1,0 +1,44 @@
+from flask import Blueprint, render_template, request, redirect, url_for
+from app import db
+from app.Modelo.Registrar import Usuario
+from app.Modelo.Registrar import TipoUsuario
+
+usuario_bp = Blueprint('usuario', __name__)
+t_usuario_bp =Blueprint('t_usuario', __name__)
+
+@usuario_bp.route('/registro', methods=['GET', 'POST'])
+def registrar():
+    if request.method == 'POST':
+        id_usuario = request.form['id_usuario']
+        id_tipo_usuario = request.form['id_tipo_usuario']
+        correo_usuario = request.form['correo_usuario']
+        contraseña = request.form['contraseña']
+
+        nuevo_usuario = Usuario(
+            id_usuario=id_usuario,
+            id_tipo_usuario=id_tipo_usuario,
+            correo_usuario=correo_usuario,
+            contraseña=contraseña,
+        )
+        db.session.add(nuevo_usuario)
+        db.session.commit()
+
+        return redirect(url_for('usuario.registrar'))
+    
+    return render_template('Registro.html')
+
+@usuario_bp.route('/registro', methods=['GET', 'POST'])
+def t_usuario():
+        id_tipo_usuario = request.form['id_usuario']
+        descripcion = request.form['descripcion']
+
+        nuevo_t_usuario = TipoUsuario(
+            id_tipo_usuario=id_tipo_usuario,
+            descripcion=descripcion,
+        )
+        db.session.add(nuevo_t_usuario)
+        db.session.commit()
+
+        return redirect(url_for('t_usuario.registrar'))
+    
+    

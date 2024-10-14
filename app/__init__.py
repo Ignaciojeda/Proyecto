@@ -29,6 +29,9 @@ def create_app():
     from .Controlador.Listar_Objeto import listar_bp
     app.register_blueprint(listar_bp)
 
+    from .Controlador.Crear_Usuario import usuario_bp
+    app.register_blueprint(usuario_bp)
+
     @app.template_filter('b64encode')
     def b64encode_filter(data):
         if data:
