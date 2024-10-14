@@ -1,12 +1,31 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio - Objetos Perdidos</title>
+    <title>Login</title>
 </head>
 <body>
-    <h1>Bienvenido a la página de Objetos Perdidos</h1>
-    <p>Esta es la página principal de la aplicación.</p>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul>
+          {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <form action="/" method="POST">  <!-- Esta debe ser la ruta de login -->
+        <label for="correo">Correo:</label>
+        <input type="email" id="correo" name="correo" required><br><br>
+
+        <label for="contraseña">Contraseña:</label>
+        <input type="password" id="contraseña" name="contraseña" required><br><br>
+
+        <button type="submit">Iniciar sesión</button>
+    </form>
+
 </body>
 </html>

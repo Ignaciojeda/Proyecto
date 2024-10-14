@@ -2,9 +2,11 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from config import Config
 from flask_migrate import Migrate 
+from flask_login import LoginManager
 import base64
 
 db = SQLAlchemy()
+login_manager = LoginManager()
 
 def create_app():
     app = Flask(__name__)
@@ -12,24 +14,26 @@ def create_app():
 
     db.init_app(app)
 
-    # Inicializar migraciones
     migrate = Migrate(app, db)
 
-    # Registrar blueprints
+    login_manager.init_app(app)
+    login_manager.login_view = 'auth.login'  # Establece la vista de login
+
     from .Controlador.Objeto_Controlador import objeto_bp
     app.register_blueprint(objeto_bp)
 
     from .Controlador.Listar_Objeto import listar_bp
     app.register_blueprint(listar_bp)
-
-   
+    
     from .Controlador.Rutas import home_bp  
     app.register_blueprint(home_bp) 
 
-    @app.template_filter('b64encode')
-    def b64encode_filter(data):
-        if data:
-            return base64.b64encode(data).decode('utf-8')
-        return ''
+    from .Controlador.Login import auth_bp  
+    app.register_blueprint(auth_bp)  
 
     return app
+
+@login_manager.user_loader
+def load_user(user_id):
+    from app.Modelo.Usuario import Usuario  
+    return Usuario.query.get(int(user_id))
