@@ -1,4 +1,5 @@
 from app import db
+from werkzeug.security import generate_password_hash, check_password_hash
 
 class ObjetoPerdido(db.Model):
     __tablename__ = 'objetos_perdidos'
@@ -18,3 +19,26 @@ class ObjetoPerdido(db.Model):
         self.sala_encontrada = sala_encontrada
         self.hora_encontrada = hora_encontrada
         self.fecha_encontrada = fecha_encontrada
+
+class TipoUsuario(db.Model):
+    __tablename__ = 'tipo_usuario'
+
+    id_tipo_usuario = db.Column(db.Integer, primary_key=True)
+    descripcion = db.Column(db.String(45), nullable=False)
+
+
+class Usuario(db.Model):
+    __tablename__ = 'usuario'
+
+    id_usuario = db.Column(db.Integer, primary_key=True)
+    id_tipo_usuario = db.Column(db.Integer, db.ForeignKey('tipo_usuario.id_tipo_usuario'), nullable=False)
+    correo_usuario = db.Column(db.String(45), nullable=False, unique=True)
+    contraseña = db.Column(db.String(128), nullable=False)
+
+    tipo_usuario = db.relationship('TipoUsuario', backref='usuarios')
+
+    def set_password(self, contraseña):
+        self.contraseña = generate_password_hash(contraseña)
+
+    def check_password(self, contraseña):
+        return check_password_hash(self.contraseña, contraseña)

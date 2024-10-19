@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listar Objetos (Admin)</title>
+</head>
+<body>
+    <h1>Lista de Objetos Perdidos</h1>
+    <ul>
+        {% for objeto in objetos %}
+            <li>{{ objeto.nombre }} - {{ objeto.descripcion }}
+                <a href="{{ url_for('eliminar_objeto', id=objeto.id) }}">Eliminar</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
