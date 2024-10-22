@@ -16,16 +16,23 @@
                 <p>Fecha encontrada: {{ objeto.fecha_encontrada }}</p>
                 <p>Hora encontrada: {{ objeto.hora_encontrada }}</p>
                 
-                <!-- Verifica si existe una foto -->
+
                 {% if objeto.foto %}
                     <img src="data:image/jpeg;base64,{{ objeto.foto | b64encode }}" alt="Imagen de {{ objeto.nombre }}" width="200">
                 {% else %}
                     <p>No hay imagen</p>
                 {% endif %}
+
+                <form action="{{ url_for('objeto.ocultar_objeto', id=objeto.id) }}" method="POST">
+                    <button type="submit" onclick="return confirm('¿Estás seguro de que quieres ocultar este objeto?');">
+                      Ocultar Objeto
+                    </button>
+                  </form>
             </li>
         {% else %}
             <li>No se encontraron objetos perdidos.</li>
         {% endfor %}
+
     </ul>
 </body>
 </html>

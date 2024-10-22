@@ -5,6 +5,6 @@ listar_bp = Blueprint('listar', __name__)
 
 @listar_bp.route('/listar_objeto')
 def lista_objetos():
-    objetos = ObjetoPerdido.query.all()
+    objetos = ObjetoPerdido.query.filter_by(activo=True).all()
     print(f"Objetos encontrados: {len(objetos)}")  
     return render_template('Listar_Objeto.html', objetos=objetos)
