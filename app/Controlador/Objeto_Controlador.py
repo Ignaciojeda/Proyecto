@@ -45,7 +45,6 @@ def eliminar_objeto(id):
     except Exception as e:
         db.session.rollback()
         flash(f'Error al eliminar el objeto: {str(e)}', 'danger')
-    
-    # Redirigir a la lista de objetos después de eliminar
+
     return redirect(url_for('listar.lista_objetos'))
 
