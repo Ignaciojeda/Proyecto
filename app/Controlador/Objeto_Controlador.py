@@ -1,11 +1,12 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for,flash
 from app import db
 from app.Modelo.Objeto_Perdido import ObjetoPerdido  
-
+from flask_login import login_required
 
 objeto_bp = Blueprint('objeto', __name__)
 
 @objeto_bp.route('/subir_objeto', methods=['GET', 'POST'])
+@login_required
 def subir_objeto():
     if request.method == 'POST':
         nombre = request.form['nombre']
@@ -31,3 +32,20 @@ def subir_objeto():
         return redirect(url_for('objeto.subir_objeto'))
 
     return render_template('Subir_Objeto.html')
+
+@objeto_bp.route('/eliminar_objeto/<int:id>', methods=['POST'])
+def eliminar_objeto(id):
+    objeto = ObjetoPerdido.query.get_or_404(id)
+    
+    try:
+        # Eliminar el objeto de la base de datos
+        db.session.delete(objeto)
+        db.session.commit()
+        
+        flash('El objeto ha sido eliminado exitosamente.', 'success')
+    except Exception as e:
+        db.session.rollback()
+        flash(f'Error al eliminar el objeto: {str(e)}', 'danger')
+
+    return redirect(url_for('listar.lista_objetos'))
+

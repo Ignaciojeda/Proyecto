@@ -20,10 +20,10 @@ CREATE TABLE tipo_usuario (
   PRIMARY KEY (id_tipo_usuario));
   
   CREATE TABLE usuario (
-  id_usuario INT NOT NULL,
+  id_usuario INT AUTO_INCREMENT NOT NULL,
   id_tipo_usuario INT NOT NULL,
   correo_usuario VARCHAR(45) NOT NULL,
-  contraseña VARCHAR(45) NOT NULL,
+  contraseña VARCHAR(500) NOT NULL,
   PRIMARY KEY (id_usuario),
   INDEX fk_ts_usuario_idx (id_tipo_usuario ASC) VISIBLE,
   CONSTRAINT fk_ts_usuario

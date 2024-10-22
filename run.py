@@ -5,6 +5,7 @@ from app.Controlador.Crear_Usuario import usuario_bp
 
 app = Flask(__name__)
 
+
 # Registrar el Blueprint del objeto
 app.register_blueprint(objeto_bp)
 app.register_blueprint(listar_bp)
