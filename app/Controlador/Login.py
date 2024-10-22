@@ -4,23 +4,23 @@ from app.Modelo.Usuario import Usuario
 
 auth_bp = Blueprint('auth', __name__)
 
-@auth_bp.route('/', methods=['GET', 'POST'])  # Esta es la ruta principal que usas para el login
+@auth_bp.route('/', methods=['GET', 'POST'])  
 def login():
     if request.method == 'POST':
         correo_usuario = request.form['correo']
         contraseña = request.form['contraseña']
 
-        # Buscar usuario en la base de datos
+        
         usuario = Usuario.query.filter_by(correo_usuario=correo_usuario).first()
 
-        # Verificar contraseña
-        if usuario and usuario.contraseña == contraseña:  # Cambiado para comparar directamente
+        
+        if usuario and usuario.check_password(contraseña): 
             login_user(usuario)
-            return redirect(url_for('listar.lista_objetos'))  # Redirigir a listar_objetos
+            return redirect(url_for('listar.lista_objetos'))  
         else:
-            flash('Credenciales incorrectas', 'danger')  # Mensaje de error
+            flash('Credenciales incorrectas', 'danger') 
 
-    return render_template('home.html')  # Regresar a la misma página en caso de error
+    return render_template('home.html')  
 
 @auth_bp.route('/logout')
 @login_required
