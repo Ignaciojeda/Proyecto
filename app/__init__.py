@@ -28,8 +28,18 @@ def create_app():
     from .Controlador.Rutas import home_bp  
     app.register_blueprint(home_bp) 
 
+    
+
     from .Controlador.Login import auth_bp  
     app.register_blueprint(auth_bp)  
+    from .Controlador.Crear_Usuario import usuario_bp
+    app.register_blueprint(usuario_bp)
+
+    @app.template_filter('b64encode')
+    def b64encode_filter(data):
+        if data:
+            return base64.b64encode(data).decode('utf-8')
+        return ''
 
     return app
 
