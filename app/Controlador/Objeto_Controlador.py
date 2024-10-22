@@ -4,7 +4,8 @@ from app.Modelo.Objeto_Perdido import ObjetoPerdido
 from datetime import datetime
 import pytz
 
-chile_tz = pytz.timezone('America/Santiago')
+# Define la zona horaria UTC-3 (por ejemplo, Santiago, Chile)
+chile_tz = pytz.timezone('Chile/Continental')
 
 
 objeto_bp = Blueprint('objeto', __name__)
@@ -27,7 +28,7 @@ def subir_objeto():
             hora_encontrada=hora_encontrada,
             fecha_encontrada=fecha_encontrada,
             activo=True,
-            fecha_creacion = db.Column(db.DateTime, default=lambda: datetime.now(chile_tz))
+            fecha_creacion=datetime.now(chile_tz)
         )
 
         # Guardar en la base de datos
