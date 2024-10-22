@@ -8,7 +8,7 @@ class Usuario(db.Model, UserMixin):
     id_usuario = db.Column(db.Integer, primary_key=True)
     id_tipo_usuario = db.Column(db.Integer, db.ForeignKey('tipo_usuario.id_tipo_usuario'), nullable=False)
     correo_usuario = db.Column(db.String(45), nullable=False, unique=True)
-    contraseña = db.Column(db.String(128), nullable=False)  # Almacena la contraseña sin hash
+    contraseña = db.Column(db.String(255), nullable=False)  # Almacena la contraseña sin hash
 
     tipo_usuario = db.relationship('TipoUsuario', back_populates='usuarios', lazy=True)  # Usar back_populates
 

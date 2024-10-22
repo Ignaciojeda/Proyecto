@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Historial de Objetos</title>
+</head>
+<body>
+    <h1>Historial de Objetos Subidos</h1>
+
+    <h2>Objetos Subidos</h2>
+    <ul>
+        {% for objeto in objetos_subidos %}
+            <li>{{ objeto.nombre }} - {{ objeto.descripcion }} (Fecha: {{ objeto.fecha_creacion }})</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

@@ -4,10 +4,10 @@ class TipoUsuario(db.Model):
     __tablename__ = 'tipo_usuario'
     
     id_tipo_usuario = db.Column(db.Integer, primary_key=True)
-    nombre = db.Column(db.String(50), nullable=False)
+    descripcion = db.Column(db.String(50), nullable=False)
 
     # Relación inversa con Usuario usando back_populates
     usuarios = db.relationship('Usuario', back_populates='tipo_usuario', lazy=True)
 
     def __repr__(self):
-        return f'<TipoUsuario {self.nombre}>'
+        return f'<TipoUsuario {self.descripcion}>'

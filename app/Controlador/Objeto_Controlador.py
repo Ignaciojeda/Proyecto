@@ -1,6 +1,10 @@
 from flask import Blueprint, render_template, request, redirect, url_for,flash
 from app import db
 from app.Modelo.Objeto_Perdido import ObjetoPerdido  
+from datetime import datetime
+import pytz
+
+chile_tz = pytz.timezone('America/Santiago')
 
 
 objeto_bp = Blueprint('objeto', __name__)
@@ -21,7 +25,9 @@ def subir_objeto():
             foto=foto,
             sala_encontrada=sala_encontrada,
             hora_encontrada=hora_encontrada,
-            fecha_encontrada=fecha_encontrada
+            fecha_encontrada=fecha_encontrada,
+            activo=True,
+            fecha_creacion = db.Column(db.DateTime, default=lambda: datetime.now(chile_tz))
         )
 
         # Guardar en la base de datos
@@ -32,20 +38,17 @@ def subir_objeto():
 
     return render_template('Subir_Objeto.html')
 
-@objeto_bp.route('/eliminar_objeto/<int:id>', methods=['POST'])
-def eliminar_objeto(id):
+@objeto_bp.route('/ocultar_objeto/<int:id>', methods=['POST'])
+def ocultar_objeto(id):
     objeto = ObjetoPerdido.query.get_or_404(id)
-    
+
     try:
-        # Eliminar el objeto de la base de datos
-        db.session.delete(objeto)
+        objeto.activo = False  # Cambiamos el estado a inactivo
         db.session.commit()
         
-        flash('El objeto ha sido eliminado exitosamente.', 'success')
+        flash('El objeto ha sido ocultado exitosamente.', 'success')
     except Exception as e:
         db.session.rollback()
-        flash(f'Error al eliminar el objeto: {str(e)}', 'danger')
-    
-    # Redirigir a la lista de objetos después de eliminar
-    return redirect(url_for('listar.lista_objetos'))
+        flash(f'Error al ocultar el objeto: {str(e)}', 'danger')
 
+    return redirect(url_for('listar.lista_objetos'))
