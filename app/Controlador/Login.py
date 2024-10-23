@@ -10,17 +10,26 @@ def login():
         correo_usuario = request.form['correo']
         contraseña = request.form['contraseña']
 
-        
+        # Buscar usuario en la base de datos
         usuario = Usuario.query.filter_by(correo_usuario=correo_usuario).first()
 
-        
-        if usuario and usuario.check_password(contraseña): 
+        # Verificar la contraseña usando check_password
+        if usuario and usuario.check_password(contraseña):  
             login_user(usuario)
-            return redirect(url_for('listar.lista_objetos'))  
-        else:
-            flash('Credenciales incorrectas', 'danger') 
 
-    return render_template('home.html')  
+            # Verificar el tipo de usuario y redirigir según el tipo
+            if usuario.tipo_usuario.nombre == 'Admin':  
+                return render_template('admin.html')  
+            elif usuario.tipo_usuario.nombre == 'Usuario':  
+                return render_template('hub.html')  
+            else:
+                flash('No se ha definido un tipo de usuario válido.', 'danger')
+                return redirect(url_for('auth.login'))
+
+        else:
+            flash('Credenciales incorrectas', 'danger')  # Mensaje de error si las credenciales fallan
+
+    return render_template('home.html')  # Página de inicio de sesión
 
 @auth_bp.route('/logout')
 @login_required
