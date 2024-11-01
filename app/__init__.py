@@ -34,10 +34,6 @@ def create_app():
     from .Controlador.Historial import historial_bp
     app.register_blueprint(historial_bp) 
 
-    
-
-    from .Controlador.Login import auth_bp  
-    app.register_blueprint(auth_bp)  
     from .Controlador.Crear_Usuario import usuario_bp
     app.register_blueprint(usuario_bp)
 
