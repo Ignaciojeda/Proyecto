@@ -17,8 +17,10 @@ def create_app():
     migrate = Migrate(app, db)
 
     login_manager.init_app(app)
-    login_manager.login_view = 'auth.login'  # Establece la vista de login
-
+    login_manager.login_view = 'auth.login'  
+    login_manager.login_message = "Por favor, inicia sesión para acceder a esta página." 
+    login_manager.login_message_category = "info"  
+    
     from .Controlador.Objeto_Controlador import objeto_bp
     app.register_blueprint(objeto_bp)
 

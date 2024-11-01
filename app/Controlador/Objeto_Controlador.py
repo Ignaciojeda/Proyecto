@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for,flash
+from flask_login import login_required
 from app import db
 from app.Modelo.Objeto_Perdido import ObjetoPerdido  
 from datetime import datetime
@@ -11,6 +12,7 @@ chile_tz = pytz.timezone('Chile/Continental')
 objeto_bp = Blueprint('objeto', __name__)
 
 @objeto_bp.route('/subir_objeto', methods=['GET', 'POST'])
+@login_required
 def subir_objeto():
     if request.method == 'POST':
         nombre = request.form['nombre']
@@ -40,6 +42,7 @@ def subir_objeto():
     return render_template('Subir_Objeto.html')
 
 @objeto_bp.route('/ocultar_objeto/<int:id>', methods=['POST'])
+@login_required
 def ocultar_objeto(id):
     objeto = ObjetoPerdido.query.get_or_404(id)
 

@@ -20,7 +20,7 @@ def login():
         else:
             flash('Credenciales incorrectas', 'danger') 
 
-    return render_template('home.html')  
+    return render_template('login.html')  
 
 @auth_bp.route('/logout')
 @login_required
