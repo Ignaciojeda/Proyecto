@@ -5,7 +5,6 @@ from app.Modelo.Objeto_Perdido import ObjetoPerdido
 from datetime import datetime
 import pytz
 
-# Define la zona horaria UTC-3 (por ejemplo, Santiago, Chile)
 chile_tz = pytz.timezone('Chile/Continental')
 
 

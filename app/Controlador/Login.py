@@ -16,7 +16,7 @@ def login():
         
         if usuario and usuario.check_password(contraseña): 
             login_user(usuario)
-            return redirect(url_for('listar.lista_objetos'))  
+            return redirect(url_for('home.home'))  
         else:
             flash('Credenciales incorrectas', 'danger') 
 

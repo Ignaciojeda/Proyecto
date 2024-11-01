@@ -27,8 +27,8 @@ def create_app():
     from .Controlador.Listar_Objeto import listar_bp
     app.register_blueprint(listar_bp)
     
-    from .Controlador.Rutas import home_bp  
-    app.register_blueprint(home_bp) 
+    from .Controlador.Rutas import login_bp  
+    app.register_blueprint(login_bp) 
 
     from .Controlador.Login import auth_bp  
     app.register_blueprint(auth_bp)  
@@ -38,6 +38,9 @@ def create_app():
 
     from .Controlador.Crear_Usuario import usuario_bp
     app.register_blueprint(usuario_bp)
+
+    from .Controlador.Home import home_bp
+    app.register_blueprint(home_bp)
 
     @app.template_filter('b64encode')
     def b64encode_filter(data):
