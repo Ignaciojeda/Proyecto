@@ -42,6 +42,10 @@ def create_app():
     from .Controlador.Home import home_bp
     app.register_blueprint(home_bp)
 
+    from app.Controlador.Listar_Objeto_Admin import listara_bp  # Importa el blueprint
+    app.register_blueprint(listara_bp)  # Registra el blueprint
+
+
     @app.template_filter('b64encode')
     def b64encode_filter(data):
         if data:
