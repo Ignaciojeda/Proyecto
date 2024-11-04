@@ -5,10 +5,10 @@ class TipoUsuario(db.Model):
     __table_args__ = {'extend_existing': True}  
 
     id_tipo_usuario = db.Column(db.Integer, primary_key=True)
-    nombre = db.Column(db.String(50), nullable=False)
+    descripcion = db.Column(db.String(50), nullable=False)
 
     
     usuarios = db.relationship('Usuario', back_populates='tipo_usuario', lazy=True)
 
     def __repr__(self):
-        return f'<TipoUsuario {self.nombre}>'
+        return f'<TipoUsuario {self.descripcion}>'

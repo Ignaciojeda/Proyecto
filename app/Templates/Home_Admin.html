@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Bienvenido al Home</h1>
+        <p>Desde aquí puedes acceder a las diferentes secciones de la aplicación.</p>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('listara.lista_objetos_admin') }}">Listar Objetos</a></li>
+            <li><a href="{{ url_for('objeto.subir_objeto') }}">Subir Objeto</a></li>
+        </ul>
+    </nav>
+</body>
+</html>

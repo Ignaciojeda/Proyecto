@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Subir Objeto Perdido</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='subir_objeto.css') }}">
 </head>
 <body>
     <h1>Subir Objeto Perdido</h1>
@@ -29,9 +29,6 @@
     
         <button type="submit">Subir Objeto</button>
 
-        <form action="{{ url_for('objeto.eliminar_objeto', id=objeto.id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este objeto?');">
-            <input type="submit" value="Eliminar" class="btn btn-danger">
-        </form>
     </form>    
 </body>
 </html>

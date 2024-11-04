@@ -17,23 +17,34 @@ def create_app():
     migrate = Migrate(app, db)
 
     login_manager.init_app(app)
-    login_manager.login_view = 'auth.login'  # Establece la vista de login
-
+    login_manager.login_view = 'auth.login'  
+    login_manager.login_message = "Por favor, inicia sesión para acceder a esta página." 
+    login_manager.login_message_category = "info"  
+    
     from .Controlador.Objeto_Controlador import objeto_bp
     app.register_blueprint(objeto_bp)
 
     from .Controlador.Listar_Objeto import listar_bp
     app.register_blueprint(listar_bp)
     
-    from .Controlador.Rutas import home_bp  
-    app.register_blueprint(home_bp) 
-
-    
+    from .Controlador.Rutas import login_bp  
+    app.register_blueprint(login_bp) 
 
     from .Controlador.Login import auth_bp  
     app.register_blueprint(auth_bp)  
+
+    from .Controlador.Historial import historial_bp
+    app.register_blueprint(historial_bp) 
+
     from .Controlador.Crear_Usuario import usuario_bp
     app.register_blueprint(usuario_bp)
+
+    from .Controlador.Home import home_bp
+    app.register_blueprint(home_bp)
+
+    from app.Controlador.Listar_Objeto_Admin import listara_bp  # Importa el blueprint
+    app.register_blueprint(listara_bp)  # Registra el blueprint
+
 
     @app.template_filter('b64encode')
     def b64encode_filter(data):
