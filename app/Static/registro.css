@@ -1,0 +1,45 @@
+html, body {
+    height: 100%; /* Aseguramos que el html y el body ocupen el 100% del alto */
+    margin: 0; /* Quitamos márgenes por defecto */
+}
+
+body {
+    background: linear-gradient(to bottom, #003c71, #f8f9fa); /* Degradado de azul a blanco */
+    display: flex;
+    align-items: center; /* Centrar verticalmente el contenido */
+    justify-content: center; /* Centrar horizontalmente el contenido */
+}
+
+.container {
+    background-color: white; /* Fondo del formulario */
+    padding: 20px;
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    width: 90%; /* Ancho del contenedor */
+    max-width: 400px; /* Ancho máximo del contenedor */
+}
+
+h3 {
+    color: #003c71; /* Azul Duoc */
+}
+
+.btn-primary {
+    background-color: #003c71; /* Azul Duoc */
+    border-color: #003c71; /* Bordes en azul */
+}
+
+.btn-primary:hover {
+    background-color: #00509e; /* Azul más oscuro al pasar el mouse */
+    border-color: #00509e;
+}
+
+.btn-secondary {
+    background-color: #ffc107; /* Amarillo */
+    border-color: #ffc107; /* Bordes amarillos */
+    color: white; /* Texto blanco */
+}
+
+.btn-secondary:hover {
+    background-color: #ffca2c; /* Amarillo más claro al pasar el mouse */
+    border-color: #ffca2c;
+}
