@@ -8,6 +8,7 @@ historial_bp = Blueprint('historial', __name__)
 @historial_bp.route('/historial', methods=['GET'])
 @login_required
 def historial():
-    objetos_subidos = ObjetoPerdido.query.all()
+
+    objetos_subidos = ObjetoPerdido.query.filter_by(visible=True).all()
 
     return render_template('Historial.html', objetos_subidos=objetos_subidos)

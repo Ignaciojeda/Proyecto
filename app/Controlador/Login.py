@@ -19,9 +19,9 @@ def login():
 
             # Verificar el tipo de usuario y redirigir según el tipo
             if usuario.tipo_usuario.descripcion == 'Admin':  
-                return render_template('admin.html')  
+                return render_template('Home_Admin.html')  
             elif usuario.tipo_usuario.descripcion == 'Usuario':  
-                return render_template('hub.html')  
+                return render_template('Home.html')  
             else:
                 flash('No se ha definido un tipo de usuario válido.', 'danger')
                 return redirect(url_for('auth.login'))

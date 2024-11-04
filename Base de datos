@@ -31,3 +31,12 @@ CREATE TABLE tipo_usuario (
     REFERENCES search.tipo_usuario (id_tipo_usuario)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
+
+  CREATE TABLE historial (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    correo VARCHAR(100) NOT NULL,
+    carrera VARCHAR(100) NOT NULL,
+    objeto_id INT NOT NULL,
+    FOREIGN KEY (objeto_id) REFERENCES objetos_perdidos(id)
+);

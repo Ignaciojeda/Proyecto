@@ -40,18 +40,3 @@ def subir_objeto():
 
     return render_template('Subir_Objeto.html')
 
-@objeto_bp.route('/ocultar_objeto/<int:id>', methods=['POST'])
-@login_required
-def ocultar_objeto(id):
-    objeto = ObjetoPerdido.query.get_or_404(id)
-
-    try:
-        objeto.activo = False  # Cambiamos el estado a inactivo
-        db.session.commit()
-        
-        flash('El objeto ha sido ocultado exitosamente.', 'success')
-    except Exception as e:
-        db.session.rollback()
-        flash(f'Error al ocultar el objeto: {str(e)}', 'danger')
-
-    return redirect(url_for('listar.lista_objetos'))
