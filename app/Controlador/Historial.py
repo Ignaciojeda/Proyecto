@@ -9,6 +9,6 @@ historial_bp = Blueprint('historial', __name__)
 @login_required
 def historial():
 
-    objetos_subidos = ObjetoPerdido.query.filter_by(visible=True).all()
+    objetos_subidos = ObjetoPerdido.query.all()
 
     return render_template('Historial.html', objetos_subidos=objetos_subidos)

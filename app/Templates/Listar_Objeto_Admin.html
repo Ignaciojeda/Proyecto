@@ -4,6 +4,18 @@
     <meta charset="UTF-8">
     <title>Lista de Objetos Perdidos</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='Style.css') }}">
+    <script>
+        // Función para abrir el modal
+        function openModal(objetoId) {
+            document.getElementById('modal').style.display = 'block';
+            document.getElementById('objetoId').value = objetoId;  // Asigna el ID del objeto al campo oculto
+        }
+
+        // Función para cerrar el modal
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+    </script>
 </head>
 <body>
     <h1>Objetos Perdidos</h1>
@@ -16,19 +28,33 @@
                 <p>Fecha encontrada: {{ objeto.fecha_encontrada }}</p>
                 <p>Hora encontrada: {{ objeto.hora_encontrada }}</p>
                 
-
                 {% if objeto.foto %}
                     <img src="data:image/jpeg;base64,{{ objeto.foto | b64encode }}" alt="Imagen de {{ objeto.nombre }}" width="200">
                 {% else %}
                     <p>No hay imagen</p>
                 {% endif %}
-
-                <form action="{{ url_for('listara.entregar', id=objeto.id) }}" method="POST">
+                
+                <form action="{{ url_for('objeto.ocultar_objeto', id=objeto.id) }}" method="POST">
+                    <button type="button" onclick="openModal({{ objeto.id }})">Objeto retirado</button>
+                </form>
             </li>
         {% else %}
             <li>No se encontraron objetos perdidos.</li>
         {% endfor %}
-
     </ul>
+
+    <!-- Modal para ingresar el nombre o correo -->
+    <div id="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5);">
+        <div style="background:#fff; padding:20px; width:300px; margin:100px auto; position:relative;">
+            <h2>Retirar Objeto</h2>
+            <form action="{{ url_for('objeto.ocultar_objeto') }}" method="POST">
+                <input type="hidden" name="objeto_id" id="objetoId"> <!-- ID del objeto oculto -->
+                <label for="retirado_por">Nombre o correo de quien retira:</label>
+                <input type="text" id="retirado_por" name="retirado_por" required>
+                <button type="submit">Confirmar Retiro</button>
+                <button type="button" onclick="closeModal()">Cancelar</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>

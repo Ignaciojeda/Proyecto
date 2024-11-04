@@ -1,12 +1,11 @@
-from flask import Blueprint, render_template, request, redirect, url_for,flash
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required
 from app import db
-from app.Modelo.Objeto_Perdido import ObjetoPerdido  
+from app.Modelo.Objeto_Perdido import ObjetoPerdido
 from datetime import datetime
 import pytz
 
 chile_tz = pytz.timezone('Chile/Continental')
-
 
 objeto_bp = Blueprint('objeto', __name__)
 
@@ -40,3 +39,24 @@ def subir_objeto():
 
     return render_template('Subir_Objeto.html')
 
+@objeto_bp.route('/ocultar_objeto', methods=['POST'])
+@login_required
+def ocultar_objeto():
+    objeto_id = request.form.get('objeto_id')
+    retirado_por = request.form.get('retirado_por')
+    
+    if not objeto_id:
+        flash('ID del objeto no proporcionado.', 'error')
+        return redirect(url_for('listara.lista_objetos_admin'))
+
+    # Buscar el objeto en la base de datos
+    objeto = ObjetoPerdido.query.get(objeto_id)
+    if objeto:
+        objeto.activo = False
+        objeto.retirado_por = retirado_por
+        db.session.commit()
+        flash('El objeto ha sido marcado como retirado.', 'success')
+    else:
+        flash('No se encontró el objeto especificado.', 'error')
+    
+    return redirect(url_for('listara.lista_objetos_admin'))

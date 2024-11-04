@@ -8,8 +8,18 @@
 </head>
 <body>
     <header>
-        <h1>Bienvenido al Home</h1>
-        <p>Desde aquí puedes acceder a las diferentes secciones de la aplicación.</p>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <h1>Bienvenido al Home</h1>
+                <p>Desde aquí puedes acceder a las diferentes secciones de la aplicación.</p>
+            </div>
+            <div>
+                <!-- Formulario de cierre de sesión -->
+                <form action="{{ url_for('auth.logout') }}" method="POST">
+                    <button type="submit" style="padding: 10px; font-size: 16px;">Cerrar Sesión</button>
+                </form>
+            </div>
+        </div>
     </header>
     
     <nav>

@@ -46,11 +46,6 @@ def create_app():
     app.register_blueprint(listara_bp)  # Registra el blueprint
 
 
-    @app.template_filter('b64encode')
-    def b64encode_filter(data):
-        if data:
-            return base64.b64encode(data).decode('utf-8')
-        return ''
 
     return app
 

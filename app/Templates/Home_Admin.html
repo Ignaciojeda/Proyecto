@@ -11,11 +11,17 @@
         <h1>Bienvenido al Home para administradores</h1>
         <p>Desde aquí puedes acceder a las diferentes secciones de la aplicación.</p>
     </header>
+    <div>
+        <form action="{{ url_for('auth.logout') }}" method="POST">
+            <button type="submit" style="padding: 10px; font-size: 16px;">Cerrar Sesión</button>
+        </form>
+    </div>
     
     <nav>
         <ul>
             <li><a href="{{ url_for('listara.lista_objetos_admin') }}">Listar Objetos</a></li>
             <li><a href="{{ url_for('objeto.subir_objeto') }}">Subir Objeto</a></li>
+            <li><a href="{{ url_for('historial.historial') }}">Ver Historial</a></li>
         </ul>
     </nav>
 </body>

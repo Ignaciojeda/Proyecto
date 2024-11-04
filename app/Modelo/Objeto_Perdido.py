@@ -17,10 +17,11 @@ class ObjetoPerdido(db.Model):
     fecha_encontrada = db.Column(db.Date, nullable=False)
     activo = db.Column(db.Boolean, default=True)
     fecha_creacion = db.Column(db.DateTime, default=lambda: datetime.now(chile_tz))
+    retirado_por = db.Column(db.String(70), nullable=True)
 
     historial = db.relationship('Historial', back_populates='objeto', cascade='all, delete-orphan')
 
-    def __init__(self, nombre, descripcion=None, foto=None, sala_encontrada='', hora_encontrada=None, fecha_encontrada=None, fecha_creacion=None, activo=True):
+    def __init__(self, nombre, descripcion=None, foto=None, sala_encontrada='', hora_encontrada=None, fecha_encontrada=None, fecha_creacion=None, activo=True,retirado_por=None):
         self.nombre = nombre
         self.descripcion = descripcion
         self.foto = foto
@@ -29,3 +30,4 @@ class ObjetoPerdido(db.Model):
         self.fecha_encontrada = fecha_encontrada
         self.activo = activo
         self.fecha_creacion = datetime.now(chile_tz)
+        self.retirado_por = retirado_por
