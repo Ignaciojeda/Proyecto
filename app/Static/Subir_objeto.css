@@ -7,53 +7,87 @@
 }
 
 body {
-    background-color: #f9f9f9;
+    background: linear-gradient(135deg, #003366, #004080, #005599);
     color: #333;
     display: flex;
     flex-direction: column;
     align-items: center;
+    min-height: 100vh;
     padding: 20px;
+    color: #fff;
 }
 
 h2 {
     margin-bottom: 20px;
-    color: #003366;
+    color: #ffcc00;
+    text-align: center;
+    font-size: 26px;
 }
 
 form {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     width: 100%;
-    max-width: 400px;
+    max-width: 450px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 form label {
     display: block;
-    margin-bottom: 5px;
     font-weight: bold;
+    margin-bottom: 5px;
+    color: #004080;
+    font-size: 14px;
 }
 
 form input[type="text"],
 form input[type="file"],
 form textarea {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #333;
+}
+
+form input[type="text"]:focus,
+form input[type="file"]:focus,
+form textarea:focus {
+    border-color: #ffcc00;
+    outline: none;
+    box-shadow: 0 0 5px rgba(255, 204, 0, 0.5);
 }
 
 form button {
-    background-color: #003366;
-    color: white;
-    padding: 10px;
+    background-color: #ffcc00;
+    color: #003366;
+    padding: 12px 20px;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
     cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
 form button:hover {
-    background-color: #005599;
+    background-color: #ffdd44;
+    transform: translateY(-2px);
+}
+
+/* Ajustes adicionales para una mejor estética */
+form input[type="file"] {
+    padding: 5px;
+}
+
+form textarea {
+    resize: vertical;
+    height: 100px;
 }

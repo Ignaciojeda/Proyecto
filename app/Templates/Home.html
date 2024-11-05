@@ -3,30 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio</title>
+    <title>Página de Inicio</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
 </head>
 <body>
     <header>
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-            <div>
-                <h1>Bienvenido al Home</h1>
-                <p>Desde aquí puedes acceder a las diferentes secciones de la aplicación.</p>
-            </div>
-            <div>
-                <!-- Formulario de cierre de sesión -->
-                <form action="{{ url_for('auth.logout') }}" method="POST">
-                    <button type="submit" style="padding: 10px; font-size: 16px;">Cerrar Sesión</button>
-                </form>
-            </div>
-        </div>
+        <h1>Bienvenido a la Plataforma de Objetos Perdidos</h1>
     </header>
-    
-    <nav>
-        <ul>
-            <li><a href="{{ url_for('listar.lista_objetos') }}">Observar Objetos perdidos</a></li>
-            <li><a href="{{ url_for('objeto.subir_objeto') }}">Subir Objeto perdidos</a></li>
-        </ul>
-    </nav>
+
+    <main>
+        <div class="context">
+            <p>Esta plataforma fue creada para ayudar a los estudiantes y personal de Duoc UC a encontrar y registrar objetos perdidos. Nuestra misión es facilitar la recuperación de pertenencias perdidas, ofreciendo una herramienta accesible y fácil de usar.</p>
+        </div>
+        
+        <form action="{{ url_for('auth.logout') }}" method="POST" class="logout-form">
+            <button type="submit" class="btn-logout">Cerrar Sesión</button>
+        </form>
+    </main>
+
+    <footer>
+        <div class="options">
+            <a href="{{ url_for('listar.lista_objetos') }}" class="option-button">Observar Objetos Perdidos</a>
+            <a href="{{ url_for('objeto.subir_objeto') }}" class="option-button">Subir Objeto Perdido</a>
+        </div>
+    </footer>
 </body>
 </html>
