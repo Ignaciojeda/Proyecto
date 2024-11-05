@@ -3,7 +3,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f9f9f9; /* Fondo suave para contraste */
+    background: linear-gradient(to bottom, #c0e1ff, #ffec85); /* Gradiente de azul a amarillo */
     color: #333; /* Texto oscuro para legibilidad */
 }
 

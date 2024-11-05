@@ -19,7 +19,7 @@
                 </div>
                 <div class="image">
                     {% if objeto.foto %}
-                        <img src="data:image/jpeg;base64,{{ objeto.foto }}" alt="Imagen de {{ objeto.nombre }}" width="200">
+                    <img src="data:image/jpeg;base64,{{ objeto.foto | b64encode }}" alt="Imagen de {{ objeto.nombre }}" width="200">
                     {% else %}
                         <p>No hay imagen</p>
                     {% endif %}

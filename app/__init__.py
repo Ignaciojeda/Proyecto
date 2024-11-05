@@ -13,14 +13,21 @@ def create_app():
     app.config.from_object(Config)
 
     db.init_app(app)
-
     migrate = Migrate(app, db)
 
     login_manager.init_app(app)
     login_manager.login_view = 'auth.login'  
     login_manager.login_message = "Por favor, inicia sesión para acceder a esta página." 
     login_manager.login_message_category = "info"  
-    
+
+    # Definir el filtro de base64
+    def b64encode(value):
+        return base64.b64encode(value).decode('utf-8')
+
+    # Registrar el filtro en Jinja2
+    app.jinja_env.filters['b64encode'] = b64encode
+
+    # Registrar blueprints
     from .Controlador.Objeto_Controlador import objeto_bp
     app.register_blueprint(objeto_bp)
 
@@ -39,15 +46,11 @@ def create_app():
     from .Controlador.Crear_Usuario import usuario_bp
     app.register_blueprint(usuario_bp)
 
-    from .Controlador.Home import home_bp
-    app.register_blueprint(home_bp)
-
     from app.Controlador.Listar_Objeto_Admin import listara_bp  # Importa el blueprint
     app.register_blueprint(listara_bp)  # Registra el blueprint
 
-
-
     return app
+
 
 @login_manager.user_loader
 def load_user(user_id):

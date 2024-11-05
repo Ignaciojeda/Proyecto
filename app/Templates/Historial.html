@@ -9,15 +9,39 @@
     <h1>Historial de Objetos Subidos</h1>
 
     <h2>Objetos Subidos</h2>
-    <ul>
-        {% for objeto in objetos_subidos %}
-            <li>
-                {{ objeto.nombre }} - {{ objeto.descripcion }} (Fecha: {{ objeto.fecha_creacion }})
-                {% if not objeto.activo %}
-                    <strong>(Retirado por: {{ objeto.retirado_por }})</strong>
-                {% endif %}
-            </li>
-        {% endfor %}
-    </ul>
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Fecha de Creación</th>
+                <th>Estado</th>
+                <th>Retirado Por</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for objeto in objetos_subidos %}
+            <tr>
+                <td>{{ objeto.nombre }}</td>
+                <td>{{ objeto.descripcion }}</td>
+                <td>{{ objeto.fecha_creacion }}</td>
+                <td>
+                    {% if objeto.activo %}
+                        Activo
+                    {% else %}
+                        Retirado
+                    {% endif %}
+                </td>
+                <td>
+                    {% if not objeto.activo %}
+                        {{ objeto.retirado_por }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </body>
 </html>

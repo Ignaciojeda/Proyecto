@@ -1,60 +1,50 @@
-/* historial.css */
+/* Estilos generales del cuerpo */
 body {
-    background-color: #f3f3f3;
     font-family: Arial, sans-serif;
     margin: 0;
+    padding: 20px; /* Agregar un poco de padding */
+    background: linear-gradient(to bottom, #c0e1ff, #ffec85); /* Fondo con gradiente */
+    color: #333; /* Texto oscuro para legibilidad */
 }
 
-.historial-container {
-    max-width: 850px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-}
-
+/* Encabezado principal */
 h1 {
-    font-size: 28px;
-    color: #003366; /* Azul Duoc UC */
     text-align: center;
+    color: #c0a500; /* Tono amarillento */
 }
 
-.entry-card {
-    padding: 15px;
-    margin: 10px 0;
-    background-color: #e3f2fd; /* Azul claro */
-    border-radius: 6px;
-    display: flex;
-    align-items: flex-start;
+/* Estilos de la tabla */
+table {
+    width: 100%; /* Tabla ocupa todo el ancho */
+    border-collapse: collapse; /* Combinar bordes */
+    margin-top: 20px; /* Espacio arriba de la tabla */
 }
 
-.entry-card h2 {
-    font-size: 18px;
-    color: #4a148c;
+/* Estilos para el encabezado de la tabla */
+th, td {
+    border: 1px solid #ddd; /* Borde gris claro */
+    padding: 12px; /* Espaciado interno */
+    text-align: left; /* Alinear texto a la izquierda */
 }
 
-.entry-card p {
-    font-size: 14px;
-    color: #003366;
+/* Estilo de encabezados */
+th {
+    background-color: #c0a500; /* Color de fondo para el encabezado */
+    color: white; /* Texto blanco en encabezados */
 }
 
-.date {
-    font-size: 12px;
-    color: #666;
-    text-align: right;
-    width: 100%;
+/* Estilos para filas alternas */
+tr:nth-child(even) {
+    background-color: #f2f2f2; /* Fondo gris claro para filas pares */
 }
 
-button {
-    padding: 8px 16px;
-    background-color: #FFD700; /* Amarillo Duoc UC */
-    color: #003366;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+/* Estilo para filas al pasar el mouse */
+tr:hover {
+    background-color: #e2e2e2; /* Fondo gris oscuro al pasar el mouse */
 }
 
-button:hover {
-    background-color: #FFC107;
+/* Estilo para el estado retirado */
+td:nth-child(4):contains('Retirado') {
+    font-weight: bold;
+    color: red; /* Color rojo para indicar retirado */
 }
