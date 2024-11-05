@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Lista de Objetos Perdidos</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='Style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='listar.css') }}">
     <script>
         // Función para abrir el modal
         function openModal(objetoId) {
@@ -21,22 +21,24 @@
     <h1>Objetos Perdidos</h1>
     <ul>
         {% for objeto in objetos %}
-            <li>
-                <h3>{{ objeto.nombre }}</h3>
-                <p>{{ objeto.descripcion }}</p>
-                <p>Sala: {{ objeto.sala_encontrada }}</p>
-                <p>Fecha encontrada: {{ objeto.fecha_encontrada }}</p>
-                <p>Hora encontrada: {{ objeto.hora_encontrada }}</p>
-                
-                {% if objeto.foto %}
-                    <img src="data:image/jpeg;base64,{{ objeto.foto | b64encode }}" alt="Imagen de {{ objeto.nombre }}" width="200">
-                {% else %}
-                    <p>No hay imagen</p>
-                {% endif %}
-                
-                <form action="{{ url_for('objeto.ocultar_objeto', id=objeto.id) }}" method="POST">
-                    <button type="button" onclick="openModal({{ objeto.id }})">Objeto retirado</button>
-                </form>
+            <li class="card">
+                <div class="info">
+                    <h3>{{ objeto.nombre }}</h3>
+                    <p>{{ objeto.descripcion }}</p>
+                    <p>Sala: {{ objeto.sala_encontrada }}</p>
+                    <p>Fecha encontrada: {{ objeto.fecha_encontrada }}</p>
+                    <p>Hora encontrada: {{ objeto.hora_encontrada }}</p>
+                    <form action="{{ url_for('objeto.ocultar_objeto', id=objeto.id) }}" method="POST">
+                        <button type="button" onclick="openModal({{ objeto.id }})">Objeto retirado</button>
+                    </form>
+                </div>
+                <div class="image">
+                    {% if objeto.foto %}
+                        <img src="data:image/jpeg;base64,{{ objeto.foto }}" alt="Imagen de {{ objeto.nombre }}" width="200">
+                    {% else %}
+                        <p>No hay imagen</p>
+                    {% endif %}
+                </div>
             </li>
         {% else %}
             <li>No se encontraron objetos perdidos.</li>

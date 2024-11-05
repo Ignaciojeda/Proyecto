@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Lista de Objetos Perdidos</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='Style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='listar.css') }}">
 </head>
 <body>
     <h1>Objetos Perdidos</h1>
@@ -18,7 +18,7 @@
                 
 
                 {% if objeto.foto %}
-                    <img src="data:image/jpeg;base64,{{ objeto.foto | b64encode }}" alt="Imagen de {{ objeto.nombre }}" width="200">
+                <img src="data:image/jpeg;base64,{{ objeto.foto | b64encode }}" alt="Imagen de {{ objeto.nombre }}" width="200">
                 {% else %}
                     <p>No hay imagen</p>
                 {% endif %}
