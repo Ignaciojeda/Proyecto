@@ -9,24 +9,25 @@
     <h1>Objetos Perdidos</h1>
     <ul>
         {% for objeto in objetos %}
-            <li>
-                <h3>{{ objeto.nombre }}</h3>
-                <p>{{ objeto.descripcion }}</p>
-                <p>Sala: {{ objeto.sala_encontrada }}</p>
-                <p>Fecha encontrada: {{ objeto.fecha_encontrada }}</p>
-                <p>Hora encontrada: {{ objeto.hora_encontrada }}</p>
-                
-
-                {% if objeto.foto %}
-                <img src="data:image/jpeg;base64,{{ objeto.foto | b64encode }}" alt="Imagen de {{ objeto.nombre }}" width="200">
-                {% else %}
-                    <p>No hay imagen</p>
-                {% endif %}
+            <li class="card">
+                <div class="info">
+                    <h3>{{ objeto.nombre }}</h3>
+                    <p>{{ objeto.descripcion }}</p>
+                    <p>Sala: {{ objeto.sala_encontrada }}</p>
+                    <p>Fecha encontrada: {{ objeto.fecha_encontrada }}</p>
+                    <p>Hora encontrada: {{ objeto.hora_encontrada }}</p>
+                </div>
+                <div class="image">
+                    {% if objeto.foto %}
+                        <img src="data:image/jpeg;base64,{{ objeto.foto }}" alt="Imagen de {{ objeto.nombre }}" width="200">
+                    {% else %}
+                        <p>No hay imagen</p>
+                    {% endif %}
+                </div>
             </li>
         {% else %}
             <li>No se encontraron objetos perdidos.</li>
         {% endfor %}
-
     </ul>
 </body>
 </html>
