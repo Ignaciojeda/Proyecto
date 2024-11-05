@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <title>Registro de cuenta</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='registro.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 </head>
 <body>
     <div class="container mt-5">
-        <h3 align="center">Crear usuario</h3>
+        <h3>Crear usuario</h3>
         <form action="/registro" method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="id_usuario">ID de usuario:</label>
@@ -24,9 +25,9 @@
             </div>
             <div class="form-group">
                 <label for="contraseña">Contraseña:</label>
-                <input type="text" class="form-control" id="contraseña" name="contraseña" required>
+                <input type="password" class="form-control" id="contraseña" name="contraseña" required>
             </div>
-            <button type="submit" class="btn btn-primary btn-block">Registrar usuario</button>
+            <button type="submit" class="btn btn-primary">Registrar usuario</button>
         </form>
     </div>
 </body>
