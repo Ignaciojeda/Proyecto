@@ -46,8 +46,8 @@ def create_app():
     from .Controlador.Crear_Usuario import usuario_bp
     app.register_blueprint(usuario_bp)
 
-    from app.Controlador.Listar_Objeto_Admin import listara_bp  # Importa el blueprint
-    app.register_blueprint(listara_bp)  # Registra el blueprint
+    from app.Controlador.Listar_Objeto_Admin import listara_bp  
+    app.register_blueprint(listara_bp) 
 
     return app
 
@@ -56,3 +56,4 @@ def create_app():
 def load_user(user_id):
     from app.Modelo.Usuario import Usuario  
     return Usuario.query.get(int(user_id))
+
