@@ -13,51 +13,44 @@
         <div class="registro-container">
             <h1 class="welcome-title">Registro</h1>
             <h2 class="subtitle">Creación de cuenta</h2>
-            <ion-icon name="person-circle-outline" class="registro-icon"></ion-icon>
             <form method="POST" action="{{ url_for('usuario.registrar_usuario') }}" class="registro-form">
                 <div class="input-item">
-                    <ion-icon name="id-card-outline" slot="start" color="primary"></ion-icon>
-                    <ion-label position="floating">RUT (12345678-9)</ion-label>
-                    <ion-input name="rut" type="text" required pattern="^[0-9]{7,8}-[0-9Kk]$"></ion-input>
+                    <label position="floating">RUT (12345678-9)</label>
+                    <input name="rut" type="text" required pattern="^[0-9]{7,8}-[0-9Kk]$"></input>
                 </div>
                 <div class="input-item">
-                    <ion-icon name="person-outline" slot="start" color="primary"></ion-icon>
-                    <ion-label position="floating">Nombre Completo</ion-label>
-                    <ion-input name="nombre_completo" type="text" required></ion-input>
+                    <label position="floating">Nombre Completo</label>
+                    <input name="nombre_completo" type="text" required></input>
                 </div>
                 <div class="input-item">
-                    <ion-icon name="mail-outline" slot="start" color="primary"></ion-icon>
-                    <ion-label position="floating">Email</ion-label>
-                    <ion-input name="correo" type="email" required></ion-input>
+                    <label position="floating">Email</label>
+                    <input name="correo" type="email" required></input>
                 </div>
                 <div class="input-item">
-                    <ion-icon name="lock-closed-outline" slot="start" color="primary"></ion-icon>
-                    <ion-label position="floating">Contraseña</ion-label>
-                    <ion-input name="contraseña" type="password" required></ion-input>
+                    <label position="floating">Contraseña</label>
+                    <input name="contraseña" type="password" required></input>
                 </div>
                 <div class="input-item">
-                    <ion-icon name="school-outline" slot="start" color="primary"></ion-icon>
-                    <ion-label position="floating">Carrera</ion-label>
-                    <ion-select name="Carrera" required>
+                    <label position="floating">Carrera</label>
+                    <select name="Carrera" required>
                         {% for carrera in carreras %}
-                            <ion-select-option value="{{ carrera.id_carrera }}">{{ carrera.descripcion }}</ion-select-option>
+                            <option value="{{ carrera.id_carrera }}">{{ carrera.descripcion }}</option>
                         {% endfor %}
-                    </ion-select>
+                    </select>
                 </div>
                 <div class="input-item">
-                    <ion-icon name="person-add-outline" slot="start" color="primary"></ion-icon>
-                    <ion-label position="floating">Tipo de Usuario</ion-label>
-                    <ion-select name="Tipo_usuario" required>
+                    <label position="floating">Tipo de Usuario</label>
+                    <select name="Tipo_usuario" required>
                         {% for tipo_usuario in tipos_usuario %}
-                            <ion-select-option value="{{ tipo_usuario.id_tipo_usuario }}">{{ tipo_usuario.descripcion }}</ion-select-option>
+                            <option value="{{ tipo_usuario.id_tipo_usuario }}">{{ tipo_usuario.descripcion }}</option>
                         {% endfor %}
-                    </ion-select>
+                    </select>
                 </div>
-                <ion-button expand="full" color="primary" type="submit" class="register-button">Registrar</ion-button>
+                <button type="submit" class="register-button">Registrar</button>
             </form>
-            <ion-button expand="full" color="light" (click)="goToLogin()" class="login-button">
-              ¿Ya tienes cuenta? Inicia sesión
-            </ion-button> 
+            <div>
+                <p>¿Ya tienes una cuenta? <a href="{{ url_for('auth.login') }}">Inicia Sesión</a></p>
+            </div>
         </div>
     </div>
 </body>

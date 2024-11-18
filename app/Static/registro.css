@@ -13,7 +13,7 @@ body {
 }
 
 /* Estilos del contenedor del formulario */
-.container {
+.registro-container {
     background-color: #ffffff;
     padding: 20px;
     border-radius: 8px;
@@ -22,8 +22,14 @@ body {
     max-width: 350px; /* Más pequeño para parecerse al login */
 }
 
+h1 {
+    font-size: 24px;
+    color: #003366; /* Azul Duoc UC */
+    margin-bottom: 20px;
+}
+
 /* Título del formulario */
-h3 {
+h1, h2 {
     color: #003c71; /* Azul Duoc UC */
     text-align: center;
     font-weight: bold;
@@ -36,15 +42,8 @@ h3 {
     font-weight: 500;
 }
 
-.form-control {
-    border-radius: 4px;
-    border: 1px solid #cccccc;
-    padding: 8px;
-    margin-bottom: 15px;
-}
-
 /* Estilos del botón de registro */
-.btn-primary {
+.register-button     {
     background-color: #ffc107; /* Amarillo */
     border: none;
     color: #003c71; /* Letras en azul */
@@ -55,7 +54,7 @@ h3 {
     transition: background-color 0.3s ease;
 }
 
-.btn-primary:hover {
+.register-button:hover {
     background-color: #ffca2c;
 }
 label {
@@ -63,6 +62,14 @@ label {
     color: #003366;
     display: block;
     margin-bottom: 5px;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
 }
 
 /* Tipografía y centrado para los textos */
