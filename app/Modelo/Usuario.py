@@ -19,18 +19,15 @@ class Usuario(db.Model):
     carrera_relacion = db.relationship('Carrera', back_populates='usuarios')
     tipo_usuario_relacion = db.relationship('TipoUsuario', back_populates='usuarios')
     objetos_perdidos = db.relationship('ObjetoPerdido', back_populates='usuario', lazy=True)
-    historial = db.relationship('Historial', back_populates='usuario', lazy=True)
+    historial_recibidos = db.relationship('Historial', backref='historiales', lazy=True) 
 
     def is_active(self):
-        # Devuelve True si el usuario está activo, False si no lo está
-        return True 
+        return True     
     
     def is_authenticated(self):
-        # Devuelve True si el usuario está autenticado
-        return True  # Este es solo un ejemplo, normalmente esta lógica está en el proceso de autenticación
+        return True  
 
     def is_anonymous(self):
-        # Devuelve True si el usuario no está autenticado, en general es False
         return False
 
 
