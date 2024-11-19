@@ -7,8 +7,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 class Usuario(db.Model):
     __tablename__ = 'Usuario'  # Nombre de la tabla en mayúsculas
 
-    id = db.Column(db.Integer, primary_key=True)
-    rut = db.Column(db.String(20), unique=True, nullable=False)
+    
+    rut = db.Column(db.String(12), primary_key=True)  # rut es la clave primaria
     nombre_completo = db.Column(db.String(100), nullable=False)
     carrera = db.Column(db.Integer, db.ForeignKey('Carrera.id_carrera'), nullable=False)  # Aquí también se usa el nombre correcto de la tabla en mayúsculas
     correo = db.Column(db.String(120), unique=True, nullable=False)
@@ -20,6 +20,19 @@ class Usuario(db.Model):
     tipo_usuario_relacion = db.relationship('TipoUsuario', back_populates='usuarios')
     objetos_perdidos = db.relationship('ObjetoPerdido', back_populates='usuario', lazy=True)
     historial = db.relationship('Historial', back_populates='usuario', lazy=True)
+
+    def is_active(self):
+        # Devuelve True si el usuario está activo, False si no lo está
+        return True 
+    
+    def is_authenticated(self):
+        # Devuelve True si el usuario está autenticado
+        return True  # Este es solo un ejemplo, normalmente esta lógica está en el proceso de autenticación
+
+    def is_anonymous(self):
+        # Devuelve True si el usuario no está autenticado, en general es False
+        return False
+
 
     def __init__(self, rut, nombre_completo, carrera, correo, contraseña, tipo_usuario):
         self.rut = rut
