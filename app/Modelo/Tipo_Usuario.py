@@ -7,6 +7,6 @@ class TipoUsuario(db.Model):
     descripcion = db.Column(db.String(100), nullable=False)
     
 
-    usuarios = db.relationship('Usuario', back_populates='tipo_usuario')
+    usuarios = db.relationship('Usuario', back_populates='tipo_usuario_relacion')
 
 

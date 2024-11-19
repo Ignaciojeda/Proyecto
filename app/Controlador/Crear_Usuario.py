@@ -13,18 +13,21 @@ def registrar_usuario():
         try:
             rut = request.form['rut']
             nombre_completo = request.form['nombre_completo']
-            carrera_id = request.form.get('Carrera')  # Se selecciona la carrera
             correo = request.form['correo']
             contraseña = request.form['contraseña']
-            tipo_usuario_id = request.form.get('Tipo_usuario')  # Se selecciona el tipo de usuario
+            carrera_id = request.form['carrera']  # Recibe el ID como string desde el formulario
+            tipo_usuario_id = request.form['tipo_usuario']
+
+            carrera = Carrera.query.get(carrera_id)
+            tipo_usuario = TipoUsuario.query.get(tipo_usuario_id)
 
             nuevo_usuario = Usuario(
                 rut=rut,
                 nombre_completo=nombre_completo,
-                carrera=carrera_id,
+                carrera=int(carrera_id),
                 correo=correo,
                 contraseña=contraseña,
-                tipo_usuario=tipo_usuario_id
+                tipo_usuario=int(tipo_usuario_id)
             )
 
             db.session.add(nuevo_usuario)

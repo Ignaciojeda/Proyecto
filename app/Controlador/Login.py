@@ -7,22 +7,25 @@ auth_bp = Blueprint('auth', __name__)
 @auth_bp.route('/', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        if current_user.tipo_usuario.descripcion == 'Admin':
+        # Verificamos el tipo de usuario directamente
+        if current_user.tipo_usuario == 1:  # 1 corresponde a Admin
             return redirect(url_for('auth.home_admin'))
-        elif current_user.tipo_usuario.descripcion == 'Usuario':
+        elif current_user.tipo_usuario == 2:  # 2 corresponde a Usuario
             return redirect(url_for('auth.home_usuario'))
     
     if request.method == 'POST':
         correo_usuario = request.form['correo']
         contraseña = request.form['contraseña']
 
-        usuario = Usuario.query.filter_by(correo_usuario=correo_usuario).first()
+        # Usamos 'correo' para la búsqueda
+        usuario = Usuario.query.filter_by(correo=correo_usuario).first()
 
-        if usuario and usuario.check_password(contraseña):  
+        if usuario and usuario.check_password(contraseña):  # Asumimos que check_password está correcto
             login_user(usuario)
-            if usuario.tipo_usuario.descripcion == 'Admin':  
+            # Verificamos el tipo de usuario para redirigir
+            if usuario.tipo_usuario == 1:  # 1 corresponde a Admin
                 return redirect(url_for('auth.home_admin'))
-            elif usuario.tipo_usuario.descripcion == 'Usuario':  
+            elif usuario.tipo_usuario == 2:  # 2 corresponde a Usuario
                 return redirect(url_for('auth.home_usuario'))
             else:
                 flash('No se ha definido un tipo de usuario válido.', 'danger')

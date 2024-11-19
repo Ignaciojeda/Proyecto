@@ -31,16 +31,16 @@
                     <input name="contraseña" type="password" required></input>
                 </div>
                 <div class="input-item">
-                    <label position="floating">Carrera</label>
-                    <select name="Carrera" required>
+                    <label for="carrera">Selecciona una carrera:</label>
+                        <select id="carrera" name="carrera">
                         {% for carrera in carreras %}
                             <option value="{{ carrera.id_carrera }}">{{ carrera.descripcion }}</option>
                         {% endfor %}
                     </select>
                 </div>
                 <div class="input-item">
-                    <label position="floating">Tipo de Usuario</label>
-                    <select name="Tipo_usuario" required>
+                    <label for="tipo_usuario">Selecciona un tipo de usuario:</label>
+                    <select id="tipo_usuario" name="tipo_usuario">
                         {% for tipo_usuario in tipos_usuario %}
                             <option value="{{ tipo_usuario.id_tipo_usuario }}">{{ tipo_usuario.descripcion }}</option>
                         {% endfor %}
