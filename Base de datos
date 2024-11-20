@@ -1,45 +1,45 @@
-CREATE DATABASE IF NOT EXISTS search;
-
-
-USE search;
-
-
-CREATE TABLE IF NOT EXISTS objetos_perdidos (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
-    descripcion VARCHAR(255),
-    foto BLOB, -- Columna para almacenar la imagen como blob
-    sala_encontrada VARCHAR(100) NOT NULL,
-    hora_encontrada TIME NOT NULL,
-    fecha_encontrada DATE NOT NULL,
-    activo tinyint,
-    fecha_Creacion datetime,
-    retirador_por VARCHAR(70);
+CREATE TABLE Tipo_usuario (
+    id_tipo_usuario SERIAL PRIMARY KEY,
+    descripcion VARCHAR(50) NOT NULL
 );
 
-CREATE TABLE tipo_usuario (
-  id_tipo_usuario INT NOT NULL,
-  descripcion VARCHAR(45) NOT NULL,
-  PRIMARY KEY (id_tipo_usuario));
-  
-  CREATE TABLE usuario (
-  id_usuario INT NOT NULL,
-  id_tipo_usuario INT NOT NULL,
-  correo_usuario VARCHAR(45) NOT NULL,
-  contraseña VARCHAR(45) NOT NULL,
-  PRIMARY KEY (id_usuario),
-  INDEX fk_ts_usuario_idx (id_tipo_usuario ASC) VISIBLE,
-  CONSTRAINT fk_ts_usuario
-    FOREIGN KEY (id_tipo_usuario)
-    REFERENCES search.tipo_usuario (id_tipo_usuario)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+-- Crear tabla Carrera
+CREATE TABLE Carrera (
+    id_carrera SERIAL PRIMARY KEY,
+    descripcion VARCHAR(100) NOT NULL
+);
 
-  CREATE TABLE historial (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
-    correo VARCHAR(100) NOT NULL,
-    carrera VARCHAR(100) NOT NULL,
-    objeto_id INT NOT NULL,
-    FOREIGN KEY (objeto_id) REFERENCES objetos_perdidos(id)
+-- Crear tabla Usuario
+CREATE TABLE Usuario (
+    rut VARCHAR(10) PRIMARY KEY,
+    nombre_completo VARCHAR(100) NOT NULL,
+    carrera INT REFERENCES Carrera(id_carrera),
+    correo VARCHAR(100) UNIQUE NOT NULL,
+    contraseña VARCHAR(100) NOT NULL,
+    tipo_usuario INT REFERENCES Tipo_usuario(id_tipo_usuario)
+);
+
+-- Crear la tabla Objetos_Perdidos
+CREATE TABLE Objetos_Perdidos (
+    id_objeto INT AUTO_INCREMENT PRIMARY KEY, -- Identificador único del objeto perdido
+    nombre_objeto VARCHAR(100) NOT NULL,      -- Nombre del objeto
+    descripcion TEXT,                         -- Descripción del objeto
+    foto TEXT,                                -- URL o ruta de la foto del objeto
+    sala_encontrada VARCHAR(50) NOT NULL,     -- Sala donde se encontró el objeto
+    hora_encontrada TIME NOT NULL,            -- Hora en la que se encontró el objeto
+    activo BOOLEAN DEFAULT TRUE,             -- Indica si el objeto sigue activo o no
+    rut_usuario VARCHAR(10) NOT NULL,        -- RUT del usuario que reportó el objeto
+    FOREIGN KEY (rut_usuario) REFERENCES Usuario(rut) ON DELETE CASCADE
+);
+
+CREATE TABLE Historial (
+    id_historial INT AUTO_INCREMENT PRIMARY KEY,
+    id_objeto INT NOT NULL,
+    rut_usuario VARCHAR(20) NOT NULL,
+    sala_encontrada VARCHAR(50) NOT NULL,
+    descripcion VARCHAR(255),
+    fecha_accion DATETIME DEFAULT CURRENT_TIMESTAMP,
+    activo BOOLEAN DEFAULT TRUE,
+    entregado_a VARCHAR(100),
+    FOREIGN KEY (id_objeto) REFERENCES Objetos_Perdidos(id_objeto)
 );
