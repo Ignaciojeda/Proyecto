@@ -5,13 +5,11 @@
     <title>Lista de Objetos Perdidos</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='listar.css') }}">
     <script>
-        // Función para abrir el modal
         function openModal(objetoId) {
             document.getElementById('modal').style.display = 'block';
             document.getElementById('objetoId').value = objetoId;  // Asigna el ID del objeto al campo oculto
         }
 
-        // Función para cerrar el modal
         function closeModal() {
             document.getElementById('modal').style.display = 'none';
         }
@@ -24,10 +22,10 @@
         {% for objeto in objetos %}
             <li class="card">
                 <div class="info">
-                    <h3>{{ objeto.nombre }}</h3>
+                    <h3>{{ objeto.nombre_objeto }}</h3>
                     <p>{{ objeto.descripcion }}</p>
                     <p>Sala: {{ objeto.sala_encontrada }}</p>
-                    <p>Fecha encontrada: {{ objeto.fecha_encontrada }}</p>
+                    <p>Activo: {{ 'Sí' if objeto.activo else 'No' }}</p>
                     <p>Hora encontrada: {{ objeto.hora_encontrada }}</p>
                     <form action="{{ url_for('objeto.ocultar_objeto', id=objeto.id) }}" method="POST">
                         <button type="button" onclick="openModal({{ objeto.id }})">Objeto retirado</button>

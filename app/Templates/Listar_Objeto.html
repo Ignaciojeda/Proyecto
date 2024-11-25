@@ -12,13 +12,17 @@
         {% for objeto in objetos %}
             <li class="card">
                 <div class="info">
-                    <h3>{{ objeto.nombre }}</h3>
+                    {% if objeto.nombre_objeto %}
+                    {{ objeto.nombre_objeto }}
+                {% else %}
+                    <span style="color: red;">Nombre no disponible</span>
+                {% endif %}
                 </div>
                 <div class="image">
                     {% if objeto.foto %}
-                    <img src="data:image/jpeg;base64,{{ objeto.foto | b64encode }}" alt="Imagen de {{ objeto.nombre }}" width="200">
+                        <img src="data:image/jpeg;base64,{{ objeto.foto | b64encode }}" alt="Imagen de {{ objeto.nombre }}" width="200">
                     {% else %}
-                        <p>No hay imagen</p>
+                        <p>No hay imagen disponible</p>
                     {% endif %}
                 </div>
             </li>
