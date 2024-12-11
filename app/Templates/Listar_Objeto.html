@@ -2,25 +2,22 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Lista de Objetos Perdidos</title>
+    <title>Historial de Objetos Perdidos</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='listar.css') }}">
 </head>
 <body>
-    <h1>Objetos Perdidos</h1>
+    <h1>Historial de Objetos Perdidos</h1>
     <button type="button" class="back-button" onclick="window.history.back()">Regresar</button>
     <ul>
         {% for objeto in objetos %}
             <li class="card">
                 <div class="info">
-                    {% if objeto.nombre_objeto %}
-                    {{ objeto.nombre_objeto }}
-                {% else %}
-                    <span style="color: red;">Nombre no disponible</span>
-                {% endif %}
+                    <h3>{{ objeto.nombre_objeto or 'Nombre no disponible' }}</h3>
+                    <p>{{ objeto.descripcion[:100] }}...</p>
                 </div>
                 <div class="image">
                     {% if objeto.foto %}
-                        <img src="data:image/jpeg;base64,{{ objeto.foto | b64encode }}" alt="Imagen de {{ objeto.nombre }}" width="200">
+                        <img src="data:image/jpeg;base64,{{ objeto.foto | b64encode }}" alt="Imagen de {{ objeto.nombre_objeto }}" width="200">
                     {% else %}
                         <p>No hay imagen disponible</p>
                     {% endif %}

@@ -39,12 +39,13 @@ def login():
 
     return render_template('login.html')  # Asegúrate de tener un archivo login.html adecuado
 
-@auth_bp.route('/logout', methods=['GET'])
+@auth_bp.route('/logout', methods=['POST'])
 @login_required
 def logout():
     logout_user()
     flash('Sesión cerrada exitosamente.', 'info')
     return redirect(url_for('auth.login'))
+
 
 @auth_bp.route('/home_admin')
 @login_required

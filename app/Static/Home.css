@@ -1,102 +1,76 @@
-/* Estilos generales */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
+/* General */
 body {
     font-family: 'Roboto', sans-serif;
-    background: linear-gradient(135deg, #002f4f, #004e75, #006a8e);
-    color: #ffffff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-    padding: 20px;
+    margin: 0;
+    background-color: #f5f5f5;
 }
 
-/* Encabezado */
-header {
-    width: 100%;
-    text-align: center;
-    margin-top: 20px;
-    padding-bottom: 20px;
-}
-
-header h1 {
-    font-size: 30px;
-    font-weight: bold;
-    color: #e0e0e0;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-}
-
-/* Sección de contexto */
-.context {
-    max-width: 600px;
-    text-align: center;
-    margin: 20px 0;
-    padding: 15px;
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.context p {
-    font-size: 16px;
-    line-height: 1.5;
-    color: #d1d1d1;
-}
-
-/* Botón de cerrar sesión */
-.logout-form {
-    text-align: center;
-    margin: 20px;
-}
-
-.btn-logout {
-    background-color: #bb3d3d;
-    border: none;
-    color: #ffffff;
+/* Navbar */
+.navbar {
+    background-color: #003366;
     padding: 10px 20px;
-    font-size: 16px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+}
+
+.nav-links li {
+    margin: 0 10px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Cards */
+.card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px;
+    text-align: center;
+}
+
+.card h3 {
+    color: #003366;
+}
+
+.card .btn {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #F2A900;
+    color: white;
+    text-decoration: none;
     border-radius: 5px;
+    font-weight: bold;
+}
+
+.card .btn:hover {
+    background-color: #003366;
+    color: white;
+}
+
+/* Logout Button */
+.btn-logout {
+    background-color: #F2A900;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-weight: bold;
     cursor: pointer;
-    transition: background-color 0.3s;
 }
 
 .btn-logout:hover {
-    background-color: #d44f4f;
-}
-
-/* Opciones (footer) */
-footer {
-    position: absolute;
-    bottom: 20px;
-    width: 100%;
-    text-align: center;
-}
-
-.options {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    padding: 20px;
-}
-
-.option-button {
-    background-color: #ffd700;
-    color: #002f4f;
-    padding: 15px 30px;
-    font-size: 18px;
-    font-weight: bold;
-    border-radius: 8px;
-    text-decoration: none;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
-    transition: background-color 0.3s, transform 0.2s;
-}
-
-.option-button:hover {
-    background-color: #f0c54d;
-    transform: translateY(-3px);
+    background-color: #003366;
+    color: white;
 }

@@ -1,107 +1,92 @@
-/* Estilos generales del cuerpo */
+/* Diseño base */
 body {
     font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
     margin: 0;
-    padding: 0;
-    background: linear-gradient(to bottom, #c0e1ff, #ffec85); /* Gradiente de azul a amarillo */
-    color: #333; /* Texto oscuro para legibilidad */
+    padding: 20px;
 }
 
-/* Encabezado principal */
 h1 {
     text-align: center;
-    margin: 20px 0;
-    color: #c0a500; /* Tono amarillento */
+    color: #333;
 }
 
-/* Estilos de la lista de objetos */
+.back-button {
+    display: block;
+    margin: 10px auto 20px auto;
+    padding: 10px 20px;
+    background-color: #0056b3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 16px;
+}
+
+.back-button:hover {
+    background-color: #003d80;
+}
+
+/* Estilo de las tarjetas */
 ul {
-    list-style-type: none; /* Quitar puntos de la lista */
-    padding: 0; /* Sin padding */
-    max-width: 800px; /* Ancho máximo para la lista */
-    margin: 0 auto; /* Centrar la lista */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    list-style: none;
+    padding: 0;
 }
 
-/* Estilo de cada tarjeta de objeto */
-.card {
-    display: flex; /* Usar flexbox para el diseño */
-    background-color: #fff; /* Fondo blanco para los elementos */
-    border: 1px solid #ddd; /* Borde gris claro */
-    border-radius: 8px; /* Bordes redondeados */
-    margin: 10px 0; /* Espaciado entre elementos */
-    padding: 15px; /* Espaciado interno */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
-}
-
-/* Estilo de la información del objeto */
-.info {
-    flex: 1; /* Ocupa el espacio restante */
-    padding-right: 15px; /* Espacio a la derecha de la información */
-}
-
-/* Estilo de la imagen */
-.image {
-    flex-shrink: 0; /* No permitir que la imagen se reduzca */
-}
-
-/* Estilo de imágenes */
-img {
-    max-width: 100%; /* Asegura que la imagen no exceda el contenedor */
-    height: auto; /* Mantener proporciones */
-    border-radius: 4px; /* Bordes redondeados para imágenes */
-}
-
-/* Estilo de los botones */
-button {
-    background-color: #c0a500; /* Tono amarillento para botones */
-    color: white; /* Texto blanco en los botones */
-    border: none; /* Sin borde */
-    border-radius: 4px; /* Bordes redondeados */
-    padding: 10px 15px; /* Espaciado interno */
-    cursor: pointer; /* Cambiar el cursor al pasar */
-    transition: background-color 0.3s; /* Transición para el color de fondo */
-}
-
-button:hover {
-    background-color: #b59400; /* Un tono más oscuro al hacer hover */
-}
-
-/* Estilos del modal */
-#modal {
-    display: none; /* Ocultar por defecto */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7); /* Fondo oscuro para el modal */
-    z-index: 1000; /* Asegurarse de que esté por encima de otros elementos */
-}
-
-/* Estilo del contenido del modal */
-#modal > div {
-    background: #fff;
-    padding: 20px;
-    width: 300px;
-    margin: 100px auto; /* Centrar el modal */
-    position: relative;
-    border-radius: 8px; /* Bordes redondeados para el modal */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra del modal */
-}
-
-/* Estilos para el formulario del modal */
-form {
+li.card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
     display: flex;
-    flex-direction: column; /* Colocar campos de formulario en columna */
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 16px;
 }
 
-label {
-    margin-bottom: 5px; /* Espacio entre etiqueta y campo */
+li.card .info {
+    flex-grow: 1;
+    margin-bottom: 10px;
 }
 
-input[type="text"] {
-    padding: 8px; /* Espaciado interno */
-    margin-bottom: 10px; /* Espacio entre campos */
-    border: 1px solid #ccc; /* Borde gris */
-    border-radius: 4px; /* Bordes redondeados */
+li.card .info h3 {
+    margin: 0 0 10px 0;
+    color: #0056b3;
+}
+
+li.card .image img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+.ocultar-button {
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.ocultar-button:hover {
+    background-color: #c9302c;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    ul {
+        grid-template-columns: 1fr;
+    }
+
+    .back-button {
+        width: 100%;
+    }
 }

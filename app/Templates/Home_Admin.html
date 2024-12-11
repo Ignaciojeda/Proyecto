@@ -5,28 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio Administrador</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
 </head>
 <body>
-    <header>
-        <h1>Bienvenido, Administrador</h1>
-        <p>Desde este panel puedes gestionar y supervisar la aplicación.</p>
-    </header>
 
-    <main>
-        <nav>
-            <ul>
-                <li><a href="{{ url_for('listara.lista_objetos_admin') }}">Listar Objetos</a></li>
-                <li><a href="{{ url_for('objeto.subir_objeto') }}">Subir Objeto</a></li>
-                <li><a href="{{ url_for('historial.historial') }}">Ver Historial</a></li>
-                <li>        <div class="text-center mt-3">
-                    <p>¿Deseas crear una cuenta? <a href="{{ url_for('usuario.registrar_usuario') }}">Regístrate aquí</a></p>
-                </li>
-            </ul>
-        </nav>
+    <nav class="navbar">
+        <div class="logo">Duoc S&F</div>
+        <ul class="nav-links">
+            <li><a href="{{ url_for('listara.lista_objetos_admin') }}">Listar Objetos</a></li>
+            <li><a href="{{ url_for('objeto.subir_objeto') }}">Subir Objeto</a></li>
+            <li><a href="{{ url_for('historial.historial') }}">Ver Historial</a></li>
+            <li><a href="{{ url_for('usuario.registrar_usuario') }}">Registrar Usuario</a></li>
+        </ul>
+    </nav>
+
+
+    <main class="admin-home">
+        <header class="welcome-header">
+            <h1>Bienvenido, Administrador</h1>
+            <p>Desde este panel puedes gestionar y supervisar la aplicación.</p>
+        </header>
+
+        <section class="actions">
+            <div class="card">
+                <h3>Listar Objetos</h3>
+                <p>Consulta y gestiona los objetos perdidos registrados en la plataforma.</p>
+                <a href="{{ url_for('listara.lista_objetos_admin') }}" class="btn">Ir a Lista</a>
+            </div>
+
+            <div class="card">
+                <h3>Subir Objeto</h3>
+                <p>Agrega nuevos objetos perdidos al sistema.</p>
+                <a href="{{ url_for('objeto.subir_objeto') }}" class="btn">Subir Objeto</a>
+            </div>
+
+            <div class="card">
+                <h3>Ver Historial</h3>
+                <p>Revisa los registros de objetos subidos y gestionados.</p>
+                <a href="{{ url_for('historial.historial') }}" class="btn">Ver Historial</a>
+            </div>
+        </section>
 
         <div class="logout-container">
             <form action="{{ url_for('auth.logout') }}" method="POST">
-                <button type="submit">Cerrar Sesión</button>
+                <button type="submit" class="btn-logout">Cerrar Sesión</button>
             </form>
         </div>
     </main>
