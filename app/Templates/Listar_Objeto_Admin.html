@@ -110,7 +110,7 @@
     <div id="modal">
         <div id="modal-content">
             <h2>Retirar Objeto</h2>
-            <form action="{{ url_for('objeto.ocultar_objeto') }}" method="POST">
+            <form action="{{ url_for('entregar.entregar_objeto') }}" method="POST">
                 <input type="hidden" name="objeto_id" id="objetoId">
                 <label for="rut">RUT de quien retira:</label>
                 <input type="text" id="rut" name="rut" required>
