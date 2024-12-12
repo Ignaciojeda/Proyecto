@@ -66,6 +66,7 @@
     <script>
         // Abre el modal y asigna el ID del objeto al campo oculto
         function openModal(objetoId) {
+            console.log("ID del objeto pasado al modal:", objetoId);  // Verificación
             document.getElementById('modal').style.display = 'block';
             document.getElementById('objetoId').value = objetoId;
         }
@@ -88,8 +89,8 @@
                     <p><strong>Sala:</strong> {{ objeto.sala_encontrada }}</p>
                     <p><strong>Activo:</strong> {{ 'Sí' if objeto.activo else 'No' }}</p>
                     <p><strong>Hora encontrada:</strong> {{ objeto.hora_encontrada }}</p>
-                    <form action="{{ url_for('objeto.ocultar_objeto', id=objeto.id) }}" method="POST">
-                        <button type="button" class="retirar-button" onclick="openModal({{ objeto.id }})">Retirar Objeto</button>
+                    <form action="{{ url_for('objeto.ocultar_objeto') }}" method="POST">
+                        <button type="button" class="retirar-button" onclick="openModal({{ objeto.id_objeto }})">Retirar Objeto</button>
                     </form>
                 </div>
                 <div class="image">
@@ -105,14 +106,14 @@
         {% endfor %}
     </ul>
 
-    <!-- Modal para ingresar el nombre o correo -->
+    <!-- Modal para ingresar el RUT -->
     <div id="modal">
         <div id="modal-content">
             <h2>Retirar Objeto</h2>
             <form action="{{ url_for('objeto.ocultar_objeto') }}" method="POST">
-                <input type="hidden" name="objeto_id" id="objetoId"> <!-- ID del objeto oculto -->
-                <label for="retirado_por">Nombre o correo de quien retira:</label>
-                <input type="text" id="retirado_por" name="retirado_por" required>
+                <input type="hidden" name="objeto_id" id="objetoId">
+                <label for="rut">RUT de quien retira:</label>
+                <input type="text" id="rut" name="rut" required>
                 <br>
                 <button type="submit" class="retirar-button">Confirmar Retiro</button>
                 <button type="button" class="cancelar-button" onclick="closeModal()">Cancelar</button>

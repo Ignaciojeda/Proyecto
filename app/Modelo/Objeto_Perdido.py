@@ -18,7 +18,7 @@ class ObjetoPerdido(db.Model):
 
     # Relaciones
     usuario = db.relationship('Usuario', back_populates='objetos_perdidos', lazy=True)
-    historial = db.relationship('Historial', backref='objeto_perdido', lazy=True)
+    historial_objetos = db.relationship('Historial', back_populates='objeto', lazy=True)
 
     def __repr__(self):
         return f'<ObjetoPerdido {self.nombre_objeto}>'
@@ -31,4 +31,3 @@ class ObjetoPerdido(db.Model):
         self.hora_encontrada = hora_encontrada
         self.activo = activo
         self.rut_usuario = rut_usuario
-

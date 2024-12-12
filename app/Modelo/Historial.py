@@ -13,8 +13,9 @@ class Historial(db.Model):
     activo = db.Column(db.Boolean, default=True)
     entregado_a = db.Column(db.String(100))  # Persona a quien se entregó el objeto (opcional)
 
-    usuario = db.relationship('Usuario', backref='historiales', lazy=True)
-    objeto = db.relationship('ObjetoPerdido', backref='historial_objetos', lazy=True)
+    # Relaciones ajustadas con overlaps
+    usuario = db.relationship('Usuario', back_populates='historial_recibidos', lazy=True, overlaps="historial_objetos,historiales")
+    objeto = db.relationship('ObjetoPerdido', back_populates='historial_objetos')
 
     def __init__(self, id_objeto, rut_usuario, sala_encontrada, descripcion, activo=True, entregado_a=None):
         self.id_objeto = id_objeto
