@@ -34,33 +34,4 @@ def entregar_objeto(id):
         flash('Ocurrió un error al cargar el objeto.', 'error')
         return redirect(url_for('listara.lista_objetos_admin'))  # Redirige a la lista de objetos
 
-# Ruta para procesar la entrega del objeto
-@listara_bp.route('/entregar/<int:id>', methods=['POST'])
-@login_required
-def entregar(id):
-    objeto = ObjetoPerdido.query.get_or_404(id)  # Buscar objeto por ID
 
-    # Obtener datos del formulario
-    nombre = request.form.get('nombre')
-    correo = request.form.get('correo')
-    carrera = request.form.get('carrera')
-
-    # Validar que todos los campos estén llenos
-    if not all([nombre, correo, carrera]):
-        flash('Todos los campos son obligatorios.', 'error')
-        return redirect(url_for('listara.entregar_objeto', id=id))
-
-    try:
-        # Crear un nuevo registro en el historial
-        entrega = Historial(nombre=nombre, correo=correo, carrera=carrera, objeto_id=objeto.id)
-        db.session.add(entrega)
-
-        # Marcar el objeto como no activo (oculto)
-        objeto.activo = False
-        db.session.commit()
-
-        flash('El objeto ha sido entregado correctamente.', 'success')
-        return redirect(url_for('listara.lista_objetos_admin'))
-    except Exception as e:
-        flash('Ocurrió un error al procesar la entrega.', 'error')
-        return redirect(url_for('listara.entregar_objeto', id=id))

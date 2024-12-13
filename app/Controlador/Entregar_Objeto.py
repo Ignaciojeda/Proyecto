@@ -44,6 +44,7 @@ def entregar_objeto():
         if historial:
             # Actualizar el campo entregado_a con el RUT del usuario que retira el objeto
             historial.entregado_a = rut
+            historial.activo = 0
             db.session.commit()
 
             flash('El objeto ha sido marcado como retirado y actualizado en el historial.', 'success')
