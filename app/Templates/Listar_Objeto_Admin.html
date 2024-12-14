@@ -89,7 +89,7 @@
                     <p><strong>Sala:</strong> {{ objeto.sala_encontrada }}</p>
                     <p><strong>Activo:</strong> {{ 'Sí' if objeto.activo else 'No' }}</p>
                     <p><strong>Hora encontrada:</strong> {{ objeto.hora_encontrada }}</p>
-                    <form action="{{ url_for('objeto.ocultar_objeto') }}" method="POST">
+                    <form action="{{ url_for('entregar.entregar_objeto') }}" method="POST">
                         <button type="button" class="retirar-button" onclick="openModal({{ objeto.id_objeto }})">Retirar Objeto</button>
                     </form>
                 </div>

@@ -49,6 +49,9 @@ def create_app():
     from app.Controlador.Listar_Objeto_Admin import listara_bp  
     app.register_blueprint(listara_bp) 
 
+    from app.Controlador.Entregar_Objeto import entregar_bp  # Asegúrate de que la ruta sea correcta
+    app.register_blueprint(entregar_bp, url_prefix='/entregar')
+
     return app
 
 
