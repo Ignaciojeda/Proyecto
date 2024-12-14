@@ -3,63 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Historial de Objetos Perdidos</title>
+    <title>Historial de Objetos Retirados</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="container mt-5">
-        <h1>Historial de Objetos Perdidos</h1>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>RUT</th>
-                    <th>Nombre Completo</th>
-                    <th>Carrera</th>
-                    <th>Sala Encontrada</th>
-                    <th>Descripción del Objeto</th>
-                    <th>Fecha de subida</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for h in historial %}
-                <tr>
-                    <td>{{ h.Historial.rut_usuario }}</td>
-                    <td>{{ h.nombre_completo }}</td>
-                    <td>{{ h.descripcion }}</td>
-                    <td>{{ h.Historial.sala_encontrada }}</td>
-                    <td>{{ h.Historial.descripcion }}</td>
-                    <td>{{ h.Historial.fecha_accion.strftime('%d/%m/%Y %H:%M:%S') }}</td>
-                    <td>
-                        <!-- Botón para mostrar el modal con los detalles -->
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#detalleHistorialModal{{ h.Historial.id_historial }}">Ver Detalle</button>
-                    </td>
-                </tr>
-                <!-- Modal con detalles del objeto -->
-                <div class="modal fade" id="detalleHistorialModal{{ h.Historial.id_historial }}" tabindex="-1" aria-labelledby="detalleHistorialModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="detalleHistorialModalLabel">Detalle del Objeto</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <p><strong>RUT:</strong> {{ h.Historial.rut_usuario }}</p>
-                                <p><strong>Nombre Completo:</strong> {{ h.nombre_completo }}</p>
-                                <p><strong>Carrera:</strong> {{ h.descripcion }}</p>
-                                <p><strong>Sala Encontrada:</strong> {{ h.Historial.sala_encontrada }}</p>
-                                <p><strong>Descripción del Objeto:</strong> {{ h.Historial.descripcion }}</p>
-                                <p><strong>Fecha de Subida:</strong> {{ h.Historial.fecha_accion.strftime('%d/%m/%Y %H:%M:%S') }}</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            </div>
+        <h1>Historial de Objetos Retirados</h1>
+        <div class="row">
+            {% for h, nombre_objeto, foto, sala_encontrada, hora_encontrada, nombre_completo in historial %}
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <!-- Mostrar la imagen del objeto -->
+                    {% if foto %}
+                    <img src="data:image/jpeg;base64,{{ foto | b64encode }}" class="card-img-top" alt="Imagen del objeto">
+                    {% else %}
+                    <div class="card-img-top text-center" style="height: 200px; background-color: #f0f0f0;">Sin Imagen</div>
+                    {% endif %}
+
+                    <div class="card-body">
+                        <h5 class="card-title">{{ nombre_objeto }}</h5>
+                        <p class="card-text"><strong>Sala Encontrada:</strong> {{ sala_encontrada }}</p>
+                        <p class="card-text"><strong>Hora Encontrada:</strong> {{ hora_encontrada }}</p>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#detalleModal{{ h.id_historial }}">Ver Detalles</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal para los detalles del objeto -->
+            <div class="modal fade" id="detalleModal{{ h.id_historial }}" tabindex="-1" aria-labelledby="detalleModalLabel{{ h.id_historial }}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="detalleModalLabel{{ h.id_historial }}">Detalles del Objeto</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p><strong>RUT que Retiró</strong> {{ h.entregado_a }}</p>
+                            <p><strong>Nombre que Retiró:</strong> {{ nombre_completo }}</p>
+                            <p><strong>Descripción:</strong> {{ h.descripcion }}</p>
+                            <p><strong>Fecha subida:</strong> {{ h.fecha_accion.strftime('%d/%m/%Y %H:%M:%S') }}</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                         </div>
                     </div>
                 </div>
-                {% endfor %}
-            </tbody>
-        </table>
+            </div>
+            {% endfor %}
+        </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
