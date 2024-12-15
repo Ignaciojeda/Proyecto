@@ -1,5 +1,5 @@
 from app import db
-from datetime import datetime
+from datetime import datetime, time
 
 class Historial(db.Model):
     __tablename__ = 'Historial'
@@ -17,11 +17,11 @@ class Historial(db.Model):
     usuario = db.relationship('Usuario', back_populates='historial_recibidos', lazy=True)
     objeto = db.relationship('ObjetoPerdido', back_populates='historial_objetos')
 
-
-    def __init__(self, id_objeto, rut_usuario, sala_encontrada, descripcion, activo=True, entregado_a=None):
+    def __init__(self, id_objeto, rut_usuario, sala_encontrada, descripcion, activo=True, entregado_a=None, hora_entrega=None):
         self.id_objeto = id_objeto
         self.rut_usuario = rut_usuario
         self.sala_encontrada = sala_encontrada
         self.descripcion = descripcion
         self.activo = activo
         self.entregado_a = entregado_a
+        self.hora_entrega = hora_entrega

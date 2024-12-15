@@ -16,7 +16,6 @@ def lista_objetos_admin():
         return redirect(url_for('home')) 
 
     try:
-        # Obtener todos los objetos perdidos
         objetos = ObjetoPerdido.query.filter_by(activo=True).all()
         print(objetos)  # Verifica qué datos se obtienen
         return render_template('Listar_Objeto_Admin.html', objetos=objetos)
@@ -25,16 +24,5 @@ def lista_objetos_admin():
         flash('Ocurrió un error al cargar los datos.', 'error')
         return redirect(url_for('auth.home_admin'))
 
-
-# Ruta para mostrar el formulario de entrega de un objeto
-@listara_bp.route('/entregar_objeto/<int:id>', methods=['GET'])
-@login_required
-def entregar_objeto(id):
-    try:
-        objeto = ObjetoPerdido.query.get_or_404(id)  # Buscar objeto por ID
-        return render_template('entregar_objeto.html', objeto=objeto)
-    except Exception as e:
-        flash('Ocurrió un error al cargar el objeto.', 'error')
-        return redirect(url_for('listara.lista_objetos_admin'))  # Redirige a la lista de objetos
 
 

@@ -9,6 +9,7 @@
 <body>
     <div class="container mt-5">
         <h1>Historial de Objetos Retirados</h1>
+        <button type="button" class="back-button" onclick="window.history.back()">Regresar</button> 
         <div class="row">
             {% for h, nombre_objeto, foto, sala_encontrada, hora_encontrada, nombre_completo in historial %}
             <div class="col-md-4">
@@ -41,7 +42,7 @@
                             <p><strong>RUT que Retiró</strong> {{ h.entregado_a }}</p>
                             <p><strong>Nombre que Retiró:</strong> {{ nombre_completo }}</p>
                             <p><strong>Descripción:</strong> {{ h.descripcion }}</p>
-                            <p><strong>Fecha subida:</strong> {{ h.fecha_accion.strftime('%d/%m/%Y %H:%M:%S') }}</p>
+                            <p><strong>Fecha de entrega:</strong> {{ h.fecha_accion.strftime('%d/%m/%Y %H:%M:%S') }}</p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
