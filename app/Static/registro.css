@@ -103,16 +103,21 @@ select:focus {
     margin-top: 10px;
     display: block;
     padding: 8px 15px;
-    background-color: #F2A900;
-    color: white;
+    background-color: #FFC107;
+    color: #003C71;
+    border-radius: 5px;
+    font-size: 16px;
     font-weight: bold;
     text-decoration: none;
+    cursor: pointer;
     transition: all 0.3s ease;
 }
 
 .back-button:hover {
-    color: #FFC107;
-    text-decoration: underline;
+    background-color: #E0A800;;
+    text-decoration: none;
+    color: #FFFFFF;
+
 }
 
 /* Responsividad */
