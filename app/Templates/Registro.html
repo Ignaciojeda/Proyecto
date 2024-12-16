@@ -4,55 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de cuenta</title>
+    <!-- Enlaces de estilos -->
     <link rel="stylesheet" href="{{ url_for('static', filename='registro.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 </head>
 <body>
-    <div class="registro-content">
-        <div class="registro-container">
-            <h1 class="welcome-title">Registro</h1>
-            <h2 class="subtitle">Creación de cuenta</h2>
-            <form method="POST" action="{{ url_for('usuario.registrar_usuario') }}" class="registro-form">
-                <div class="input-item">
-                    <label position="floating">RUT (12345678-9)</label>
-                    <input name="rut" type="text" required pattern="^[0-9]{7,8}-[0-9Kk]$"></input>
-                </div>
-                <div class="input-item">
-                    <label position="floating">Nombre Completo</label>
-                    <input name="nombre_completo" type="text" required></input>
-                </div>
-                <div class="input-item">
-                    <label position="floating">Email</label>
-                    <input name="correo" type="email" required></input>
-                </div>
-                <div class="input-item">
-                    <label position="floating">Contraseña</label>
-                    <input name="contraseña" type="password" required></input>
-                </div>
-                <div class="input-item">
-                    <label for="carrera">Selecciona una carrera:</label>
-                        <select id="carrera" name="carrera">
-                        {% for carrera in carreras %}
-                            <option value="{{ carrera.id_carrera }}">{{ carrera.descripcion }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="input-item">
-                    <label for="tipo_usuario">Selecciona un tipo de usuario:</label>
-                    <select class="slct" id="tipo_usuario" name="tipo_usuario">
-                        {% for tipo_usuario in tipos_usuario %}
-                            <option value="{{ tipo_usuario.id_tipo_usuario }}">{{ tipo_usuario.descripcion }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="input-item">
-                    <label for=""></label>
-                    <button type="submit" class="register-button">Registrar</button>
-                </div>
-            </form>
-        </div>
+    <div class="registro-container">
+        <h1 class="welcome-title">Registro</h1>
+        <h2 class="subtitle">Creación de cuenta</h2>
+        <form method="POST" action="{{ url_for('usuario.registrar_usuario') }}">
+            <div class="form-group">
+                <label for="rut">RUT</label>
+                <input type="text" name="rut" id="rut" required placeholder="Formato: 12345678-9">
+            </div>
+            <div class="form-group">
+                <label for="nombre_completo">Nombre Completo</label>
+                <input type="text" name="nombre_completo" id="nombre_completo" required>
+            </div>
+            <div class="form-group">
+                <label for="correo">Email</label>
+                <input type="email" name="correo" id="correo" required>
+            </div>
+            <div class="form-group">
+                <label for="contraseña">Contraseña</label>
+                <input type="password" name="contraseña" id="contraseña" required>
+            </div>
+            <div class="form-group">
+                <label for="carrera">Selecciona una carrera</label>
+                <select id="carrera" name="carrera">
+                    {% for carrera in carreras %}
+                        <option value="{{ carrera.id_carrera }}">{{ carrera.descripcion }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="tipo_usuario">Tipo de Usuario</label>
+                <select id="tipo_usuario" name="tipo_usuario">
+                    {% for tipo_usuario in tipos_usuario %}
+                        <option value="{{ tipo_usuario.id_tipo_usuario }}">{{ tipo_usuario.descripcion }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="register-button">Registrar</button>
+            <a href="../home_admin" class="back-button">Regresar</a>
+        </form>
     </div>
 </body>
 </html>
-
