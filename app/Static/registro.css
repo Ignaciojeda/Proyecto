@@ -43,7 +43,7 @@ h1, h2 {
 }
 
 /* Estilos del botón de registro */
-.register-button     {
+.register-button, .back-button {
     background-color: #ffc107; /* Amarillo */
     border: none;
     color: #003c71; /* Letras en azul */
@@ -52,9 +52,10 @@ h1, h2 {
     padding: 10px;
     border-radius: 4px;
     transition: background-color 0.3s ease;
+    text-align: center;
 }
 
-.register-button:hover {
+.register-button:hover, .back-button:hover {
     background-color: #ffca2c;
 }
 label {
@@ -77,3 +78,4 @@ body, h3, .form-control {
     font-family: 'Roboto', sans-serif;
     color: #003c71; /* Ajuste de colores */
 }
+

@@ -40,17 +40,17 @@
                 </div>
                 <div class="input-item">
                     <label for="tipo_usuario">Selecciona un tipo de usuario:</label>
-                    <select id="tipo_usuario" name="tipo_usuario">
+                    <select class="slct" id="tipo_usuario" name="tipo_usuario">
                         {% for tipo_usuario in tipos_usuario %}
                             <option value="{{ tipo_usuario.id_tipo_usuario }}">{{ tipo_usuario.descripcion }}</option>
                         {% endfor %}
                     </select>
                 </div>
-                <button type="submit" class="register-button">Registrar</button>
+                <div class="input-item">
+                    <label for=""></label>
+                    <button type="submit" class="register-button">Registrar</button>
+                </div>
             </form>
-            <div>
-                <p>¿Ya tienes una cuenta? <a href="{{ url_for('auth.login') }}">Inicia Sesión</a></p>
-            </div>
         </div>
     </div>
 </body>

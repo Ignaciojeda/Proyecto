@@ -71,6 +71,7 @@ form button {
     border: none;
     border-radius: 8px;
     font-size: 16px;
+    text-decoration: none;
     font-weight: bold;
     cursor: pointer;
     width: 100%;
@@ -82,9 +83,29 @@ form button:hover {
     transform: translateY(-2px);
 }
 
+.back-button{
+    background-color: #ffcc00;
+    color: #003366;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s, transform 0.2s;
+    text-align: center;
+}
+
+.back-button:hover{
+    background-color: #ffdd44;
+    transform: translateY(-2px);
+}
+
 /* Ajustes adicionales para una mejor estética */
 form input[type="file"] {
-    padding: 5px;
+    padding: 10px;
 }
 
 form textarea {

@@ -14,28 +14,7 @@ h1 {
     text-align: center;
 }
 
-.table {
-    background-color: #fff;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
 
-.table th, .table td {
-    text-align: center;
-    padding: 12px;
-    vertical-align: middle;
-}
-
-.table th {
-    background-color: #34495e;
-    color: #fff;
-    font-weight: bold;
-}
-
-.table-striped tbody tr:nth-child(odd) {
-    background-color: #ecf0f1;
-}
 
 .btn-primary {
     background-color: #2980b9;
@@ -67,4 +46,34 @@ h1 {
 .modal-footer .btn-secondary:hover {
     background-color: #95a5a6;
     border-color: #95a5a6;
+}
+
+.back-button {
+    display: inline-block;
+    padding: 8px 15px;
+    background-color: #F2A900;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.back-button:hover {
+    background-color: #003366;
+    color: white;
+}
+
+.card{
+    background-color: #fff; 
+    border-radius: 10px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    
+    display: flex; 
+    flex-direction: column; 
+    justify-content:space-between;
+}
+
+.card-img-top { 
+    max-width: 100%; 
+    max-height: 190px; /* Ajusta la altura máxima de la imagen */ 
 }

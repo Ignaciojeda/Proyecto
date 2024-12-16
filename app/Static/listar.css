@@ -12,16 +12,13 @@ h1 {
 }
 
 .back-button {
-    display: block;
-    margin: 10px auto 20px auto;
-    padding: 10px 20px;
-    background-color: #0056b3;
+    display: inline-block;
+    padding: 8px 15px;
+    background-color: #F2A900;
     color: white;
-    border: none;
+    text-decoration: none;
     border-radius: 5px;
-    cursor: pointer;
-    text-align: center;
-    font-size: 16px;
+    font-weight: bold;
 }
 
 .back-button:hover {
