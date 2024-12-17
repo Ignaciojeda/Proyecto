@@ -1,4 +1,4 @@
-/* hub.css */
+
 body {
     background-color: #e3f2fd;
     font-family: Arial, sans-serif;
@@ -16,14 +16,14 @@ body {
 
 h1 {
     font-size: 28px;
-    color: #003366; /* Azul Duoc UC */
+    color: #003366;
     text-align: center;
 }
 
 .card {
     padding: 15px;
     margin: 10px 0;
-    background-color: #e8f4ff; /* Azul claro */
+    background-color: #e8f4ff; 
     border-radius: 6px;
     display: flex;
     align-items: center;
@@ -41,7 +41,7 @@ h1 {
 
 button {
     padding: 8px 16px;
-    background-color: #FFD700; /* Amarillo Duoc UC */
+    background-color: #FFD700;
     color: #003366;
     border: none;
     border-radius: 4px;

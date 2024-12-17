@@ -7,28 +7,28 @@ auth_bp = Blueprint('auth', __name__)
 @auth_bp.route('/', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        # Verificar el tipo de usuario y redirigir a la página correspondiente
-        if current_user.tipo_usuario == 1:  # Admin
+        e
+        if current_user.tipo_usuario == 1: 
             return redirect(url_for('auth.home_admin'))
-        elif current_user.tipo_usuario == 2:  # Usuario
+        elif current_user.tipo_usuario == 2:  
             return redirect(url_for('auth.home_usuario'))
 
     if request.method == 'POST':
-        # Capturar las credenciales ingresadas
+        
         correo_usuario = request.form.get('correo')
         contraseña = request.form.get('contraseña')
 
-        # Buscar al usuario por correo
+        
         usuario = Usuario.query.filter_by(correo=correo_usuario).first()
 
-        # Validar usuario y contraseña
+        
         if usuario:
-            if usuario.check_password(contraseña):  # Método para verificar la contraseña
+            if usuario.check_password(contraseña):  
                 login_user(usuario)
-                # Redirigir según el tipo de usuario
-                if usuario.tipo_usuario == 1:  # Admin
+                
+                if usuario.tipo_usuario == 1: 
                     return redirect(url_for('auth.home_admin'))
-                elif usuario.tipo_usuario == 2:  # Usuario regular
+                elif usuario.tipo_usuario == 2:  
                     return redirect(url_for('auth.home_usuario'))
                 else:
                     flash('Tipo de usuario no reconocido.', 'danger')
@@ -37,7 +37,7 @@ def login():
         else:
             flash('Usuario no encontrado.', 'danger')
 
-    return render_template('login.html')  # Asegúrate de tener un archivo login.html adecuado
+    return render_template('login.html')  
 
 @auth_bp.route('/logout', methods=['POST'])
 @login_required

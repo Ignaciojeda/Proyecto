@@ -15,7 +15,7 @@ def registrar_usuario():
             nombre_completo = request.form['nombre_completo']
             correo = request.form['correo']
             contraseña = request.form['contraseña']
-            carrera_id = request.form['carrera']  # Recibe el ID como string desde el formulario
+            carrera_id = request.form['carrera']  
             tipo_usuario_id = request.form['tipo_usuario']
 
             carrera = Carrera.query.get(carrera_id)

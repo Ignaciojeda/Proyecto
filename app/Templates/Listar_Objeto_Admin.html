@@ -5,7 +5,7 @@
     <title>Lista de Objetos Perdidos</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='listar.css') }}">
     <style>
-        /* Estilo para el modal */
+        /* El css funcionaba de esta manera, si lo ponia en el css no funcionaba */
         #modal {
             display: none;
             position: fixed;
@@ -36,7 +36,7 @@
             margin-right: 5px;
         }
 
-        /* Estilo para los botones */
+
         button {
             cursor: pointer;
             padding: 8px 16px;
@@ -64,14 +64,12 @@
         }
     </style>
     <script>
-        // Abre el modal y asigna el ID del objeto al campo oculto
         function openModal(objetoId) {
-            console.log("ID del objeto pasado al modal:", objetoId);  // Verificación
+            console.log("ID del objeto pasado al modal:", objetoId); 
             document.getElementById('modal').style.display = 'block';
             document.getElementById('objetoId').value = objetoId;
         }
 
-        // Cierra el modal
         function closeModal() {
             document.getElementById('modal').style.display = 'none';
         }
@@ -106,7 +104,6 @@
         {% endfor %}
     </ul>
 
-    <!-- Modal para ingresar el RUT -->
     <div id="modal">
         <div id="modal-content">
             <h2>Retirar Objeto</h2>

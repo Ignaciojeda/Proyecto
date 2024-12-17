@@ -15,7 +15,7 @@
             {% for h, nombre_objeto, foto, sala_encontrada, hora_encontrada, nombre_completo in historial %}
             <div class="col-md-4">
                 <div class="card mb-4">
-                    <!-- Mostrar la imagen del objeto -->
+
                     {% if foto %}
                     <img src="data:image/jpeg;base64,{{ foto | b64encode }}" class="card-img-top" alt="Imagen del objeto">
                     {% else %}
@@ -31,7 +31,6 @@
                 </div>
             </div>
 
-            <!-- Modal para los detalles del objeto -->
             <div class="modal fade" id="detalleModal{{ h.id_historial }}" tabindex="-1" aria-labelledby="detalleModalLabel{{ h.id_historial }}" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">

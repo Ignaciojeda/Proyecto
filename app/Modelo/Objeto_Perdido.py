@@ -5,7 +5,7 @@ import pytz
 chile_tz = pytz.timezone('Chile/Continental')
 
 class ObjetoPerdido(db.Model):
-    __tablename__ = 'Objetos_Perdidos'  # Nombre de la tabla en la base de datos
+    __tablename__ = 'Objetos_Perdidos'  
 
     id_objeto = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nombre_objeto = db.Column(db.String(100), nullable=False)
@@ -16,7 +16,7 @@ class ObjetoPerdido(db.Model):
     activo = db.Column(db.Boolean, default=True)
     rut_usuario = db.Column(db.String(10), db.ForeignKey('Usuario.rut'), nullable=False)
 
-    # Relaciones
+
     usuario = db.relationship('Usuario', back_populates='objetos_perdidos', lazy=True)
     historial_objetos = db.relationship('Historial', back_populates='objeto', lazy=True)
 

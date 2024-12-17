@@ -12,7 +12,7 @@ historial_bp = Blueprint('historial', __name__)
 @login_required
 def historial():
     try:
-        # Consulta para obtener el historial con datos del objeto y usuario
+        
         historial_objetos = db.session.query(
             Historial,
             ObjetoPerdido.nombre_objeto,

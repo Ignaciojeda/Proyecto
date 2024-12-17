@@ -1,4 +1,4 @@
-/* login.css */
+
 body {
     background: linear-gradient(to bottom, #003c71, #f8f9fa);
     display: flex;
@@ -21,7 +21,7 @@ body {
 
 h1 {
     font-size: 24px;
-    color: #003366; /* Azul Duoc UC */
+    color: #003366; 
     margin-bottom: 20px;
 }
 
@@ -30,7 +30,7 @@ h1 {
 }
 
 .message {
-    color: #d9534f; /* Rojo para errores */
+    color: #d9534f; 
     font-size: 14px;
     margin: 5px 0;
 }
@@ -62,9 +62,9 @@ input::placeholder {
 .submit-btn {
     width: 100%;
     padding: 10px;
-    background-color: #FFD700; /* Amarillo Duoc UC */
+    background-color: #FFD700; 
     border: none;
-    color: #003366; /* Azul oscuro */
+    color: #003366; 
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;

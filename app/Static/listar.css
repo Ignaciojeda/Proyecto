@@ -1,4 +1,4 @@
-/* Diseño base */
+
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f9;
@@ -25,7 +25,6 @@ h1 {
     background-color: #003d80;
 }
 
-/* Estilo de las tarjetas */
 ul {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -77,7 +76,6 @@ li.card .image img {
     background-color: #c9302c;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
     ul {
         grid-template-columns: 1fr;

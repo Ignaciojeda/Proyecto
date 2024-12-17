@@ -6,14 +6,14 @@ class Historial(db.Model):
 
     id_historial = db.Column(db.Integer, primary_key=True, autoincrement=True)
     id_objeto = db.Column(db.Integer, db.ForeignKey('Objetos_Perdidos.id_objeto'), nullable=False)
-    rut_usuario = db.Column(db.String(12), db.ForeignKey('Usuario.rut'), nullable=False)  # Usar db.String(12) para coincidir con Usuario
+    rut_usuario = db.Column(db.String(12), db.ForeignKey('Usuario.rut'), nullable=False)  
     sala_encontrada = db.Column(db.String(50), nullable=False)
     descripcion = db.Column(db.String(255))
     fecha_accion = db.Column(db.DateTime, default=datetime.utcnow)
     activo = db.Column(db.Boolean, default=True)
     entregado_a = db.Column(db.String(100))
 
-    # Relaciones
+ 
     usuario = db.relationship('Usuario', back_populates='historial_recibidos', lazy=True)
     objeto = db.relationship('ObjetoPerdido', back_populates='historial_objetos')
 

@@ -10,7 +10,7 @@ from app.Controlador.Listar_Objeto_Admin import listara_bp
 
 app = Flask(__name__)
 
-# Registrar el Blueprint del objeto
+
 app.register_blueprint(objeto_bp)
 app.register_blueprint(listar_bp)
 app.register_blueprint(historial_bp)

@@ -14,7 +14,7 @@ class Usuario(db.Model, UserMixin):
     contraseña = db.Column(db.String(255), nullable=False)
     tipo_usuario = db.Column(db.Integer, db.ForeignKey('Tipo_usuario.id_tipo_usuario'), nullable=False)
 
-    # Relaciones
+
     carrera_relacion = db.relationship('Carrera', back_populates='usuarios')
     tipo_usuario_relacion = db.relationship('TipoUsuario', back_populates='usuarios')
     objetos_perdidos = db.relationship('ObjetoPerdido', back_populates='usuario', lazy=True)

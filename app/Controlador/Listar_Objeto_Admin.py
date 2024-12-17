@@ -4,10 +4,10 @@ from app.Modelo.Objeto_Perdido import ObjetoPerdido
 from app.Modelo.Historial import Historial
 from app import db
 
-# Crear el Blueprint
+
 listara_bp = Blueprint('listara', __name__)
 
-# Ruta para listar objetos (solo admins)
+
 @listara_bp.route('/listar_objeto_admin')
 @login_required
 def lista_objetos_admin():
@@ -17,10 +17,10 @@ def lista_objetos_admin():
 
     try:
         objetos = ObjetoPerdido.query.filter_by(activo=True).all()
-        print(objetos)  # Verifica qué datos se obtienen
+        print(objetos)  
         return render_template('Listar_Objeto_Admin.html', objetos=objetos)
     except Exception as e:
-        print(f"Error al cargar los datos: {e}")  # Mostrar el error en la consola
+        print(f"Error al cargar los datos: {e}")  
         flash('Ocurrió un error al cargar los datos.', 'error')
         return redirect(url_for('auth.home_admin'))
 

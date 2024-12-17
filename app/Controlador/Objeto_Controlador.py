@@ -18,30 +18,28 @@ objeto_bp = Blueprint('objeto', __name__)
 def subir_objeto():
     if request.method == 'POST':
         try:
-            # Datos del formulario
+
             nombre_objeto = request.form['nombre']
             descripcion = request.form['descripcion']
             sala_encontrada = request.form['sala_encontrada']
             hora_encontrada = request.form['hora_encontrada']
             foto = request.files['foto'] if 'foto' in request.files else None
-            
-            # Validar el tamaño de la foto
+
             if foto and len(foto.read()) > MAX_IMAGE_SIZE:
                 flash('La imagen es demasiado grande. Tamaño máximo: 5 MB.', 'error')
                 return redirect(url_for('objeto.subir_objeto'))
 
-            # Reiniciar puntero del archivo
             if foto:
-                foto.seek(0)  # Volver al inicio del archivo para su lectura posterior
+                foto.seek(0) 
                 foto_datos = foto.read()
             else:
                 foto_datos = None
 
-            # Usuario autenticado
+
             usuario_actual = current_user
             rut_usuario = usuario_actual.rut
 
-            # Crear el nuevo objeto
+           
             nuevo_objeto = ObjetoPerdido(
                 nombre_objeto=nombre_objeto,
                 descripcion=descripcion,
@@ -54,7 +52,7 @@ def subir_objeto():
             db.session.add(nuevo_objeto)
             db.session.commit()
 
-            # Registrar en el historial
+            
             nueva_historial = Historial(
                 id_objeto=nuevo_objeto.id_objeto,
                 rut_usuario=rut_usuario,

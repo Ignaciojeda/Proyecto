@@ -1,11 +1,11 @@
-/* General */
+
 body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
     background-color: #f5f5f5;
 }
 
-/* Navbar */
+
 .navbar {
     background-color: #003366;
     padding: 10px 20px;
@@ -30,7 +30,7 @@ body {
     font-weight: bold;
 }
 
-/* Cards */
+
 .card {
     background: white;
     border-radius: 10px;
@@ -59,7 +59,6 @@ body {
     color: white;
 }
 
-/* Logout Button */
 .btn-logout {
     background-color: #F2A900;
     color: white;

@@ -20,14 +20,11 @@ def create_app():
     login_manager.login_message = "Por favor, inicia sesión para acceder a esta página." 
     login_manager.login_message_category = "info"  
 
-    # Definir el filtro de base64
     def b64encode(value):
         return base64.b64encode(value).decode('utf-8')
 
-    # Registrar el filtro en Jinja2
     app.jinja_env.filters['b64encode'] = b64encode
 
-    # Registrar blueprints
     from .Controlador.Objeto_Controlador import objeto_bp
     app.register_blueprint(objeto_bp)
 
@@ -49,7 +46,7 @@ def create_app():
     from app.Controlador.Listar_Objeto_Admin import listara_bp  
     app.register_blueprint(listara_bp) 
 
-    from app.Controlador.Entregar_Objeto import entregar_bp  # Asegúrate de que la ruta sea correcta
+    from app.Controlador.Entregar_Objeto import entregar_bp 
     app.register_blueprint(entregar_bp, url_prefix='/entregar')
 
     return app
