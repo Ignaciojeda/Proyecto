@@ -1,34 +1,35 @@
 from app import db
-from flask_login import UserMixin
-from app.Modelo.Tipo_Usuario import TipoUsuario
-from werkzeug.security import generate_password_hash, check_password_hash  
+from werkzeug.security import generate_password_hash, check_password_hash
+from app.Modelo.TipoUsuario import TipoUsuario 
 
-class Usuario(db.Model, UserMixin):
-    __tablename__ = 'usuario'
+class Usuario(db.Model):
+    __tablename__ = 'Usuario'
+
+    idUsuario = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    nombre = db.Column(db.String(45))
+    apellido = db.Column(db.String(45))
+    email = db.Column(db.String(45))
+    telefono = db.Column(db.String(45))
+    password = db.Column(db.String(50)) 
+    tipoUsuario = db.Column(db.Integer, db.ForeignKey('TIPO_USUARIO.idTipoUsuario'), nullable=False)
     
-    id_usuario = db.Column(db.Integer, primary_key=True)
-    id_tipo_usuario = db.Column(db.Integer, db.ForeignKey('tipo_usuario.id_tipo_usuario'), nullable=False)
-    correo_usuario = db.Column(db.String(45), nullable=False, unique=True)
-    contraseña = db.Column(db.String(255), nullable=False)  # Almacena la contraseña sin hash
+    pedido = db.relationship('Pedido', back_populates='cliente')
+    tipo = db.relationship('TipoUsuario', back_populates='usuarios')
 
-    tipo_usuario = db.relationship('TipoUsuario', back_populates='usuarios', lazy=True)  
-
-    def __init__(self, id_usuario, id_tipo_usuario, correo_usuario, contraseña):
-        self.id_usuario = id_usuario
-        self.id_tipo_usuario = id_tipo_usuario
-        self.correo_usuario = correo_usuario
-        self.set_password(contraseña) 
+    def __init__(self, idUsuario, nombre, apellido, email, telefono, password, tipoUsuario):
+        self.idUsuario = idUsuario
+        self.nombre = nombre
+        self.apellido = apellido
+        self.email = email
+        self.telefono = telefono
+        self.set_password(password)
+        self.tipoUsuario = tipoUsuario
 
     def set_password(self, password):
-       
-        self.contraseña = generate_password_hash(password)
+        self.password = generate_password_hash(password)
 
     def check_password(self, password):
-      
-        return check_password_hash(self.contraseña, password)
+        return check_password_hash(self.password, password)
 
-    def get_id(self):
-        return str(self.id_usuario)
-    
     def __repr__(self):
-        return f'<Usuario {self.correo_usuario}>'
+        return f'<Usuario {self.email}>'

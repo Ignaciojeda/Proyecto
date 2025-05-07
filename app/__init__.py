@@ -28,11 +28,7 @@ def create_app():
     app.jinja_env.filters['b64encode'] = b64encode
 
     # Registrar blueprints
-    from .Controlador.Objeto_Controlador import objeto_bp
-    app.register_blueprint(objeto_bp)
-
-    from .Controlador.Listar_Objeto import listar_bp
-    app.register_blueprint(listar_bp)
+  
     
     from .Controlador.Rutas import login_bp  
     app.register_blueprint(login_bp) 
@@ -40,14 +36,13 @@ def create_app():
     from .Controlador.Login import auth_bp  
     app.register_blueprint(auth_bp)  
 
-    from .Controlador.Historial import historial_bp
-    app.register_blueprint(historial_bp) 
 
     from .Controlador.Crear_Usuario import usuario_bp
     app.register_blueprint(usuario_bp)
 
-    from app.Controlador.Listar_Objeto_Admin import listara_bp  # Importa el blueprint
-    app.register_blueprint(listara_bp)  # Registra el blueprint
+    from .Controlador.Crear_Usuario import t_usuario_bp
+    app.register_blueprint(t_usuario_bp)
+
 
     return app
 

@@ -7,33 +7,33 @@ auth_bp = Blueprint('auth', __name__)
 @auth_bp.route('/', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        if current_user.tipo_usuario.descripcion == 'Admin':
+        if current_user.tipo.descripcion == 'Admin':
             return redirect(url_for('auth.home_admin'))
-        elif current_user.tipo_usuario.descripcion == 'Usuario':
+        elif current_user.tipo.descripcion == 'Usuario':
             return redirect(url_for('auth.home_usuario'))
-    
+
     if request.method == 'POST':
-        correo_usuario = request.form['correo']
-        contraseña = request.form['contraseña']
+        email = request.form['email']
+        password = request.form['password']
 
-        usuario = Usuario.query.filter_by(correo_usuario=correo_usuario).first()
+        usuario = Usuario.query.filter_by(email=email).first()
 
-        if usuario and usuario.check_password(contraseña):  
+        if usuario and usuario.check_password(password):
             login_user(usuario)
-            if usuario.tipo_usuario.descripcion == 'Admin':  
+            flash('Inicio de sesión exitoso.', 'success')
+            if usuario.tipo.descripcion == 'Admin':
                 return redirect(url_for('auth.home_admin'))
-            elif usuario.tipo_usuario.descripcion == 'Usuario':  
+            elif usuario.tipo.descripcion == 'Usuario':
                 return redirect(url_for('auth.home_usuario'))
             else:
-                flash('No se ha definido un tipo de usuario válido.', 'danger')
+                flash('Tipo de usuario no válido.', 'danger')
                 return redirect(url_for('auth.login'))
-
         else:
-            flash('Credenciales incorrectas', 'danger')
+            flash('Credenciales incorrectas.', 'danger')
 
     return render_template('home.html')
 
-@auth_bp.route('/logout', methods=['GET', 'POST'])
+@auth_bp.route('/logout')
 @login_required
 def logout():
     logout_user()
