@@ -9,7 +9,7 @@ def login():
     if current_user.is_authenticated:
         if current_user.tipo.descripcion == 'Admin':
             return redirect(url_for('auth.home_admin'))
-        elif current_user.tipo.descripcion == 'Usuario':
+        elif current_user.tipo.descripcion == 'Cliente':
             return redirect(url_for('auth.home_usuario'))
 
     if request.method == 'POST':
@@ -23,7 +23,7 @@ def login():
             flash('Inicio de sesión exitoso.', 'success')
             if usuario.tipo.descripcion == 'Admin':
                 return redirect(url_for('auth.home_admin'))
-            elif usuario.tipo.descripcion == 'Usuario':
+            elif usuario.tipo.descripcion == 'Cliente':
                 return redirect(url_for('auth.home_usuario'))
             else:
                 flash('Tipo de usuario no válido.', 'danger')

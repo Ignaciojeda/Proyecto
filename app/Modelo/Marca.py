@@ -9,9 +9,5 @@ class Marca(db.Model):
 
     productos = db.relationship('Producto', back_populates='marca')
 
-    def __init__(self, nombreMarca, descripcion):
-        self.nombreMarca = nombreMarca
-        self.descripcion = descripcion
-
     def __repr__(self):
         return f'<Marca {self.nombreMarca}>'

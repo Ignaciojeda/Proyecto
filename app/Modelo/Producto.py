@@ -1,7 +1,4 @@
 from app import db
-from app.Modelo.Marca import Marca
-from app.Modelo.Categoria import Categoria
-from app.Modelo.Inventario import Inventario
 
 class Producto(db.Model):
     __tablename__ = 'PRODUCTO'
@@ -17,14 +14,6 @@ class Producto(db.Model):
     marca = db.relationship('Marca', back_populates='productos')
     categoria = db.relationship('Categoria', back_populates='productos')
     inventarios = db.relationship('Inventario', back_populates='producto')
-
-    def __init__(self, nombreProducto, descripcion, precio, marcaId, categoriaId, imagen):
-        self.nombreProducto = nombreProducto
-        self.descripcion = descripcion
-        self.precio = precio
-        self.marcaId = marcaId
-        self.categoriaId = categoriaId
-        self.imagen = imagen
 
     def __repr__(self):
         return f'<Producto {self.nombreProducto}>'

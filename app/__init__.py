@@ -15,6 +15,14 @@ def create_app():
     db.init_app(app)
     migrate = Migrate(app, db)
 
+    from app.Modelo.Usuario import Usuario
+    from app.Modelo.Pedido import Pedido
+    from app.Modelo.Sucursal import Sucursal
+    from app.Modelo.EtapaPedido import EtapaPedido
+    from app.Modelo.Marca import Marca
+    from app.Modelo.TipoUsuario import TipoUsuario
+    
+
     login_manager.init_app(app)
     login_manager.login_view = 'auth.login'  
     login_manager.login_message = "Por favor, inicia sesión para acceder a esta página." 

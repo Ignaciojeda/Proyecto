@@ -9,16 +9,9 @@ class Sucursal(db.Model):
     region = db.Column(db.String(45))
     comuna = db.Column(db.String(45))
     
+    # Relaciones
     pedidos = db.relationship('Pedido', back_populates='sucursal')
-
-
-
-    def __init__(self, sucursalId ,nombre, direccion, region):
-        self.sucursalId = sucursalId
-        self.nombre =  nombre
-        self.direccion = direccion
-        self.region = region
-        
+    inventarios = db.relationship('Inventario', back_populates='sucursal')
 
     def __repr__(self):
         return f'<Sucursal {self.nombre}>'
