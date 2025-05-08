@@ -2,33 +2,38 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio Administrador</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+    <title>Ferremas - Panel Admin</title>
+    <link rel="stylesheet" href="css/admin.css">
 </head>
 <body>
-    <header>
-        <h1>Bienvenido, Administrador</h1>
-        <p>Desde este panel puedes gestionar y supervisar la aplicación.</p>
-    </header>
+    <div class="admin-container">
+        <aside class="sidebar">
+            <h2>Panel Admin</h2>
+            <nav>
+                <ul>
+                    <li><a href="/admin/dashboard">Dashboard</a></li>
+                    <li><a href="/admin/productos">Productos</a></li>
+                    <li><a href="/admin/usuarios">Usuarios</a></li>
+                    <li><a href="/admin/pedidos">Pedidos</a></li>
+                    <li><a href="/admin/informe">Informes</a></li>
+                    <li><a href="/logout">Cerrar Sesión</a></li>
+                </ul>
+            </nav>
+        </aside>
 
-    <main>
-        <nav>
-            <ul>
-                <li><a href="{{ url_for('listara.lista_objetos_admin') }}">Listar Objetos</a></li>
-                <li><a href="{{ url_for('objeto.subir_objeto') }}">Subir Objeto</a></li>
-                <li><a href="{{ url_for('historial.historial') }}">Ver Historial</a></li>
-                <li>        <div class="text-center mt-3">
-                    <a href="{{ url_for('usuario.registrar') }}" class="btn btn-secondary btn-block">Crear cuenta</a>
-                </li>
-            </ul>
-        </nav>
-
-        <div class="logout-container">
-            <form action="{{ url_for('auth.logout') }}" method="POST">
-                <button type="submit">Cerrar Sesión</button>
-            </form>
-        </div>
-    </main>
+        <main class="content">
+            <h1>Dashboard Administrador</h1>
+            <div class="stats">
+                <div class="stat-card">
+                    <h3>Ventas Hoy</h3>
+                    <p>$1,250,000</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Usuarios Registrados</h3>
+                    <p>1,248</p>
+                </div>
+            </div>
+        </main>
+    </div>
 </body>
 </html>

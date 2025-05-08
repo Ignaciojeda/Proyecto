@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ferremas - Catálogo</title>
+    <link rel="stylesheet" href="css/catalogo.css">
+</head>
+<body>
+    <header>
+        <div class="logo">Ferretería Ferremas</div>
+        <nav>
+            <ul>
+                <li><a href="/carrito">Carrito</a></li>
+                <li><a href="/pedidos">Mis Pedidos</a></li>
+                <li><a href="/perfil">Mi Perfil</a></li>
+                <li><a href="/logout">Cerrar Sesión</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="filtros">
+            <select>
+                <option>Todas las categorías</option>
+                <option>Herramientas Manuales</option>
+                <option>Herramientas Eléctricas</option>
+            </select>
+            <input type="text" placeholder="Buscar producto...">
+        </div>
+
+        <div class="catalogo-grid">
+            <!-- Productos se repetirían aquí -->
+            <article class="producto">
+                <img src="img/martillo.jpg" alt="Martillo">
+                <h3>Martillo Carpintero</h3>
+                <p class="precio">$12.990</p>
+                <button>Ver Detalles</button>
+            </article>
+        </div>
+    </main>
+</body>
+</html>

@@ -2,31 +2,44 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página de Inicio</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <title>Ferremas - Inicio</title>
+    <link rel="stylesheet" href="css/cliente.css">
 </head>
 <body>
     <header>
-        <h1>Bienvenido a la Plataforma de Objetos Perdidos</h1>
+        <div class="logo">Ferretería Ferremas</div>
+        <nav>
+            <ul>
+                <li><a href="/carrito">Carrito</a></li>
+                <li><a href="/pedidos">Mis Pedidos</a></li>
+                <li><a href="/perfil">Mi Perfil</a></li>
+                <li><a href="/logout">Cerrar Sesión</a></li>
+            </ul>
+        </nav>
     </header>
 
     <main>
-        <div class="context">
-            <p>Esta plataforma fue creada para ayudar a los estudiantes y personal de Duoc UC a encontrar y registrar objetos perdidos. Nuestra misión es facilitar la recuperación de pertenencias perdidas, ofreciendo una herramienta accesible y fácil de usar.</p>
-        </div>
-        
-        <form action="{{ url_for('auth.logout') }}" method="POST" class="logout-form">
-            <button type="submit" class="btn-logout">Cerrar Sesión</button>
-        </form>
+        <section class="banner">
+            <h1>Bienvenido a Ferremas</h1>
+            <p>Todo en materiales de construcción y herramientas</p>
+        </section>
+
+        <section class="productos">
+            <h2>Productos Destacados</h2>
+            <div class="grid-productos">
+
+                <article class="producto">
+                    <img src="img/taladro.jpg" alt="Taladro">
+                    <h3>Taladro Percutor 750W</h3>
+                    <p class="precio">$89.990</p>
+                    <button>Añadir al carrito</button>
+                </article>
+            </div>
+        </section>
     </main>
 
     <footer>
-        <div class="options">
-            <a href="{{ url_for('listar.lista_objetos') }}" class="option-button">Observar Objetos Perdidos</a>
-            <a href="{{ url_for('objeto.subir_objeto') }}" class="option-button">Subir Objeto Perdido</a>
-        </div>
+        <p>© 2025 Ferretería Ferremas</p>
     </footer>
 </body>
 </html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ferremas - Carrito</title>
+    <link rel="stylesheet" href="css/carrito.css">
+</head>
+<body>
+    <header>
+        <div class="logo">Ferretería Ferremas</div>
+        <nav>
+            <ul>
+                <li><a href="/carrito">Carrito</a></li>
+                <li><a href="/pedidos">Mis Pedidos</a></li>
+                <li><a href="/perfil">Mi Perfil</a></li>
+                <li><a href="/logout">Cerrar Sesión</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Tu Carrito de Compras</h1>
+        <table class="carrito">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Subtotal</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <img src="img/taladro.jpg" alt="Taladro">
+                        <span>Taladro Percutor 750W</span>
+                    </td>
+                    <td>$89.990</td>
+                    <td><input type="number" value="1" min="1"></td>
+                    <td>$89.990</td>
+                    <td><button>Eliminar</button></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="resumen">
+            <h3>Resumen de Compra</h3>
+            <p>Subtotal: $89.990</p>
+            <p>Envío: $5.000</p>
+            <p>Total: $94.990</p>
+            <button>Proceder al Pago</button>
+        </div>
+    </main>
+</body>
+</html>
