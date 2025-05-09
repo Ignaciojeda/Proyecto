@@ -3,39 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar Sesión - Ferremas</title>
+    <title>Iniciar Sesión - Sistema de Gestión</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
-    <div class="login-page">
-        <div class="login-card">
-            <h2 class="text-center">Bienvenido a Ferremas</h2>
-            <p class="text-center subtitulo">Ingresa tus datos para continuar</p>
+    <div class="wave-effect"></div>
+    
+    <div class="login-container">
 
-            {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                    <div class="message-container">
-                        {% for category, message in messages %}
-                            <p class="message {{ category }}">{{ message }}</p>
-                        {% endfor %}
-                    </div>
-                {% endif %}
-            {% endwith %}
+        <div class="login-logo">
+            <img src="{{ url_for('static', filename='img/FerremasLogo.png') }}" alt="Logo Ferremas">
+        </div>
+        <h1 class="login-title">Iniciar Sesión</h1>
 
-            <form action="/" method="POST" class="login-form">
-                <div class="form-group">
-                    <label for="email">Correo electrónico</label>
-                    <input type="email" id="email" name="email" required placeholder="ejemplo@correo.com" class="form-control">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="message-container">
+                    {% for category, message in messages %}
+                        <div class="message {{ category }}">
+                            <i class="fas fa-{% if category == 'success' %}check-circle{% else %}exclamation-circle{% endif %}"></i>
+                            {{ message }}
+                        </div>
+                    {% endfor %}
                 </div>
+            {% endif %}
+        {% endwith %}
 
-                <div class="form-group">
-                    <label for="password">Contraseña</label>
-                    <input type="password" id="password" name="password" required placeholder="********" class="form-control">
-                </div>
+        <!-- Formulario -->
+        <form action="/" method="POST" class="login-form"> 
+            <div class="form-group">
+                <label for="email">Correo electrónico</label>
+                <input type="email" id="email" name="email" required placeholder="ejemplo@empresa.com">
+                <i class="fas fa-envelope input-icon"></i>
+            </div>
 
-                <button type="submit" class="btn btn-login">Iniciar sesión</button>
-            </form>
+            <div class="form-group">
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" name="password" required placeholder="Ingresa tu contraseña">
+                <i class="fas fa-lock input-icon"></i>
+            </div>
+
+            <button type="submit" class="submit-btn">
+                <i class="fas fa-sign-in-alt"></i> Ingresar al Sistema
+            </button>
+        </form>
+
+        <!-- Enlaces adicionales -->
+        <div class="login-links">
+            <a href="#"><i class="fas fa-key"></i> Recuperar contraseña</a>
+            <a href="#"><i class="fas fa-user-plus"></i> Crear nueva cuenta</a>
+            <a href="#"><i class="fas fa-question-circle"></i> Ayuda</a>
         </div>
     </div>
 </body>

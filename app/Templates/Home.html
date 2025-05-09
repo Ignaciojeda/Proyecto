@@ -2,19 +2,21 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ferremas - Inicio</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
     <header>
         <div class="logo">Ferretería Ferremas</div>
         <nav>
             <ul>
-                <li><a href="/pedidos">Mis Pedidos</a></li>
-                <li><a href="/perfil">Mi Perfil</a></li>
-                <li><a href="/logout">Cerrar Sesión</a></li>
-                <li><a href="/catalogo">Cerrar Sesión</a></li>
+                <li><a href="/pedidos"><i class="fas fa-clipboard-list"></i> Mis Pedidos</a></li>
+                <li><a href="/perfil"><i class="fas fa-user"></i> Mi Perfil</a></li>
+                <li><a href="/catalogo"><i class="fas fa-tools"></i> Catálogo</a></li>
+                <li><a href="/logout"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
             </ul>
         </nav>
     </header>
@@ -22,25 +24,51 @@
     <main>
         <section class="banner">
             <h1>Bienvenido a Ferremas</h1>
-            <p>Todo en materiales de construcción y herramientas</p>
+            <p>Todo en materiales de construcción y herramientas al mejor precio</p>
+            <a href="/catalogo" class="btn-banner">Ver Catálogo Completo</a>
         </section>
 
         <section class="productos">
             <h2>Productos Destacados</h2>
             <div class="grid-productos">
-
                 <article class="producto">
-                    <img src="img/taladro.jpg" alt="Taladro">
+                    <img src="{{ url_for('static', filename='img/taladro.jpg') }}" alt="Taladro profesional">
                     <h3>Taladro Percutor 750W</h3>
                     <p class="precio">$89.990</p>
-                    <button>Añadir al carrito</button>
+                    <button><i class="fas fa-cart-plus"></i> Añadir al carrito</button>
+                </article>
+                
+                <article class="producto">
+                    <img src="{{ url_for('static', filename='img/martillo.jpg') }}" alt="Martillo">
+                    <h3>Martillo de Obra 22oz</h3>
+                    <p class="precio">$12.990</p>
+                    <button><i class="fas fa-cart-plus"></i> Añadir al carrito</button>
+                </article>
+                
+                <article class="producto">
+                    <img src="{{ url_for('static', filename='img/pintura.jpg') }}" alt="Pintura">
+                    <h3>Pintura Latex Interior 4L</h3>
+                    <p class="precio">$24.990</p>
+                    <button><i class="fas fa-cart-plus"></i> Añadir al carrito</button>
                 </article>
             </div>
         </section>
     </main>
 
     <footer>
-        <p>© 2025 Ferretería Ferremas</p>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <p><i class="fas fa-phone"></i> +56 2 2345 6789</p>
+                <p><i class="fas fa-envelope"></i> contacto@ferremas.cl</p>
+            </div>
+            <div class="footer-section">
+                <h3>Horarios</h3>
+                <p>Lunes a Viernes: 9:00 - 20:00</p>
+                <p>Sábado: 9:00 - 18:00</p>
+            </div>
+        </div>
+        <p class="copyright">© 2025 Ferretería Ferremas. Todos los derechos reservados.</p>
     </footer>
 </body>
 </html>

@@ -1,95 +1,221 @@
+/* Colores corporativos estilo Sodimac mejorado */
+:root {
+  --primary: #E67E22;    /* Naranja Sodimac */
+  --primary-light: #FF9E40; /* Naranja más claro */
+  --secondary: #2C3E50;  /* Azul oscuro */
+  --secondary-light: #3D566E; /* Azul más claro */
+  --light: #F7F7F7;      /* Gris claro */
+  --white: #FFFFFF;
+  --text-dark: #333333;
+  --border-color: #DDDDDD;
+  --gradient-start: #FF9E40; /* Para el gradiente */
+  --gradient-end: #E67E22;   /* Para el gradiente */
+}
+
+/* Reset y estilos base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+}
+
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #E67E22, #ECF0F1); /* Degradado de naranja a gris claro */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+  color: var(--text-dark);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-attachment: fixed;
 }
 
-.login-page {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
+/* Contenedor principal */
+.login-container {
+  width: 100%;
+  max-width: 420px;
+  background: var(--white);
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  padding: 40px;
+  margin: 20px;
+  position: relative;
+  overflow: hidden;
 }
 
-.login-card {
-    background-color: white;
-    padding: 40px;
-    border-radius: 8px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
-    border-top: 6px solid #E67E22; /* Naranja para la parte superior */
-    border-bottom: 4px solid #2C3E50; /* Gris oscuro para un toque elegante */
+/* Efecto decorativo */
+.login-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
 }
 
-.login-card h2 {
-    color: #2C3E50; /* Gris oscuro */
-    margin-bottom: 10px;
-    font-size: 24px;
+/* Logo */
+.login-logo {
+  text-align: center;
+  margin-bottom: 30px;
 }
 
-.subtitulo {
-    color: #7f8c8d;
-    margin-bottom: 30px;
-    font-size: 14px;
+.login-logo img {
+  max-width: 180px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+
+/* Título */
+.login-title {
+  text-align: center;
+  color: var(--secondary);
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 25px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Formulario */
+.login-form {
+  margin-top: 20px;
+}
+
+.form-group {
+  margin-bottom: 22px;
+  position: relative;
 }
 
 .form-group label {
-    color: #2C3E50;
-    font-weight: bold;
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: var(--secondary);
+  font-weight: 600;
 }
 
-.form-control {
-    border-radius: 4px;
-    padding: 12px;
-    border: 1px solid #ccc;
-    font-size: 16px;
-    transition: border-color 0.3s;
+.form-group input {
+  width: 100%;
+  padding: 14px 15px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 15px;
+  transition: all 0.3s;
+  background-color: #f9f9f9;
 }
 
-.form-control:focus {
-    border-color: #E67E22; /* Naranja al hacer focus */
-    outline: none;
+.form-group input:focus {
+  border-color: var(--primary);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.2);
+  background-color: var(--white);
 }
 
-.btn-login {
-    width: 100%;
-    background-color: #E67E22;
-    color: white;
-    padding: 12px;
-    border: none;
-    border-radius: 4px;
-    font-weight: bold;
-    font-size: 16px;
-    margin-top: 20px;
-    transition: background-color 0.3s ease;
+/* Botón */
+.submit-btn {
+  width: 100%;
+  padding: 15px;
+  background-color: var(--primary);
+  color: var(--white);
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-top: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 8px rgba(230, 126, 34, 0.3);
 }
 
-.btn-login:hover {
-    background-color: #cf6a0e;
+.submit-btn:hover {
+  background-color: var(--secondary);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(44, 62, 80, 0.3);
 }
 
+/* Mensajes */
 .message-container {
-    margin-bottom: 20px;
+  margin-bottom: 22px;
 }
 
 .message {
-    padding: 10px;
-    border-radius: 4px;
-    font-size: 14px;
-    margin-top: 10px;
+  padding: 14px 15px;
+  border-radius: 6px;
+  font-size: 14px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.message.error {
-    background-color: #e74c3c;
-    color: white;
+.message i {
+  font-size: 18px;
 }
 
 .message.success {
-    background-color: #2ecc71;
-    color: white;
+  background-color: #E8F5E9;
+  color: #2E7D32;
+  border-left: 4px solid #2E7D32;
+}
+
+.message.error {
+  background-color: #FFEBEE;
+  color: #C62828;
+  border-left: 4px solid #C62828;
+}
+
+/* Enlaces adicionales */
+.login-links {
+  margin-top: 28px;
+  text-align: center;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.login-links a {
+  color: var(--secondary);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s;
+  padding: 5px 0;
+}
+
+.login-links a:hover {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+/* Efecto de onda decorativo */
+.wave-effect {
+  position: absolute;
+  bottom: -50px;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" fill="%23E67E22" opacity=".1"/><path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" fill="%23E67E22" opacity=".1"/></svg>');
+  background-size: cover;
+  z-index: -1;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .login-container {
+    padding: 30px 20px;
+    margin: 15px;
+    border-radius: 10px;
+  }
+  
+  .login-title {
+    font-size: 20px;
+  }
+  
+  .submit-btn {
+    padding: 13px;
+  }
 }
