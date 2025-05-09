@@ -2,14 +2,14 @@ from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
 
 class Usuario(db.Model):
-    __tablename__ = 'Usuario'  # Exactamente como en tu BD
+    __tablename__ = 'Usuario'  
 
     idUsuario = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nombre = db.Column(db.String(45), nullable=False)
     apellido = db.Column(db.String(45), nullable=False)
     email = db.Column(db.String(45), nullable=False, unique=True)
     telefono = db.Column(db.String(45))
-    password = db.Column(db.String(255), nullable=False)  # Aumenté el tamaño para el hash
+    password = db.Column(db.String(255), nullable=False)  
     tipoUsuario = db.Column(db.Integer, db.ForeignKey('TIPO_USUARIO.idTipoUsuario'), nullable=False)
     
     # Relaciones usando strings
