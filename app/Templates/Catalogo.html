@@ -1,7 +1,7 @@
 <div class="catalogo-grid">
     {% for producto in productos %}
     <div class="producto">
-        <img src="{{ url_for('static', filename='img/' + producto.imagen) }}" alt="{{ producto.nombreProducto }}">
+        <img src="{{ url_for('static', filename='img/default.jpg') }}" alt="{{ producto.nombreProducto }}">
         <h3>{{ producto.nombreProducto }}</h3>
         <p class="precio">${{ producto.precio }}</p>
         <button>Ver Detalles</button>
