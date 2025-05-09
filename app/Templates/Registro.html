@@ -32,11 +32,11 @@
                 <input type="password" class="form-control" id="password" name="password" required>
             </div>
             <div class="form-group">
-                <label for="tipo_usuario_id">Tipo de usuario:</label>
-                <select class="form-control" id="tipo_usuario_id" name="tipo_usuario_id" required>
+                <label for="tipoUsuario">Tipo de usuario:</label>
+                <select class="form-control" id="tipoUsuario" name="tipoUsuario" required>
                     <option value="">Seleccione un tipo de usuario</option>
                     {% for tipo in tipos_usuario %}
-                        <option value="{{ tipo.id_tipo_usuario }}">{{ tipo.descripcion }}</option>
+                        <option value="{{ tipo.idTipoUsuario }}">{{ tipo.descripcion }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -44,5 +44,15 @@
             <button type="button" class="btn btn-secondary" onclick="window.history.back()">Regresar</button>
         </form>
     </div>
+
+    <script>
+        document.querySelector('form').addEventListener('submit', function (e) {
+            var tipo = document.getElementById('tipoUsuario').value;
+            if (!tipo) {
+                alert('Por favor seleccione un tipo de usuario.');
+                e.preventDefault(); 
+            }
+        });
+    </script>
 </body>
 </html>

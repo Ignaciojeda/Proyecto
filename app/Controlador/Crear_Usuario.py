@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
+from werkzeug.security import generate_password_hash
 from app import db
 from app.Modelo.Usuario import Usuario
 from app.Modelo.TipoUsuario import TipoUsuario
@@ -17,7 +18,27 @@ def registrar():
         email = request.form['email']
         telefono = request.form['telefono']
         password = request.form['password']
-        tipo_usuario_id = request.form['tipo_usuario_id']
+        tipoUsuario_str = request.form['tipoUsuario']
+
+        # Validar que todos los campos obligatorios estén completos
+        if not nombre or not email or not password or not tipoUsuario_str:
+            flash('Por favor completa todos los campos obligatorios.', 'error')
+            return redirect(url_for('usuario.registrar'))
+
+        # Verificar si el usuario ya existe
+        if Usuario.query.filter_by(email=email).first():
+            flash('Ya existe un usuario con ese correo.', 'error')
+            return redirect(url_for('usuario.registrar'))
+
+        # Encriptar la contraseña
+        password_hash = generate_password_hash(password)
+
+        # Convertir tipoUsuario a entero
+        try:
+            tipoUsuario = int(tipoUsuario_str)  # Asegúrate de que tipoUsuario es un número entero
+        except ValueError:
+            flash('Tipo de usuario inválido.', 'error')
+            return redirect(url_for('usuario.registrar'))
 
         # Crear el nuevo usuario
         nuevo_usuario = Usuario(
@@ -25,45 +46,24 @@ def registrar():
             apellido=apellido,
             email=email,
             telefono=telefono,
-            password=password,
-            tipoUsuario=tipo_usuario_id
-        )
+            password=password_hash,
+            tipoUsuario=tipoUsuario   
+        ) 
 
-        # Agregar el nuevo usuario a la base de datos
-        db.session.add(nuevo_usuario)
-        db.session.commit()
+        # Agregar a la base de datos con manejo de errores
+        try:
+            db.session.add(nuevo_usuario)
+            db.session.commit()
+            flash('Usuario registrado exitosamente.', 'success')
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error al registrar el usuario: {str(e)}', 'error')
 
-        # Mostrar mensaje de éxito
-        flash('Usuario registrado exitosamente.', 'success')
-
-        # Redirigir al formulario de registro nuevamente
         return redirect(url_for('usuario.registrar'))
 
-    # Obtener los tipos de usuario desde la base de datos
-    tipos_usuario = TipoUsuario.query.all()
     
-    # Renderizar la plantilla de registro
+    tipos_usuario = TipoUsuario.query.all()
     return render_template('Registro.html', tipos_usuario=tipos_usuario)
 
-# Ruta para registrar un tipo de usuario
-@t_usuario_bp.route('/tipo_usuario/registro', methods=['GET', 'POST'])
-def registrar_tipo_usuario():
-    if request.method == 'POST':
-        # Obtener la descripción del tipo de usuario
-        descripcion = request.form['descripcion']
 
-        # Crear un nuevo tipo de usuario
-        nuevo_tipo_usuario = TipoUsuario(descripcion=descripcion)
 
-        # Agregar el nuevo tipo de usuario a la base de datos
-        db.session.add(nuevo_tipo_usuario)
-        db.session.commit()
-
-        # Mostrar mensaje de éxito
-        flash('Tipo de usuario registrado exitosamente.', 'success')
-
-        # Redirigir al formulario de registro de tipo de usuario
-        return redirect(url_for('t_usuario.registrar_tipo_usuario'))
-
-    # Renderizar la plantilla de registro de tipo de usuario
-    return render_template('Tipo_Usuario_Registro.html')

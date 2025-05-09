@@ -48,8 +48,6 @@ def create_app():
     from .Controlador.Crear_Usuario import usuario_bp
     app.register_blueprint(usuario_bp)
 
-    from .Controlador.Crear_Usuario import t_usuario_bp
-    app.register_blueprint(t_usuario_bp)
 
 
     return app
