@@ -18,9 +18,9 @@ def allowed_file(filename):
 @producto_bp.route('', methods=['GET', 'POST'])
 @login_required
 def registrar_producto():
-    if current_user.tipoUsuario != 1:  # Solo admin
+    if current_user.tipoUsuario == 1:  # Solo admin
         flash('No tienes permisos para esta acción', 'error')
-        return redirect(url_for('home'))
+        return redirect(url_for('home.home'))
     
     marcas = Marca.query.all()
     categorias = Categoria.query.all()

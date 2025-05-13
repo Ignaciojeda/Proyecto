@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Producto - Ferremas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='registro_producto.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <header class="admin-header">
+        <nav>
+            <ul>
+                <li><a href="/admin"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="/catalogo" class="active"><i class="fas fa-box-open"></i> Productos</a></li>
+                <li><a href="/logout"><i class="fas fa-sign-out-alt"></i> Salir</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h1><i class="fas fa-plus-circle"></i> Registrar Nuevo Producto</h1>
+        
+
+        <form method="POST" action="/admin/productos" enctype="multipart/form-data" class="product-form">
+            <div class="form-group">
+                <label for="nombre"><i class="fas fa-tag"></i> Nombre del Producto</label>
+                <input type="text" id="nombre" name="nombre" required placeholder="Ej: Taladro Percutor 750W">
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="marca"><i class="fas fa-industry"></i> Marca</label>
+                    <select id="marca" name="marca" required>
+                        <option value="">Seleccione una marca</option>
+                        {% for marca in marcas %}
+                            <option value="{{ marca.marcaId }}">{{ marca.nombreMarca }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="categoria"><i class="fas fa-list"></i> Categoría</label>
+                    <select id="categoria" name="categoria" required>
+                        <option value="">Seleccione una categoría</option>
+                        {% for categoria in categorias %}
+                            <option value="{{ categoria.categoriaId }}">{{ categoria.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="precio"><i class="fas fa-dollar-sign"></i> Precio</label>
+                    <input type="number" id="precio" name="precio" min="0" step="0.01" required placeholder="Ej: 89990">
+                </div>
+
+                <div class="form-group">
+                    <label for="stock"><i class="fas fa-boxes"></i> Stock Inicial</label>
+                    <input type="number" id="stock" name="stock" min="0" value="0" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="descripcion"><i class="fas fa-align-left"></i> Descripción</label>
+                <textarea id="descripcion" name="descripcion" rows="4" placeholder="Descripción detallada del producto..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="imagen"><i class="fas fa-camera"></i> Imagen del Producto</label>
+                <input type="file" id="imagen" name="imagen" accept="image/*">
+                <small>Formatos aceptados: JPG, PNG (Máx. 2MB)</small>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-submit">
+                    <i class="fas fa-save"></i> Registrar Producto
+                </button>
+                <a href="/admin" class="btn-cancel">
+                    <i class="fas fa-times"></i> Cancelar
+                </a>
+            </div>
+        </form>
+    </main>
+</body>
+</html>

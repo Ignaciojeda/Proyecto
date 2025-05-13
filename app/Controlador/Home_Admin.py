@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 
 admin_bp = Blueprint('admin', __name__)
 
-@admin_bp.route('/admin/dashboard')
+@admin_bp.route('')
 @login_required
 def dashboard():
     # Estadísticas para el dashboard
