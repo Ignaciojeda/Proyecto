@@ -59,6 +59,9 @@ def create_app():
     from app.Controlador.Crear_Usuario import usuario_bp
     app.register_blueprint(usuario_bp)
 
+    from app.Controlador.Home import home_bp
+    app.register_blueprint(home_bp, url_prefix='/home')
+
     from app.Controlador.Home_Admin import admin_bp
     app.register_blueprint(admin_bp, url_prefix='/admin')
     
@@ -76,7 +79,7 @@ def create_app():
 
     try:
         from app.Controlador.Webpay import webpay_bp
-        app.register_blueprint(webpay_bp, url_prefix='/webpay')
+        app.register_blueprint(webpay_bp, url_prefix='/api')
     except ImportError:
         pass
 

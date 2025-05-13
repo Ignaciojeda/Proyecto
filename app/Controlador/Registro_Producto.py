@@ -15,7 +15,7 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@producto_bp.route('/admin/productos/nuevo', methods=['GET', 'POST'])
+@producto_bp.route('', methods=['GET', 'POST'])
 @login_required
 def registrar_producto():
     if current_user.tipoUsuario != 1:  # Solo admin
