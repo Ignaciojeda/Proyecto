@@ -41,8 +41,8 @@ def create_app():
     from app.Controlador.Login import auth_bp
     app.register_blueprint(auth_bp)
     
-    from app.Controlador.Rutas import home_bp
-    app.register_blueprint(home_bp)
+    from app.Controlador.Rutas import login_bp
+    app.register_blueprint(login_bp)
 
     from app.Controlador.Catalogo import catalogo_bp
     app.register_blueprint(catalogo_bp, url_prefix='/catalogo')
@@ -56,8 +56,8 @@ def create_app():
     from app.Controlador.Perfil import perfil_bp
     app.register_blueprint(perfil_bp, url_prefix='/perfil')
     
-    from app.Controlador.Registro import registro_bp
-    app.register_blueprint(registro_bp, url_prefix='/registro')
+    from app.Controlador.Crear_Usuario import usuario_bp
+    app.register_blueprint(usuario_bp)
 
     from app.Controlador.Home_Admin import admin_bp
     app.register_blueprint(admin_bp, url_prefix='/admin')

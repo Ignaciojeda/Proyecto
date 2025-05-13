@@ -1,18 +1,19 @@
 from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import UserMixin  
 
-class Usuario(db.Model):
-    __tablename__ = 'Usuario'  
+class Usuario(UserMixin, db.Model):
+    __tablename__ = 'Usuario'
 
     idUsuario = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nombre = db.Column(db.String(45), nullable=False)
     apellido = db.Column(db.String(45), nullable=False)
     email = db.Column(db.String(45), nullable=False, unique=True)
     telefono = db.Column(db.String(45))
-    password = db.Column(db.String(255), nullable=False)  
+    password = db.Column(db.String(255), nullable=False)
     tipoUsuario = db.Column(db.Integer, db.ForeignKey('TIPO_USUARIO.idTipoUsuario'), nullable=False)
-    
-    # Relaciones usando strings
+
+
     tipo = db.relationship('TipoUsuario', back_populates='usuarios')
     pedidos = db.relationship('Pedido', back_populates='cliente', lazy='dynamic')
 
@@ -32,3 +33,7 @@ class Usuario(db.Model):
 
     def __repr__(self):
         return f'<Usuario {self.email}>'
+
+    # Este método es requerido por Flask-Login
+    def get_id(self):
+        return str(self.idUsuario)

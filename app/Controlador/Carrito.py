@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
 from flask_login import login_required
 from app.Modelo.Producto import Producto
-from app.Modelo.Carrito import Carrito
+# from app.Modelo.Carrito import Carrito
 
 carrito_bp = Blueprint('carrito', __name__)
 

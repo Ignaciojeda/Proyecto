@@ -30,8 +30,7 @@ def registrar():
             flash('Ya existe un usuario con ese correo.', 'error')
             return redirect(url_for('usuario.registrar'))
 
-        # Encriptar la contraseña
-        password_hash = generate_password_hash(password)
+     
 
         # Convertir tipoUsuario a entero
         try:
@@ -46,11 +45,11 @@ def registrar():
             apellido=apellido,
             email=email,
             telefono=telefono,
-            password=password_hash,
+            password=password,
             tipoUsuario=tipoUsuario   
         ) 
 
-        # Agregar a la base de datos con manejo de errores
+        
         try:
             db.session.add(nuevo_usuario)
             db.session.commit()
