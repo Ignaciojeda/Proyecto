@@ -5,7 +5,7 @@ class Marca(db.Model):
 
     marcaId = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nombreMarca = db.Column(db.String(45), nullable=False)
-    descripcion = db.Column(db.String(45))
+    descripcion = db.Column(db.String(255))
 
     productos = db.relationship('Producto', back_populates='marca')
 

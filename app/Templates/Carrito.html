@@ -2,55 +2,70 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Ferremas - Carrito</title>
-    <link rel="stylesheet" href="css/carrito.css">
+    <title>Tu Carrito</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='carrito.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
     <header>
-        <div class="logo">Ferretería Ferremas</div>
+        <h1>Carrito de Compras</h1>
         <nav>
-            <ul>
-                <li><a href="/carrito">Carrito</a></li>
-                <li><a href="/pedidos">Mis Pedidos</a></li>
-                <li><a href="/perfil">Mi Perfil</a></li>
-                <li><a href="/logout">Cerrar Sesión</a></li>
-            </ul>
+            <a href="{{ url_for('catalogo.catalogo') }}"><i class="fas fa-arrow-left"></i> Volver al catálogo</a>
         </nav>
     </header>
 
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul class="flashes">
+          {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
     <main>
-        <h1>Tu Carrito de Compras</h1>
-        <table class="carrito">
+        {% if productos %}
+        <table>
             <thead>
                 <tr>
                     <th>Producto</th>
                     <th>Precio</th>
                     <th>Cantidad</th>
                     <th>Subtotal</th>
-                    <th>Acciones</th>
+                    <th>Acción</th>
                 </tr>
             </thead>
             <tbody>
+                {% for item in productos %}
                 <tr>
+                    <td>{{ item.producto.nombreProducto }}</td>
+                    <td>${{ item.precio }}</td>
+                    <td>{{ item.cantidad }}</td>
+                    <td>${{ item.subtotal }}</td>
                     <td>
-                        <img src="img/taladro.jpg" alt="Taladro">
-                        <span>Taladro Percutor 750W</span>
+                    <form action="{{ url_for('carrito.eliminar_del_carrito', producto_id=item.producto.idProducto) }}" method="POST" class="form-eliminar">
+                        <label for="cantidad-eliminar-{{ item.producto.idProducto }}">Eliminar:</label>
+                         <input type="number" name="cantidad" id="cantidad-eliminar-{{ item.producto.idProducto }}"
+                          min="1" max="{{ item.cantidad }}" value="1" required>
+                        <button type="submit" class="btn-eliminar"><i class="fas fa-trash"></i> Eliminar</button>
+                    </form>
                     </td>
-                    <td>$89.990</td>
-                    <td><input type="number" value="1" min="1"></td>
-                    <td>$89.990</td>
-                    <td><button>Eliminar</button></td>
                 </tr>
+                {% endfor %}
             </tbody>
         </table>
 
-        <div class="resumen">
-            <h3>Resumen de Compra</h3>
-            <p>Subtotal: $89.990</p>
-            <p>Envío: $5.000</p>
-            <p>Total: $94.990</p>
-            <button>Proceder al Pago</button>
+        <div class="total">
+            <strong>Total: ${{ total }}</strong>
         </div>
+
+        <div class="acciones">
+            <a href="/realizar-pedido" class="btn-finalizar">Finalizar Pedido</a>
+        </div>
+        {% else %}
+        <p>Tu carrito está vacío.</p>
+        {% endif %}
     </main>
 </body>
 </html>
