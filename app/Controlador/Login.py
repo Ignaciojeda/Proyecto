@@ -71,7 +71,7 @@ def home_usuario():
 
 
 
-API_KEY = "AIzaSyBQ0DDplgatpypYLs0He7N81bLnrOxuBOQ"  # Reemplaza con tu clave real
+API_KEY = "" 
 
 @auth_bp.route("/ingreso_direccion")
 def ingreso_direccion():
