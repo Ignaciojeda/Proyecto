@@ -23,41 +23,53 @@
     </header>
 
     <div class="filtros-container">
-        <h2>Filtrar Productos</h2>
+    <h2>Filtrar Productos</h2>
+    <form method="get" action="/catalogo">
         <div class="filtros-grid">
             <div class="filtro-group">
                 <label for="categoria">Categoría</label>
-                <select id="categoria">
-                    <option>Todas</option>
-                    <option>Herramientas</option>
-                    <option>Materiales</option>
-                    <option>Electricidad</option>
+                <select name="categoria" id="categoria">
+                    <option {% if not request.args.get('categoria') or request.args.get('categoria') == "Todas" %}selected{% endif %}>Todas</option>
+                    {% for c in categorias %}
+                        <option value="{{ c.nombreCategoria }}"
+                            {% if request.args.get('categoria') == c.nombreCategoria %}selected{% endif %}>
+                            {{ c.nombreCategoria }}
+                        </option>
+                    {% endfor %}
                 </select>
             </div>
             <div class="filtro-group">
                 <label for="precio">Rango de Precio</label>
-                <select id="precio">
-                    <option>Todos</option>
-                    <option>Menos de $10.000</option>
-                    <option>$10.000 - $50.000</option>
-                    <option>Más de $50.000</option>
+                <select name="precio" id="precio">
+                    <option {% if not request.args.get('precio') or request.args.get('precio') == "Todos" %}selected{% endif %}>Todos</option>
+                    <option {% if request.args.get('precio') == "Menos de $10.000" %}selected{% endif %}>Menos de $10.000</option>
+                    <option {% if request.args.get('precio') == "$10.000 - $50.000" %}selected{% endif %}>$10.000 - $50.000</option>
+                    <option {% if request.args.get('precio') == "Más de $50.000" %}selected{% endif %}>Más de $50.000</option>
                 </select>
             </div>
             <div class="filtro-group">
                 <label for="marca">Marca</label>
-                <select id="marca">
-                    <option>Todas</option>
-                    <option>Bosch</option>
-                    <option>Stanley</option>
-                    <option>Truper</option>
+                <select name="marca" id="marca">
+                    <option {% if not request.args.get('marca') or request.args.get('marca') == "Todas" %}selected{% endif %}>Todas</option>
+                    {% for m in marcas %}
+                        <option value="{{ m.nombreMarca }}"
+                            {% if request.args.get('marca') == m.nombreMarca %}selected{% endif %}>
+                            {{ m.nombreMarca }}
+                        </option>
+                    {% endfor %}
                 </select>
             </div>
             <div class="filtro-group">
                 <label for="busqueda">Buscar</label>
-                <input type="text" id="busqueda" placeholder="Nombre del producto">
+                <input type="text" name="busqueda" id="busqueda"
+                       value="{{ request.args.get('busqueda', '') }}"
+                       placeholder="Nombre del producto">
             </div>
         </div>
-    </div>
+        <button type="submit">Aplicar Filtros</button>
+    </form>
+</div>
+
 
         <div class="catalogo-grid">
         {% for producto in productos %}
