@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import Blueprint, render_template, request, redirect, url_for, flash,jsonify
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from app.Modelo.Usuario import Usuario
@@ -68,3 +68,16 @@ def home_admin():
 @login_required
 def home_usuario():
     return render_template('Home.html')
+
+
+
+API_KEY = "AIzaSyBQ0DDplgatpypYLs0He7N81bLnrOxuBOQ"  # Reemplaza con tu clave real
+
+@auth_bp.route("/ingreso_direccion")
+def ingreso_direccion():
+    return render_template("Ingreso_Direccion.html", api_key=API_KEY)
+
+@auth_bp.route("/get_api_key")
+def get_api_key():
+    return jsonify({"api_key": API_KEY})
+
