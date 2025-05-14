@@ -2,40 +2,124 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Ferremas - Contabilidad</title>
-    <link rel="stylesheet" href="css/contador.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ferremas - Panel Contador</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='contador.css') }}">
 </head>
 <body>
-    <div class="contador-container">
-        <h1>Reportes Contables</h1>
-        <div class="filtros">
-            <select>
-                <option>Últimos 7 días</option>
-                <option>Este mes</option>
-                <option>Trimestre</option>
-            </select>
-            <button>Generar Reporte</button>
-        </div>
-        <div class="reporte">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Fecha</th>
-                        <th>Ventas</th>
-                        <th>Gastos</th>
-                        <th>Utilidad</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>01/05/2023</td>
-                        <td>$1,250,000</td>
-                        <td>$850,000</td>
-                        <td>$400,000</td>
-                    </tr>
-                </tbody>
-            </table>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <div class="header-left">
+                <h1><i class="fas fa-calculator"></i> Panel Contable</h1>
+            </div>
+            <div class="header-right">
+                <span class="user-info">{{ current_user.nombre }}</span>
+                <a href="{{ url_for('auth.logout') }}" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Salir
+                </a>
+            </div>
+        </header>
+
+        <div class="content-container">
+            <div class="stats-cards">
+                <div class="stat-card">
+                    <div class="stat-value">8</div>
+                    <div class="stat-label">Pendientes de Verificación</div>
+                    <i class="fas fa-clock stat-icon"></i>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">$1,250,000</div>
+                    <div class="stat-label">Ingresos Hoy</div>
+                    <i class="fas fa-dollar-sign stat-icon"></i>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">24</div>
+                    <div class="stat-label">Entregas Pendientes</div>
+                    <i class="fas fa-truck-loading stat-icon"></i>
+                </div>
+            </div>
+
+            <div class="tabs-container">
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="pagos">Verificación de Pagos</button>
+                    <button class="tab-btn" data-tab="entregas">Registro de Entregas</button>
+                    <button class="tab-btn" data-tab="reportes">Reportes</button>
+                </div>
+                
+                <div class="tab-content active" id="pagos">
+                    <div class="filters">
+                        <select class="filter-select">
+                            <option>Todos los estados</option>
+                            <option>Pendientes</option>
+                            <option>Verificados</option>
+                            <option>Rechazados</option>
+                        </select>
+                        <input type="date" class="date-input">
+                        <button class="btn-primary"><i class="fas fa-filter"></i> Filtrar</button>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>N° Transacción</th>
+                                    <th>Fecha</th>
+                                    <th>Cliente</th>
+                                    <th>Monto</th>
+                                    <th>Método</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>TRX-10025</td>
+                                    <td>15/06/2023</td>
+                                    <td>Juan Pérez</td>
+                                    <td>$125,000</td>
+                                    <td>Transferencia</td>
+                                    <td><span class="status-badge pending">Pendiente</span></td>
+                                    <td>
+                                        <button class="btn-action verify"><i class="fas fa-check-circle"></i> Verificar</button>
+                                        <button class="btn-action reject"><i class="fas fa-times-circle"></i> Rechazar</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="entregas">
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>N° Pedido</th>
+                                    <th>Cliente</th>
+                                    <th>Fecha Entrega</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>#10025</td>
+                                    <td>Juan Pérez</td>
+                                    <td>15/06/2023</td>
+                                    <td><span class="status-badge delivered">Entregado</span></td>
+                                    <td>
+                                        <button class="btn-action register"><i class="fas fa-clipboard-check"></i> Registrar</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
+    <script src="{{ url_for('static', filename='js/contador.js') }}"></script>
 </body>
 </html>

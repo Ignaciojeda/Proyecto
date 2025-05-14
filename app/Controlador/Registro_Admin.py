@@ -11,7 +11,7 @@ admin_registro_bp = Blueprint('admin_registro', __name__)
 @login_required
 def registrar_admin():
     # Verificar que el usuario actual es administrador
-    if current_user.tipoUsuario != 1:  # Asumiendo que 1 es el ID para administradores
+    if current_user.tipoUsuario != 2:  # Asumiendo que 1 es el ID para administradores
         flash('No tienes permisos para acceder a esta página', 'error')
         return redirect(url_for('home'))
     

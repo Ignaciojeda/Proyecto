@@ -20,7 +20,7 @@ def allowed_file(filename):
 @login_required
 def registrar_producto():
     # Verificación de permisos
-    if current_user.tipoUsuario == 1:  # Solo admin
+    if current_user.tipoUsuario ==1: 
         flash('No tienes permisos para esta acción', 'error')
         return redirect(url_for('home.home'))
     

@@ -2,33 +2,136 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Ferremas - Bodega</title>
-    <link rel="stylesheet" href="css/bodega.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ferremas - Panel Bodeguero</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bodeguero.css') }}">
 </head>
 <body>
-    <div class="bodega-container">
-        <h1>Gestión de Bodega</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Producto</th>
-                    <th>Stock</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>001</td>
-                    <td>Taladro Percutor 750W</td>
-                    <td>15</td>
-                    <td>
-                        <button>Editar</button>
-                        <button>Reponer</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <div class="header-left">
+                <h1><i class="fas fa-boxes"></i> Panel de Bodega</h1>
+            </div>
+            <div class="header-right">
+                <span class="user-info">{{ current_user.nombre }}</span>
+                <a href="/logout" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Salir
+                </a>
+            </div>
+        </header>
+
+        <div class="content-container">
+            <!-- Sección de Acciones Rápidas -->
+            <div class="quick-actions">
+                <a href="/admin/productos" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Agregar Producto
+                </a>
+                <button class="btn btn-secondary">
+                    <i class="fas fa-file-export"></i> Generar Reporte
+                </button>
+            </div>
+
+            <!-- Tarjetas Estadísticas -->
+            <div class="stats-cards">
+                <div class="stat-card">
+                    <div class="stat-value">12</div>
+                    <div class="stat-label">Pedidos Pendientes</div>
+                    <i class="fas fa-clipboard-list stat-icon"></i>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">5</div>
+                    <div class="stat-label">En Preparación</div>
+                    <i class="fas fa-box-open stat-icon"></i>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">8</div>
+                    <div class="stat-label">Listos para Despacho</div>
+                    <i class="fas fa-truck stat-icon"></i>
+                </div>
+            </div>
+
+            <!-- Pestañas de Contenido -->
+            <div class="tabs-container">
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="pedidos">Pedidos</button>
+                    <button class="tab-btn" data-tab="inventario">Inventario</button>
+                </div>
+                
+                <!-- Contenido de Pedidos -->
+                <div class="tab-content active" id="pedidos">
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>N° Pedido</th>
+                                    <th>Cliente</th>
+                                    <th>Productos</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>#10025</td>
+                                    <td>Juan Pérez</td>
+                                    <td>3 productos</td>
+                                    <td><span class="status-badge pending">Pendiente</span></td>
+                                    <td>
+                                        <button class="btn-action accept"><i class="fas fa-check"></i> Aceptar</button>
+                                        <button class="btn-action details"><i class="fas fa-eye"></i> Detalles</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>#10026</td>
+                                    <td>María González</td>
+                                    <td>5 productos</td>
+                                    <td><span class="status-badge preparing">En preparación</span></td>
+                                    <td>
+                                        <button class="btn-action ready"><i class="fas fa-check-double"></i> Marcar listo</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Contenido de Inventario -->
+                <div class="tab-content" id="inventario">
+                    <div class="inventory-actions">
+                        <input type="text" placeholder="Buscar producto..." class="search-input">
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Producto</th>
+                                    <th>Stock</th>
+                                    <th>Ubicación</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>PRD-001</td>
+                                    <td>Taladro Percutor 750W</td>
+                                    <td>15</td>
+                                    <td>Bodega A, Estante 3</td>
+                                    <td>
+                                        <button class="btn-action edit"><i class="fas fa-edit"></i></button>
+                                        <button class="btn-action restock"><i class="fas fa-boxes"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <script src="{{ url_for('static', filename='js/bodega.js') }}"></script>
 </body>
 </html>
