@@ -59,10 +59,20 @@
         </div>
     </div>
 
-    <div class="catalogo-grid">
+        <div class="catalogo-grid">
         {% for producto in productos %}
         <div class="producto">
-            <img src="{{ url_for('static', filename='img/default.jpg') }}" alt="{{ producto.nombreProducto }}">
+            <div class="image">
+                {% if producto.imagen %}
+                    <img src="data:image/jpeg;base64,{{ producto.imagen | b64encode }}"
+                         alt="{{ producto.nombreProducto }}"
+                         class="product-image">
+                {% else %}
+                    <img src="{{ url_for('static', filename='img/productos/default.jpeg') }}"
+                         alt="Imagen no disponible"
+                         class="product-image">
+                {% endif %}
+            </div>
             <div class="producto-info">
                 <h3>{{ producto.nombreProducto }}</h3>
                 <p class="precio">${{ producto.precio }}</p>
@@ -70,7 +80,7 @@
             </div>
         </div>
         {% endfor %}
-    </div>
+    </div> <!-- cierre de catalogo-grid -->
 
     <div class="paginacion">
         <a href="#"><i class="fas fa-chevron-left"></i></a>

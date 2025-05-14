@@ -14,6 +14,7 @@ def create_app():
 
     db.init_app(app)
     migrate = Migrate(app, db)
+    
 
     from app.Modelo.Usuario import Usuario
     from app.Modelo.Pedido import Pedido
@@ -75,7 +76,7 @@ def create_app():
     
     from app.Controlador.Vista_Contador import contador_bp
     app.register_blueprint(contador_bp, url_prefix='/contador')
- 
+    
 
     try:
         from app.Controlador.Webpay import webpay_bp
