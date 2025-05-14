@@ -4,7 +4,7 @@ from app.Modelo.Producto import Producto
 from app.Modelo.Marca import Marca
 from app.Modelo.Categoria import Categoria
 from app import db
-import os,io
+import os, io
 from werkzeug.utils import secure_filename
 
 producto_bp = Blueprint('producto', __name__)
@@ -20,7 +20,7 @@ def allowed_file(filename):
 @login_required
 def registrar_producto():
     # Verificación de permisos
-    if current_user.tipoUsuario ==1: 
+    if current_user.tipoUsuario == 1:  
         flash('No tienes permisos para esta acción', 'error')
         return redirect(url_for('home.home'))
     
@@ -32,9 +32,15 @@ def registrar_producto():
             # Obtención de datos del formulario
             nombre = request.form.get('nombre')
             descripcion = request.form.get('descripcion')
-            precio = int(request.form.get('precio'))  # Cambiado a int según modelo
+            precio = int(request.form.get('precio'))
+            stock = int(request.form.get('stock', 0))  # Nuevo campo stock
             marca_id = int(request.form.get('marca'))
             categoria_id = int(request.form.get('categoria'))
+            
+            # Validación de stock no negativo
+            if stock < 0:
+                flash('El stock no puede ser negativo', 'error')
+                return redirect(url_for('producto.registrar_producto'))
             
             # Manejo de la imagen como LargeBinary
             imagen = request.files.get('imagen')
@@ -62,9 +68,10 @@ def registrar_producto():
                 nombreProducto=nombre,
                 descripcion=descripcion,
                 precio=precio,
+                stock=stock,  # Nuevo campo
                 marcaId=marca_id,
                 categoriaId=categoria_id,
-                imagen=imagen_data  # Guardamos los bytes directamente
+                imagen=imagen_data
             )
             
             db.session.add(nuevo_producto)
@@ -83,5 +90,4 @@ def registrar_producto():
     return render_template('registro_producto.html', 
                          marcas=marcas, 
                          categorias=categorias)
-
 
