@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ferremas - Panel Vendedor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendedor.css') }}">
+</head>
+<body>
+    <div class="vendedor-container">
+        <aside class="vendedor-sidebar">
+            <div class="sidebar-header">
+                <h3><i class="fas fa-store"></i> Ferremas</h3>
+                <p>Panel Vendedor</p>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <a href="#productos"><i class="fas fa-boxes"></i> Productos</a>
+                    </li>
+                    <li>
+                        <a href="#pedidos"><i class="fas fa-clipboard-list"></i> Pedidos</a>
+                    </li>
+                    <li>
+                        <a href="#despachos"><i class="fas fa-truck"></i> Despachos</a>
+                    </li>
+                    <li>
+                        <a href="/logout"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="vendedor-main">
+            <header class="vendedor-header">
+                <h1><i class="fas fa-user-tie"></i> Panel de Vendedor</h1>
+                <div class="user-info">
+                    <span>{{ current_user.nombre }}</span>
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+            </header>
+
+            <div class="vendedor-content">
+                <!-- Estadísticas Rápidas -->
+                <div class="stats-cards">
+                    <div class="stat-card">
+                        <div class="stat-value">{{ productos|length }}</div>
+                        <div class="stat-label">Productos Disponibles</div>
+                        <i class="fas fa-box-open stat-icon"></i>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">{{ pedidos|length }}</div>
+                        <div class="stat-label">Pedidos Pendientes</div>
+                        <i class="fas fa-clipboard-list stat-icon"></i>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">15</div>
+                        <div class="stat-label">Despachos Hoy</div>
+                        <i class="fas fa-truck stat-icon"></i>
+                    </div>
+                </div>
+
+                <!-- Pestañas -->
+                <div class="tabs-container">
+                    <div class="tabs">
+                        <button class="tab-btn active" data-tab="productos">Productos</button>
+                        <button class="tab-btn" data-tab="pedidos">Pedidos</button>
+                        <button class="tab-btn" data-tab="despachos">Despachos</button>
+                    </div>
+                    
+                    <!-- Productos -->
+                    <div class="tab-content active" id="productos">
+                        <div class="table-controls">
+                            <input type="text" placeholder="Buscar producto..." class="search-input" id="searchProduct">
+                            <select class="filter-select" id="filterCategory">
+                                <option value="">Todas las categorías</option>
+                                <option value="herramientas">Herramientas</option>
+                                <option value="materiales">Materiales</option>
+                                <option value="electricidad">Electricidad</option>
+                            </select>
+                        </div>
+                        <div class="table-container">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Producto</th>
+                                        <th>Categoría</th>
+                                        <th>Stock</th>
+                                        <th>Precio</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for producto in productos %}
+                                    <tr>
+                                        <td>{{ producto.idProducto }}</td>
+                                        <td>{{ producto.nombreProducto }}</td>
+                                        <td>{{ producto.categoria.nombre }}</td>
+                                        <td class="stock-cell">
+                                            <span class="stock-value">{{ producto.stock }}</span>
+                                            {% if producto.stock < 10 %}
+                                            <span class="stock-warning"><i class="fas fa-exclamation-triangle"></i></span>
+                                            {% endif %}
+                                        </td>
+                                        <td>${{ "{:,.0f}".format(producto.precio) }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <!-- Pedidos -->
+                    <div class="tab-content" id="pedidos">
+                        <div class="table-container">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>N° Pedido</th>
+                                        <th>Cliente</th>
+                                        <th>Productos</th>
+                                        <th>Total</th>
+                                        <th>Estado</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for pedido in pedidos %}
+                                    <tr>
+                                        <td>#{{ pedido.idPedido }}</td>
+                                        <td>{{ pedido.cliente.nombre }}</td>
+                                        <td>{{ pedido.detalles|length }} productos</td>
+                                        <td>${{ "{:,.0f}".format(pedido.total) }}</td>
+                                        <td>
+                                            <span class="status-badge {{ pedido.estado }}">
+                                                {{ pedido.estado|replace('_', ' ')|title }}
+                                            </span>
+                                        </td>
+                                        <td class="actions-cell">
+                                            {% if pedido.estado == 'pendiente' %}
+                                            <button class="btn-action approve" onclick="window.location.href='{{ url_for('vendedor.aprobar_pedido', pedido_id=pedido.idPedido) }}'">
+                                                <i class="fas fa-check"></i> Aprobar
+                                            </button>
+                                            <button class="btn-action reject" onclick="window.location.href='{{ url_for('vendedor.rechazar_pedido', pedido_id=pedido.idPedido) }}'">
+                                                <i class="fas fa-times"></i> Rechazar
+                                            </button>
+                                            {% elif pedido.estado == 'aprobado' %}
+                                            <button class="btn-action send" onclick="window.location.href='{{ url_for('vendedor.enviar_bodega', pedido_id=pedido.idPedido) }}'">
+                                                <i class="fas fa-paper-plane"></i> Enviar a Bodega
+                                            </button>
+                                            {% endif %}
+                                            <button class="btn-action details">
+                                                <i class="fas fa-eye"></i> Detalles
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <!-- Despachos -->
+                    <div class="tab-content" id="despachos">
+                        <div class="dispatch-controls">
+                            <input type="date" class="date-input" id="dispatchDate">
+                            <button class="btn-primary" id="filterDispatch">
+                                <i class="fas fa-filter"></i> Filtrar
+                            </button>
+                            <button class="btn-secondary" id="printDispatch">
+                                <i class="fas fa-print"></i> Imprimir Lista
+                            </button>
+                        </div>
+                        <div class="table-container">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>N° Despacho</th>
+                                        <th>Pedido</th>
+                                        <th>Cliente</th>
+                                        <th>Dirección</th>
+                                        <th>Fecha Entrega</th>
+                                        <th>Estado</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>DESP-001</td>
+                                        <td>#10025</td>
+                                        <td>Juan Pérez</td>
+                                        <td>Av. Principal 123</td>
+                                        <td>15/06/2023</td>
+                                        <td><span class="status-badge preparacion">En preparación</span></td>
+                                        <td>
+                                            <button class="btn-action track">
+                                                <i class="fas fa-map-marked-alt"></i> Seguir
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/vendedor.js') }}"></script>
+</body>
+</html>

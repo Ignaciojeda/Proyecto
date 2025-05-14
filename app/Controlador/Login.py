@@ -46,6 +46,9 @@ def login():
                     elif usuario.tipo.descripcion == 'Contador':
                         flash('Redirigiendo al panel de cliente...', 'info')
                         return redirect(url_for('auth.home_contador'))
+                    elif usuario.tipo.descripcion == 'Vendedor':
+                        flash('Redirigiendo al panel de cliente...', 'info')
+                        return redirect(url_for('auth.home_vendedor'))                   
                     else:
                         flash('Tipo de usuario no válido.', 'danger')
                         return redirect(url_for('auth.login'))
@@ -88,6 +91,11 @@ def home_bodeguero():
 @login_required
 def home_contador():
     return render_template('Vista_Contador.html')
+
+@auth_bp.route('/vendedor')
+@login_required
+def home_vendedor():
+    return render_template('Vista_Vendedor.html')
 
 
 
