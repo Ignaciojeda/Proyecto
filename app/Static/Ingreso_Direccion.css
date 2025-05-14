@@ -1,0 +1,46 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: "Roboto", sans-serif;
+    font-size: 18px;
+    color: rgb(104, 104, 104);
+}
+
+form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    max-width: 400px;
+    padding: 20px;
+}
+
+input {
+    width: 100%;
+    padding: 0.5em;
+    border: 0;
+    border-bottom: 2px solid gray;
+    font-size: 18px;
+}
+
+.my-button {
+    background-color: #000;
+    border-radius: 6px;
+    color: #fff;
+    cursor: pointer;
+    padding: 6px 24px;
+}
+
+.my-button:hover {
+    background-color: #666;
+}
+
+.title {
+    width: 100%;
+    font-weight: 500;
+}
+
+.note {
+    width: 100%;
+    font-size: 12px;
+}

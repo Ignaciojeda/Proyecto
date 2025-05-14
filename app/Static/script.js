@@ -1,0 +1,175 @@
+fetch("/get_api_key")
+    .then(response => response.json())
+    .then(data => {
+        let script = document.createElement("script");
+        script.src = `https://maps.googleapis.com/maps/api/js?key=${data.api_key}&libraries=places&loading=async`;
+        script.async = true;
+        script.defer = true;
+        script.onload = initAutocomplete; // Asegura que se ejecuta cuando la API está lista
+        document.head.appendChild(script);
+    })
+    .catch(error => console.error("Error obteniendo API key:", error));
+
+function initAutocomplete() {
+    if (typeof google === "undefined" || !google.maps.places) {
+        console.error("Google Maps API no está disponible.");
+        return;
+    }
+
+    let address1Field = document.querySelector("#ship-address");
+    let address2Field = document.querySelector("#address2");
+    let postalField = document.querySelector("#postcode");
+
+    if (!address1Field) {
+        console.error("Elemento de dirección no encontrado.");
+        return;
+    }
+
+    let autocomplete = new google.maps.places.Autocomplete(address1Field, {
+        componentRestrictions: { country: ["cl"] },
+        fields: ["address_components", "geometry"],
+        types: ["address"],
+    });
+
+    autocomplete.addListener("place_changed", () => {
+        const place = autocomplete.getPlace();
+        if (!place || !place.address_components) {
+            console.error("No se pudo obtener los datos del lugar.");
+            return;
+        }
+
+        let address1 = "";
+        let postcode = "";
+
+        place.address_components.forEach(component => {
+            const componentType = component.types[0];
+            switch (componentType) {
+                case "street_number":
+                    address1 = `${component.long_name} ${address1}`;
+                    break;
+                case "route":
+                    address1 += component.short_name;
+                    break;
+                case "postal_code":
+                    postcode = `${component.long_name}${postcode}`;
+                    break;
+                case "postal_code_suffix":
+                    postcode = `${postcode}-${component.long_name}`;
+                    break;
+                case "locality":
+                    document.querySelector("#locality").value = component.long_name;
+                    break;
+                case "administrative_area_level_1":
+                    document.querySelector("#state").value = component.short_name;
+                    break;
+                case "country":
+                    document.querySelector("#country").value = component.long_name;
+                    break;
+            }
+        });
+
+        address1Field.value = address1;
+        postalField.value = postcode;
+        address2Field.focus();
+    });
+}
+
+let autocomplete;
+let address1Field;
+let address2Field;
+let postalField;
+
+// Cargar dinámicamente el script de Google Maps para asegurar que se ejecuta correctamente
+function loadGoogleMapsScript() {
+    let script = document.createElement("script");
+    script.src = `https://maps.googleapis.com/maps/api/js?key={{ api_key }}&libraries=places&loading=async`;
+    script.async = true;
+    script.defer = true;
+
+    script.onload = function () {
+        console.log("Google Maps API cargada correctamente.");
+        setTimeout(() => {
+            if (typeof google === "undefined" || !google.maps.places) {
+                console.error("Google Maps API sigue sin estar disponible.");
+                return;
+            }
+            initAutocomplete();
+        }, 1000); // Da tiempo extra para que la API cargue bien
+    };
+
+    script.onerror = function () {
+        console.error("Error al cargar la API de Google Maps.");
+    };
+
+    document.head.appendChild(script);
+}
+
+window.onload = loadGoogleMapsScript;
+
+
+
+function initAutocomplete() {
+    if (typeof google === "undefined" || !google.maps.places) {
+        console.error("Google Maps API no está disponible.");
+        return;
+    }
+
+    address1Field = document.querySelector("#ship-address");
+    address2Field = document.querySelector("#address2");
+    postalField = document.querySelector("#postcode");
+
+    if (!address1Field) {
+        console.error("Elemento de dirección no encontrado.");
+        return;
+    }
+
+    autocomplete = new google.maps.places.Autocomplete(address1Field, {
+        componentRestrictions: { country: ["cl"] },
+        fields: ["address_components", "geometry"],
+        types: ["address"],
+    });
+
+    autocomplete.addListener("place_changed", fillInAddress);
+}
+
+function fillInAddress() {
+    const place = autocomplete.getPlace();
+    if (!place || !place.address_components) {
+        console.error("No se pudo obtener los datos del lugar.");
+        return;
+    }
+
+    let address1 = "";
+    let postcode = "";
+
+    place.address_components.forEach(component => {
+        const componentType = component.types[0];
+        switch (componentType) {
+            case "street_number":
+                address1 = `${component.long_name} ${address1}`;
+                break;
+            case "route":
+                address1 += component.short_name;
+                break;
+            case "postal_code":
+                postcode = `${component.long_name}${postcode}`;
+                break;
+            case "postal_code_suffix":
+                postcode = `${postcode}-${component.long_name}`;
+                break;
+            case "locality":
+                document.querySelector("#locality").value = component.long_name;
+                break;
+            case "administrative_area_level_1":
+                document.querySelector("#state").value = component.short_name;
+                break;
+            case "country":
+                document.querySelector("#country").value = component.long_name;
+                break;
+        }
+    });
+
+    address1Field.value = address1;
+    postalField.value = postcode;
+    address2Field.focus();
+}
