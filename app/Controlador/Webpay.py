@@ -1,6 +1,7 @@
-from flask import Blueprint, request, jsonify, current_app, redirect, render_template, url_for
+from flask import Blueprint, request, jsonify, current_app, redirect, render_template
+
 import requests
-import logging
+from transbank.webpay.webpay_plus.transaction import Transaction
 
 webpay_bp = Blueprint('webpay', __name__)
 
@@ -63,14 +64,33 @@ def confirmar_transaccion(token):
             return render_template("webpay_error.html", data=data)
 
     except Exception as e:
-        current_app.logger.error(f"Error en confirmar_transaccion: {str(e)}")
-        return render_template("webpay_error.html", error=str(e))
+<<<<<<< HEAD
+        return jsonify({'error': str(e)}), 500
+    
 
-@webpay_bp.route('/webpay/cancelar', methods=['GET'])
-def cancelar_transaccion():
-    # Esta ruta será llamada manualmente desde el frontend cuando el usuario cancele
-    return render_template("webpay_cancelado.html", 
-                         home_url=url_for('home.home'))
+
+
+
+
+@webpay_bp.route('/confirmacion', methods=['GET', 'POST'])
+def confirmacion_pago():
+    token_ws = request.args.get('token_ws')
+    
+    if not token_ws:
+        return render_template('error.html', mensaje="No se recibió el token de pago.")
+
+    response = Transaction().commit(token_ws)
+    
+    if response['status'] == 'AUTHORIZED':
+        estado_pago = "Pago procesado exitosamente."
+    else:
+        estado_pago = f"Pago no procesado. Estado: {response['status']}"
+    
+    return render_template('Pago_Realizado.html', estado_pago=estado_pago)
+
+=======
+        return f"Error confirmando transacción: {str(e)}", 500
+    
 
 @webpay_bp.route('/webpay/commit', methods=['GET', 'POST'])
 def webpay_commit():
@@ -78,16 +98,4 @@ def webpay_commit():
     if not token:
         return "Token no recibido", 400
     return redirect(f"/webpay/confirmar/{token}")
-
-@webpay_bp.route('/webpay/confirmar', methods=['GET'])
-def confirmar_cancelacion():
-    """Maneja la redirección cuando el usuario cancela en Webpay"""
-    token = request.args.get('TBK_TOKEN')
-    buy_order = request.args.get('TBK_ORDEN_COMPRA')
-    session_id = request.args.get('TBK_ID_SESION')
-
-    current_app.logger.info(
-        f"Pago cancelado - Orden: {buy_order}, Sesión: {session_id}, Token: {token}"
-    )
-    
-    return redirect(url_for('webpay.cancelar_transaccion'))
+>>>>>>> 1c5968a4f54b67ce75b67c56ffa6784308ac1f2b

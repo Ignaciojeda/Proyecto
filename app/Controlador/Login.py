@@ -100,7 +100,7 @@ def home_vendedor():
 
 
 
-API_KEY = "" 
+API_KEY = "AIzaSyBQ0DDplgatpypYLs0He7N81bLnrOxuBOQ" 
 
 @auth_bp.route("/ingreso_direccion")
 def ingreso_direccion():
