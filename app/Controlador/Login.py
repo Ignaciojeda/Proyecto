@@ -13,11 +13,11 @@ def login():
             if current_user.tipo.descripcion == 'Admin':
                 return redirect(url_for('auth.home_admin'))
             elif current_user.tipo.descripcion == 'Cliente':
-                return redirect(url_for('auth.home_usuario'))
+                return redirect(url_for('home.home'))
             elif current_user.tipo.descripcion == 'Contador':
-                return redirect(url_for('auth.home_usuario'))
+                return redirect(url_for('auth.home_contador'))
             elif current_user.tipo.descripcion == 'Bodeguero':
-                return redirect(url_for('auth.home_usuario'))
+                return redirect(url_for('auth.home_bodeguero'))
         else:
             flash('No se pudo determinar el tipo de usuario.', 'danger')
 
@@ -39,7 +39,7 @@ def login():
                         return redirect(url_for('auth.home_admin'))
                     elif usuario.tipo.descripcion == 'Cliente':
                         flash('Redirigiendo al panel de cliente...', 'info')
-                        return redirect(url_for('auth.home_usuario'))
+                        return redirect(url_for('home.home'))
                     elif usuario.tipo.descripcion == 'Bodeguero':
                         flash('Redirigiendo al panel de cliente...', 'info')
                         return redirect(url_for('auth.home_bodeguero'))
@@ -77,10 +77,10 @@ def logout():
 def home_admin():
     return render_template('Home_Admin.html')
 
-@auth_bp.route('/home_usuario')
-@login_required
-def home_usuario():
-    return render_template('Home.html')
+#@auth_bp.route('/home_usuario')
+#@login_required
+#def home_usuario():
+#    return render_template('Home.html')
 
 @auth_bp.route('/bodeguero')
 @login_required
