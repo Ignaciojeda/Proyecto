@@ -1,56 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Agregar Dirección de Envío</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='Ingreso_Direccion.css') }}">
-  <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Place Autocomplete Address Form</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='Ingreso_Direccion.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
 </head>
 <body>
-  <form id="address-form" action="" method="get" autocomplete="off">
-    <p class="title">Dirección de envio - Chile</p>
-    <p class="note"><em>* = campo requerido</em></p>
+    <form id="address-form" action="" method="get" autocomplete="off">
+        <p class="title">ejemplo de direcciones chile</p>
+        <p class="note"><em>* = campo requerido</em></p>
 
-    <label class="full-field">
-      <span class="form-label">Enviar a *</span>
-      <input id="ship-address" name="ship-address" required autocomplete="off"/>
-    </label>
+        <label class="full-field">
+            <span class="form-label">enviar a *</span>
+            <input id="ship-address" name="ship-address" required autocomplete="off"/>
+        </label>
 
-    <label class="full-field">
-      <span class="form-label">Apartamento, unidad, departamento o piso #</span>
-      <input id="address2" name="address2" />
-    </label>
+        <label class="full-field">
+            <span class="form-label">Apartmento, unidad, departamento o piso #</span>
+            <input id="address2" name="address2" />
+        </label>
 
-    <label class="full-field">
-      <span class="form-label">Ciudad *</span>
-      <input id="locality" name="locality" required />
-    </label>
+        <label class="full-field">
+            <span class="form-label">ciudad*</span>
+            <input id="locality" name="locality" required />
+        </label>
 
-    <div class="row">
-      <label class="half-field">
-        <span class="form-label">Región *</span>
-        <input id="state" name="state" required />
-      </label>
+        <label class="slim-field-start">
+            <span class="form-label">Region*</span>
+            <input id="state" name="state" required />
+        </label>
 
-      <label class="half-field">
-        <span class="form-label">Código postal *</span>
-        <input id="postcode" name="postcode" required />
-      </label>
-    </div>
+        <label class="slim-field-end">
+            <span class="form-label">Codigo postal*</span>
+            <input id="postcode" name="postcode" required />
+        </label>
 
-    <label class="full-field">
-      <span class="form-label">País</span>
-      <input id="country" name="country" required />
-    </label>
+        <label class="full-field">
+            <span class="form-label">Pais</span>
+            <input id="country" name="country" required />
+        </label>
 
-    <div class="button-container">
-      <button type="button" class="my-button">Guardar dirección</button>
-      <input type="reset" value="Limpiar formulario" class="reset-button" />
-    </div>
-  </form>
+        <button type="button" class="my-button">Guardar direccion</button>
+        <input type="reset" value="Clear form" />
+    </form>
+   
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 
-  <!-- Se carga el script de forma dinámica desde script.js -->
-  <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
