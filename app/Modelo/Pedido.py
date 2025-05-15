@@ -2,9 +2,9 @@ from app import db
 from datetime import datetime
 
 class Pedido(db.Model):
-    __tablename__ = 'PEDIDO'  # Exactamente como en tu BD
+    __tablename__ = 'PEDIDO' 
 
-    idPedido = db.Column(db.Integer, primary_key=True)
+    idPedido = db.Column(db.Integer, primary_key=True, autoincrement=True)
     clienteId = db.Column(db.Integer, db.ForeignKey('Usuario.idUsuario'), nullable=False)
     fechaPedido = db.Column(db.Date, default=datetime.utcnow)
     total = db.Column(db.Numeric(10, 2), nullable=False)
@@ -16,6 +16,8 @@ class Pedido(db.Model):
     cliente = db.relationship('Usuario', back_populates='pedidos')
     sucursal = db.relationship('Sucursal', back_populates='pedidos')
     etapa = db.relationship('EtapaPedido', back_populates='pedidos')
+    detalles = db.relationship('DetallePedido', back_populates='pedido', cascade='all, delete-orphan')
+
 
     def __init__(self, clienteId, total, direccionEnvio, sucursalID=None, etapaId=1):
         self.clienteId = clienteId

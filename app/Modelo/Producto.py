@@ -18,6 +18,9 @@ class Producto(db.Model):
     categoria = db.relationship('Categoria', back_populates='productos')
     inventarios = db.relationship('Inventario', back_populates='producto')
     carrito = db.relationship('Carrito', back_populates='producto')
+    detalles = db.relationship('DetallePedido', back_populates='producto')
+    comentarios = db.relationship('Comentario', back_populates='producto', lazy='dynamic')
+
 
     def __repr__(self):
         return f'<Producto {self.nombreProducto}>'

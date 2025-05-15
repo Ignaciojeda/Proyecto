@@ -107,11 +107,12 @@ def register_blueprints(app):
     app.register_blueprint(producto_bp, url_prefix='/admin/productos')
     app.register_blueprint(bodeguero_bp, url_prefix='/bodeguero')
     app.register_blueprint(contador_bp, url_prefix='/contador')
+    
 
     # Registrar Webpay si está disponible
     try:
         from app.Controlador.Webpay import webpay_bp
-        app.register_blueprint(webpay_bp)
+        app.register_blueprint(webpay_bp, url_prefix='/webpay')
     except ImportError:
         pass
 

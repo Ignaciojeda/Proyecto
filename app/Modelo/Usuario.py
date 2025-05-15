@@ -17,6 +17,8 @@ class Usuario(UserMixin, db.Model):
     tipo = db.relationship('TipoUsuario', back_populates='usuarios')
     pedidos = db.relationship('Pedido', back_populates='cliente', lazy='dynamic')
     carrito = db.relationship('Carrito', back_populates='usuario')
+    comentarios = db.relationship('Comentario', back_populates='usuario', lazy='dynamic')
+
 
     def __init__(self, nombre, apellido, email, telefono, password, tipoUsuario):
         self.nombre = nombre

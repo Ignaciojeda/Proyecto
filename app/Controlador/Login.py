@@ -32,7 +32,7 @@ def login():
             flash(f'Usuario encontrado: {usuario.email}', 'info')
             if usuario.check_password(password):
                 flash('Contraseña correcta.', 'success')
-                login_user(usuario)
+                login_user(usuario, remember=True)
                 if usuario.tipo:
                     if usuario.tipo.descripcion == 'Admin':
                         flash('Redirigiendo al panel de administrador...', 'info')

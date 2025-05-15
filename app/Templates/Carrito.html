@@ -61,7 +61,12 @@
         </div>
 
         <div class="acciones">
-            <a href="/realizar-pedido" class="btn-finalizar">Finalizar Pedido</a>
+            <form action="{{ url_for('webpay.crear_transaccion') }}" method="POST">
+                <input type="hidden" name="buy_order" value="{{ buy_order }}">
+                <input type="hidden" name="session_id" value="{{ current_user.idUsuario }}">
+                <input type="hidden" name="amount" value="{{ total|int }}">
+                <button type="submit" class="btn-finalizar">Finalizar Pedido</button>
+            </form>
         </div>
         {% else %}
         <p>Tu carrito está vacío.</p>
