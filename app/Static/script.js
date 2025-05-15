@@ -172,4 +172,29 @@ function fillInAddress() {
     address1Field.value = address1;
     postalField.value = postcode;
     address2Field.focus();
+
+        // Bloquea los cuadros autocompletados para que no se puedan editar
+    document.querySelector("#locality").readOnly = true;
+    document.querySelector("#state").readOnly = true;
+    document.querySelector("#country").readOnly = true;
+    document.querySelector("#postcode").readOnly = true;
+
 }
+
+// Evento para el botón de guardar dirección
+document.querySelector('.my-button').addEventListener('click', function () {
+    // Recoger los datos de los campos del formulario
+    let addressData = {
+        shipAddress: document.getElementById('ship-address').value,
+        address2: document.getElementById('address2').value,
+        city: document.getElementById('locality').value,
+        region: document.getElementById('state').value,
+        postcode: document.getElementById('postcode').value,
+        country: document.getElementById('country').value
+    };
+
+    // Almacenar el objeto de dirección en el localStorage (convertido a cadena JSON)
+    localStorage.setItem('tempShippingAddress', JSON.stringify(addressData));
+
+    alert('La dirección se ha guardado temporalmente.');
+});

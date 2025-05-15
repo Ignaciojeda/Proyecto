@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ producto.nombreProducto }} - Detalle del producto</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='Detalle_Producto.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <header class="detalle-header">
+        <a href="{{ url_for('catalogo') }}" class="volver-catalogo"><i class="fas fa-chevron-left"></i> Regresar al catálogo</a>
+    </header>
+
+    <div class="producto-detalle-container">
+        <div class="imagen-producto">
+            {% if producto.imagen %}
+                <img src="data:image/jpeg;base64,{{ producto.imagen | b64encode }}" alt="{{ producto.nombreProducto }}">
+            {% else %}
+                <img src="{{ url_for('static', filename='img/productos/default.jpeg') }}" alt="Imagen no disponible">
+            {% endif %}
+        </div>
+        <div class="detalle-info">
+            <h1>{{ producto.nombreProducto }}</h1>
+            <p class="marca"><strong>Marca:</strong> {{ producto.marca }}</p>
+            <p class="descripcion"><strong>Descripción:</strong> {{ producto.descripcion }}</p>
+            <p class="precio"><strong>Precio:</strong> ${{ producto.precio }}</p>
+            <!-- Si deseas incluir más información, agrégala aquí -->
+            <form action="{{ url_for('carrito.agregar_al_carrito', producto_id=producto.idProducto) }}" method="POST">
+                <label for="cantidad">Cantidad:</label>
+                <input type="number" name="cantidad" id="cantidad" min="1" value="1" required>
+                <button type="submit"><i class="fas fa-cart-plus"></i> Añadir al carrito</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

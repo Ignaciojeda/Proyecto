@@ -1,5 +1,6 @@
-from flask import Blueprint, request, jsonify, current_app
+from flask import Blueprint, request, jsonify, current_app,render_template
 import requests
+from transbank.webpay.webpay_plus.transaction import Transaction
 
 webpay_bp = Blueprint('webpay', __name__)
 
@@ -50,3 +51,25 @@ def confirmar_transaccion(token):
         
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+    
+
+
+
+
+
+@webpay_bp.route('/confirmacion', methods=['GET', 'POST'])
+def confirmacion_pago():
+    token_ws = request.args.get('token_ws')
+    
+    if not token_ws:
+        return render_template('error.html', mensaje="No se recibió el token de pago.")
+
+    response = Transaction().commit(token_ws)
+    
+    if response['status'] == 'AUTHORIZED':
+        estado_pago = "Pago procesado exitosamente."
+    else:
+        estado_pago = f"Pago no procesado. Estado: {response['status']}"
+    
+    return render_template('Pago_Realizado.html', estado_pago=estado_pago)
+
