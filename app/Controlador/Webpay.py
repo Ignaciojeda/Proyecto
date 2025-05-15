@@ -64,31 +64,6 @@ def confirmar_transaccion(token):
             return render_template("webpay_error.html", data=data)
 
     except Exception as e:
-<<<<<<< HEAD
-        return jsonify({'error': str(e)}), 500
-    
-
-
-
-
-
-@webpay_bp.route('/confirmacion', methods=['GET', 'POST'])
-def confirmacion_pago():
-    token_ws = request.args.get('token_ws')
-    
-    if not token_ws:
-        return render_template('error.html', mensaje="No se recibió el token de pago.")
-
-    response = Transaction().commit(token_ws)
-    
-    if response['status'] == 'AUTHORIZED':
-        estado_pago = "Pago procesado exitosamente."
-    else:
-        estado_pago = f"Pago no procesado. Estado: {response['status']}"
-    
-    return render_template('Pago_Realizado.html', estado_pago=estado_pago)
-
-=======
         return f"Error confirmando transacción: {str(e)}", 500
     
 
@@ -98,4 +73,3 @@ def webpay_commit():
     if not token:
         return "Token no recibido", 400
     return redirect(f"/webpay/confirmar/{token}")
->>>>>>> 1c5968a4f54b67ce75b67c56ffa6784308ac1f2b

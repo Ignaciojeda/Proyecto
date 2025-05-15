@@ -198,3 +198,49 @@ body {
     border: 1px solid #ccc;
     border-radius: 8px;
 }
+/* Selector de divisas */
+.divisa-selector-container {
+    background-color: #f8f9fa;
+    padding: 15px;
+    margin: 20px auto;
+    max-width: 1200px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.divisa-selector-container label {
+    font-weight: 500;
+    color: #333;
+}
+
+#divisa-selector {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: white;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+#divisa-selector:hover {
+    border-color: #aaa;
+}
+
+#tasa-actualizacion {
+    margin-left: auto;
+    font-size: 12px;
+    font-style: italic;
+    color: #666;
+}
+
+/* Ajustes para precios en diferentes monedas */
+.precio {
+    font-weight: bold;
+    font-size: 1.2em;
+    margin: 10px 0;
+    color: #2e7d32;
+    min-height: 1.5em; /* Evita saltos de línea al cambiar moneda */
+}
