@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pago Cancelado</title>
+    <style>
+        .container {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .message {
+            color: #d9534f;
+            margin-bottom: 20px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #5bc0de;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .btn:hover {
+            background-color: #46b8da;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="message">Pago Cancelado</h1>
+        <p>El proceso de pago ha sido cancelado por el usuario.</p>
+        {% if data %}
+        <p>Orden de compra: {{ data.buy_order }}</p>
+        <p>Monto: ${{ data.amount }}</p>
+        {% endif %}
+        <a href="{{ url_for('home.home') }}" class="btn">Volver al Inicio</a>
+    </div>
+</body>
+</html>

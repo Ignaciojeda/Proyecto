@@ -19,7 +19,7 @@ def crear_transaccion():
         return render_template('webpay_form.html')
 
     try:
-        data = request.form  # <- usamos form en vez de json
+        data = request.form
         required_fields = ['buy_order', 'session_id', 'amount']
 
         if not all(field in data for field in required_fields):
@@ -30,6 +30,7 @@ def crear_transaccion():
             "session_id": data['session_id'],
             "amount": int(data['amount']),
             "return_url": current_app.config['RETURN_URL']
+            # Eliminado el cancel_url que no es soportado
         }
 
         response = requests.post(
@@ -40,12 +41,12 @@ def crear_transaccion():
 
         if response.status_code == 200:
             resp_json = response.json()
-            # Redirigimos al URL que entrega Webpay para que el usuario pague
             return redirect(resp_json['url'] + '?token_ws=' + resp_json['token'])
 
         return jsonify(response.json()), response.status_code
 
     except Exception as e:
+        current_app.logger.error(f"Error en crear_transaccion: {str(e)}")
         return jsonify({'error': str(e)}), 500
 
 @webpay_bp.route('/webpay/confirmar/<token>', methods=['GET'])
