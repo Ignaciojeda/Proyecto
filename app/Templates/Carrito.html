@@ -2,74 +2,128 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Tu Carrito</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras - Ferremas</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='carrito.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
     <header>
-        <h1>Carrito de Compras</h1>
+        <div class="logo">Ferretería Ferremas</div>
         <nav>
-            <a href="{{ url_for('catalogo.catalogo') }}"><i class="fas fa-arrow-left"></i> Volver al catálogo</a>
+            <ul>
+                <li><a href="/home"><i class="fas fa-home"></i> Inicio</a></li>
+                <li><a href="{{ url_for('carrito.ver_carrito') }}" class="active"><i class="fas fa-shopping-cart"></i> Carrito</a></li>
+                <li><a href="/pedidos"><i class="fas fa-clipboard-list"></i> Mis Pedidos</a></li>
+                <li><a href="/perfil"><i class="fas fa-user"></i> Mi Perfil</a></li>
+                <li><a href="/logout"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
+            </ul>
         </nav>
     </header>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
-        <ul class="flashes">
+        <div class="flashes-container">
           {% for category, message in messages %}
-            <li class="{{ category }}">{{ message }}</li>
+            <div class="flash-message {{ category }}">
+              <i class="fas fa-{% if category == 'success' %}check-circle{% else %}exclamation-circle{% endif %}"></i>
+              <span>{{ message }}</span>
+            </div>
           {% endfor %}
-        </ul>
+        </div>
       {% endif %}
     {% endwith %}
 
-    <main>
-        {% if productos %}
-        <table>
-            <thead>
-                <tr>
-                    <th>Producto</th>
-                    <th>Precio</th>
-                    <th>Cantidad</th>
-                    <th>Subtotal</th>
-                    <th>Acción</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in productos %}
-                <tr>
-                    <td>{{ item.producto.nombreProducto }}</td>
-                    <td>${{ item.precio }}</td>
-                    <td>{{ item.cantidad }}</td>
-                    <td>${{ item.subtotal }}</td>
-                    <td>
-                    <form action="{{ url_for('carrito.eliminar_del_carrito', producto_id=item.producto.idProducto) }}" method="POST" class="form-eliminar">
-                        <label for="cantidad-eliminar-{{ item.producto.idProducto }}">Eliminar:</label>
-                         <input type="number" name="cantidad" id="cantidad-eliminar-{{ item.producto.idProducto }}"
-                          min="1" max="{{ item.cantidad }}" value="1" required>
-                        <button type="submit" class="btn-eliminar"><i class="fas fa-trash"></i> Eliminar</button>
-                    </form>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-
-        <div class="total">
-            <strong>Total: ${{ total }}</strong>
+    <main class="carrito-container">
+        <div class="carrito-header">
+            <h1><i class="fas fa-shopping-cart"></i> Tu Carrito de Compras</h1>
+            <a href="{{ url_for('catalogo.catalogo') }}" class="btn-seguir-comprando">
+                <i class="fas fa-arrow-left"></i> Seguir Comprando
+            </a>
         </div>
 
-        <div class="acciones">
-            <form action="{{ url_for('webpay.crear_transaccion') }}" method="POST">
-                <input type="hidden" name="buy_order" value="{{ buy_order }}">
-                <input type="hidden" name="session_id" value="{{ current_user.idUsuario }}">
-                <input type="hidden" name="amount" value="{{ total|int }}">
-                <button type="submit" class="btn-finalizar">Finalizar Pedido</button>
-            </form>
+        {% if productos %}
+        <div class="carrito-content">
+            <div class="productos-table-container">
+                <table class="productos-table">
+                    <thead>
+                        <tr>
+                            <th class="producto-col">Producto</th>
+                            <th class="precio-col">Precio Unitario</th>
+                            <th class="cantidad-col">Cantidad</th>
+                            <th class="subtotal-col">Subtotal</th>
+                            <th class="acciones-col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in productos %}
+                        <tr>
+                            <td class="producto-cell">
+                                {% if item.producto.imagen %}
+                                    <img src="data:image/jpeg;base64,{{ item.producto.imagen | b64encode }}" alt="{{ item.producto.nombreProducto }}" class="producto-img">
+                                {% else %}
+                                    <img src="{{ url_for('static', filename='img/productos/default.jpeg') }}" alt="Imagen no disponible" class="producto-img">
+                                {% endif %}
+                                <span class="producto-nombre">{{ item.producto.nombreProducto }}</span>
+                            </td>
+                            <td class="precio-cell">${{ "{:,.0f}".format(item.precio) }}</td>
+                            <td class="cantidad-cell">{{ item.cantidad }}</td>
+                            <td class="subtotal-cell">${{ "{:,.0f}".format(item.subtotal) }}</td>
+                            <td class="acciones-cell">
+                                <form action="{{ url_for('carrito.eliminar_del_carrito', producto_id=item.producto.idProducto) }}" method="POST" class="form-eliminar">
+                                    <div class="eliminar-control">
+                                        <input type="number" name="cantidad" 
+                                               id="cantidad-eliminar-{{ item.producto.idProducto }}"
+                                               min="1" max="{{ item.cantidad }}" 
+                                               value="1" required>
+                                        <button type="submit" class="btn-eliminar">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="resumen-carrito">
+                <div class="resumen-card">
+                    <h3>Resumen del Pedido</h3>
+                    <div class="resumen-line">
+                        <span>Subtotal:</span>
+                        <span>${{ "{:,.0f}".format(total) }}</span>
+                    </div>
+                    <div class="resumen-line">
+                        <span>Envío:</span>
+                        <span>Gratis</span>
+                    </div>
+                    <div class="resumen-line total">
+                        <span>Total:</span>
+                        <span>${{ "{:,.0f}".format(total) }}</span>
+                    </div>
+                    <form action="{{ url_for('webpay.crear_transaccion') }}" method="POST" class="form-finalizar">
+                        <input type="hidden" name="buy_order" value="{{ buy_order }}">
+                        <input type="hidden" name="session_id" value="{{ current_user.idUsuario }}">
+                        <input type="hidden" name="amount" value="{{ total|int }}">
+                        <button type="submit" class="btn-finalizar">
+                            <i class="fas fa-credit-card"></i> Finalizar Compra
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
         {% else %}
-        <p>Tu carrito está vacío.</p>
+        <div class="carrito-vacio">
+            <i class="fas fa-shopping-cart"></i>
+            <h2>Tu carrito está vacío</h2>
+            <p>Agrega productos para continuar con tu compra</p>
+            <a href="{{ url_for('catalogo.catalogo') }}" class="btn-principal">
+                <i class="fas fa-arrow-left"></i> Volver al Catálogo
+            </a>
+        </div>
         {% endif %}
     </main>
 </body>
