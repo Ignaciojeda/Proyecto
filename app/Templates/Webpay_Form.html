@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Iniciar Pago</title>
+</head>
+<body>
+    <h2>Simular Pago con Webpay</h2>
+    <form method="POST" action="/webpay/crear">
+        <label for="buy_order">Orden de Compra:</label>
+        <input type="text" id="buy_order" name="buy_order" value="ORD123456" required><br><br>
+
+        <label for="session_id">ID de Sesión:</label>
+        <input type="text" id="session_id" name="session_id" value="SES7890" required><br><br>
+
+        <label for="amount">Monto:</label>
+        <input type="number" id="amount" name="amount" value="1000" required><br><br>
+
+        <button type="submit">Pagar con Webpay</button>
+    </form>
+</body>
+</html>
