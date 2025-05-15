@@ -78,9 +78,9 @@ def create_app():
     app.register_blueprint(contador_bp, url_prefix='/contador')
     
 
-    try:
+    try:    
         from app.Controlador.Webpay import webpay_bp
-        app.register_blueprint(webpay_bp, url_prefix='/api')
+        app.register_blueprint(webpay_bp)
     except ImportError:
         pass
 

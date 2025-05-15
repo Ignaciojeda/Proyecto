@@ -1,4 +1,5 @@
-from flask import Blueprint, request, jsonify, current_app,render_template
+from flask import Blueprint, request, jsonify, current_app, redirect, render_template
+
 import requests
 from transbank.webpay.webpay_plus.transaction import Transaction
 
@@ -12,30 +13,38 @@ def get_webpay_headers():
         "Content-Type": "application/json"
     }
 
-@webpay_bp.route('/webpay/crear', methods=['POST'])
+@webpay_bp.route('/webpay/crear', methods=['GET', 'POST'])
 def crear_transaccion():
+    if request.method == 'GET':
+        return render_template('webpay_form.html')
+
     try:
-        data = request.json
+        data = request.form  # <- usamos form en vez de json
         required_fields = ['buy_order', 'session_id', 'amount']
-        
+
         if not all(field in data for field in required_fields):
             return jsonify({'error': 'Faltan campos requeridos'}), 400
-        
+
         payload = {
             "buy_order": data['buy_order'],
             "session_id": data['session_id'],
-            "amount": data['amount'],
+            "amount": int(data['amount']),
             "return_url": current_app.config['RETURN_URL']
         }
-        
+
         response = requests.post(
             f"{current_app.config['WEBPAY_URL']}/transactions",
             json=payload,
             headers=get_webpay_headers()
         )
-        
+
+        if response.status_code == 200:
+            resp_json = response.json()
+            # Redirigimos al URL que entrega Webpay para que el usuario pague
+            return redirect(resp_json['url'] + '?token_ws=' + resp_json['token'])
+
         return jsonify(response.json()), response.status_code
-        
+
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
@@ -46,10 +55,15 @@ def confirmar_transaccion(token):
             f"{current_app.config['WEBPAY_URL']}/transactions/{token}",
             headers=get_webpay_headers()
         )
-        
-        return jsonify(response.json()), response.status_code
-        
+        data = response.json()
+
+        if response.status_code == 200:
+            return render_template("webpay_exito.html", data=data)
+        else:
+            return render_template("webpay_error.html", data=data)
+
     except Exception as e:
+<<<<<<< HEAD
         return jsonify({'error': str(e)}), 500
     
 
@@ -73,3 +87,14 @@ def confirmacion_pago():
     
     return render_template('Pago_Realizado.html', estado_pago=estado_pago)
 
+=======
+        return f"Error confirmando transacción: {str(e)}", 500
+    
+
+@webpay_bp.route('/webpay/commit', methods=['GET', 'POST'])
+def webpay_commit():
+    token = request.args.get('token_ws')
+    if not token:
+        return "Token no recibido", 400
+    return redirect(f"/webpay/confirmar/{token}")
+>>>>>>> 1c5968a4f54b67ce75b67c56ffa6784308ac1f2b
