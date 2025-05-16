@@ -11,7 +11,7 @@ def login():
         flash(f'Ya estás autenticado como {current_user.email}. Redirigiendo...', 'info')
         if current_user.tipo:
             if current_user.tipo.descripcion == 'Admin':
-                return redirect(url_for('auth.home_admin'))
+                return redirect(url_for('admin.dashboard'))  
             elif current_user.tipo.descripcion == 'Cliente':
                 return redirect(url_for('home.home'))
             elif current_user.tipo.descripcion == 'Contador':
@@ -36,7 +36,7 @@ def login():
                 if usuario.tipo:
                     if usuario.tipo.descripcion == 'Admin':
                         flash('Redirigiendo al panel de administrador...', 'info')
-                        return redirect(url_for('auth.home_admin'))
+                        return redirect(url_for('admin.dashboard'))  
                     elif usuario.tipo.descripcion == 'Cliente':
                         flash('Redirigiendo al panel de cliente...', 'info')
                         return redirect(url_for('home.home'))
@@ -72,20 +72,10 @@ def logout():
     flash('Sesión cerrada exitosamente.', 'info')
     return redirect(url_for('auth.login'))
 
-@auth_bp.route('/home_admin')
-@login_required
-def home_admin():
-    return render_template('Home_Admin.html')
-
-
-
 @auth_bp.route('/vendedor')
 @login_required
 def home_vendedor():
     return render_template('Vista_Vendedor.html')
-
-
-
 
 API_KEY = "AIzaSyBQ0DDplgatpypYLs0He7N81bLnrOxuBOQ" 
 

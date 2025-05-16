@@ -14,10 +14,9 @@
             <h2><i class="fas fa-tools"></i> Panel Admin</h2>
             <nav>
                 <ul>
-                    <li><a href="/admin/dashboard" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                   <li><a href="/admin/dashboard" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
                     <li><a href="/admin/productos"><i class="fas fa-boxes"></i> Registrar Productos</a></li>
-                    <li><a href="/admin/informe"><i class="fas fa-chart-bar"></i> Informes</a></li>
-                    <li><a href="/registra"><i class="fas fa-cog"></i> Registro De Empleados</a></li>
+                    <li><a href="/registra"><i class="fas fa-user-plus"></i> Registro De Empleados</a></li>            
                     <li><a href="/logout"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
                 </ul>
             </nav>
@@ -25,39 +24,38 @@
 
         <main class="content">
             <div class="content-header">
-                <h1>Dashboard Administrador</h1>
+                <h1>Dashboard Administrador - {{ hoy }}</h1>
                 <div class="user-info">
-                    <span>Admin User</span>
+                    <span>{{ current_user.nombre }}</span>
                     <i class="fas fa-user-circle"></i>
                 </div>
             </div>
 
+            <!-- Estadísticas principales -->
             <div class="stats">
                 <div class="stat-card">
-                    <h3>Ventas Hoy</h3>
-                    <p>$1,250,000</p>
+                    <h3>Ventas del Mes</h3>
+                    <p>${{ "{:,.0f}".format(ventas_hoy) }}</p>
                 </div>
                 <div class="stat-card">
-                    <h3>Pedidos Hoy</h3>
-                    <p>24</p>
+                    <h3>Pedidos del mes</h3>
+                    <p>{{ pedidos_hoy }}</p>
                 </div>
                 <div class="stat-card">
                     <h3>Usuarios Registrados</h3>
-                    <p>1,248</p>
-                </div>
-                <div class="stat-card">
-                    <h3>Productos en Stock</h3>
-                    <p>586</p>
+                    <p>{{ total_usuarios }}</p>
                 </div>
             </div>
 
+            <!-- Tabla de pedidos recientes -->
             <div class="recent-orders">
-                <h2><i class="fas fa-history"></i> Pedidos Recientes</h2>
+                <h2><i class="fas fa-history"></i> Últimos Pedidos</h2>
                 <table>
                     <thead>
                         <tr>
                             <th>ID Pedido</th>
                             <th>Cliente</th>
+                            <th>Productos</th>
                             <th>Fecha</th>
                             <th>Total</th>
                             <th>Estado</th>
@@ -65,30 +63,37 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>#10025</td>
-                            <td>Juan Pérez</td>
-                            <td>15/05/2023</td>
-                            <td>$89,990</td>
-                            <td><span class="status completed">Completado</span></td>
-                            <td><a href="#"><i class="fas fa-eye"></i></a></td>
-                        </tr>
-                        <tr>
-                            <td>#10024</td>
-                            <td>María González</td>
-                            <td>15/05/2023</td>
-                            <td>$124,500</td>
-                            <td><span class="status pending">Pendiente</span></td>
-                            <td><a href="#"><i class="fas fa-eye"></i></a></td>
-                        </tr>
-                        <tr>
-                            <td>#10023</td>
-                            <td>Carlos López</td>
-                            <td>14/05/2023</td>
-                            <td>$45,320</td>
-                            <td><span class="status completed">Completado</span></td>
-                            <td><a href="#"><i class="fas fa-eye"></i></a></td>
-                        </tr>
+                        {% if pedidos_recientes %}
+                            {% for pedido in pedidos_recientes %}
+                            <tr>
+                                <td>#{{ pedido.idPedido }}</td>
+                                <td>{{ pedido.cliente.nombre if pedido.cliente else 'N/A' }}</td>
+                                <td>
+                                    <ul class="productos-list">
+                                        {% for detalle in pedido.detalles %}
+                                        <li>{{ detalle.producto.nombreProducto }} (x{{ detalle.cantidad }})</li>
+                                        {% endfor %}
+                                    </ul>
+                                </td>
+                                <td>{{ pedido.fechaPedido.strftime('%d/%m/%Y %H:%M') if pedido.fechaPedido else 'N/A' }}</td>
+                                <td>${{ "{:,.0f}".format(pedido.total) if pedido.total else '0' }}</td>
+                                <td>
+                                    <span class="status {{ pedido.etapa.descripcion.lower().replace(' ', '-') if pedido.etapa else '' }}">
+                                        {{ pedido.etapa.descripcion if pedido.etapa else 'Sin estado' }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <a href="{{ url_for('pedidos.detalle_pedido', pedido_id=pedido.idPedido) }}" class="btn-action">
+                                        <i class="fas fa-eye"></i> Ver
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="7">No hay pedidos recientes</td>
+                            </tr>
+                        {% endif %}
                     </tbody>
                 </table>
             </div>

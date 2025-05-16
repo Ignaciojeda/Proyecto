@@ -21,17 +21,6 @@
 
     <main class="container">
         <h1><i class="fas fa-plus-circle"></i> Registrar Nuevo Producto</h1>
-        
-        <!-- Mostrar mensajes flash -->
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="alert alert-{{ category }}">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
 
         <form method="POST" action="/admin/productos" enctype="multipart/form-data" class="product-form">
             <div class="form-group">
