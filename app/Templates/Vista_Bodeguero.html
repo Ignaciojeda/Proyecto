@@ -23,74 +23,36 @@
         </header>
 
         <div class="content-container">
-            <!-- Mensajes flash -->
-            {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                    <div class="flash-messages">
-                        {% for category, message in messages %}
-                            <div class="flash-message {{ category }}">
-                                <i class="fas {% if category == 'success' %}fa-check-circle{% else %}fa-exclamation-circle{% endif %}"></i>
-                                {{ message }}
-                            </div>
-                        {% endfor %}
-                    </div>
-                {% endif %}
-            {% endwith %}
 
-            <!-- Sección de Acciones Rápidas -->
             <div class="quick-actions">
-                <!-- Corregido: Cambiado a producto.registrar_producto -->
                 <a href="{{ url_for('producto.registrar_producto') }}" class="btn btn-primary">
                     <i class="fas fa-plus"></i> Agregar Producto
                 </a>
             </div>
 
-            <!-- Tarjetas Estadísticas -->
+            <div class="stats-cards">
+                <div class="stat-card">
+                    <div class="stat-value">{{ estados.get('Pendientes', 0) }}</div>
+                    <div class="stat-label">Pedidos Pendientes</div>
+                    <i class="fas fa-clipboard-list stat-icon"></i>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">{{ estados.get('Preparacion', 0) }}</div>
+                    <div class="stat-label">En Preparación</div>
+                    <i class="fas fa-box-open stat-icon"></i>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">{{ estados.get('Listos', 0) }}</div>
+                    <div class="stat-label">Listos para Despacho</div>
+                    <i class="fas fa-truck stat-icon"></i>
+                </div>
+            </div>
 
-                    <div class="stats-cards">
-                        <div class="stat-card">
-                            <div class="stat-value">
-                                {% if estados is defined and estados.Pendiente is defined %}
-                                    {{ estados.Pendiente }}
-                                {% else %}
-                                    0
-                                {% endif %}
-                            </div>
-                            <div class="stat-label">Pedidos Pendientes</div>
-                            <i class="fas fa-clipboard-list stat-icon"></i>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-value">
-                                {% if estados is defined and estados.get('En preparación') is not none %}
-                                    {{ estados['En preparación'] }}
-                                {% else %}
-                                    0
-                                {% endif %}
-                            </div>
-                            <div class="stat-label">En Preparación</div>
-                            <i class="fas fa-box-open stat-icon"></i>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-value">
-                                {% if estados is defined and estados['Listo para despacho'] is defined %}
-                                    {{ estados['Listo para despacho'] }}
-                                {% else %}
-                                    0
-                                {% endif %}
-                            </div>
-                            <div class="stat-label">Listos para Despacho</div>
-                            <i class="fas fa-truck stat-icon"></i>
-                        </div>
-                    </div>
-
-            <!-- Pestañas de Contenido -->
             <div class="tabs-container">
                 <div class="tabs">
                     <button class="tab-btn active" data-tab="pedidos">Pedidos</button>
-                    
                 </div>
-                
-                <!-- Contenido de Pedidos -->
+
                 <div class="tab-content active" id="pedidos">
                     <div class="table-container">
                         <table class="data-table">
@@ -117,28 +79,37 @@
                                         </span>
                                     </td>
                                     <td class="actions-cell">
-                                        {% if pedido.etapa and pedido.etapa.descripcion == 'Pendiente' %}
-                                        <form action="{{ url_for('bodeguero.actualizar_estado') }}" method="POST" style="display: inline;">
-                                            <input type="hidden" name="pedido_id" value="{{ pedido.idPedido }}">
-                                            <input type="hidden" name="nuevo_estado" value="2">
-                                            <button type="submit" class="btn-action accept">
-                                                <i class="fas fa-check"></i> Aceptar
-                                            </button>
-                                        </form>
-                                        {% elif pedido.etapa and pedido.etapa.descripcion == 'En preparación' %}
-                                        <form action="{{ url_for('bodeguero.actualizar_estado') }}" method="POST" style="display: inline;">
-                                            <input type="hidden" name="pedido_id" value="{{ pedido.idPedido }}">
-                                            <input type="hidden" name="nuevo_estado" value="3">
-                                            <button type="submit" class="btn-action ready">
-                                                <i class="fas fa-check-double"></i> Marcar listo
-                                            </button>
-                                        </form>
-                                        {% endif %}
-                                        <a href="{{ url_for('pedidos.detalle_pedido', pedido_id=pedido.idPedido) }}" class="btn-action details">
-                                            <i class="fas fa-eye"></i> Detalles
-                                        </a>
-
-                                    </td>
+                                            {% if pedido.etapa and pedido.etapa.idEtapaPedido == 1 %}
+                                                <!-- De Pendiente a Aceptado -->
+                                                <form action="{{ url_for('bodeguero.actualizar_estado') }}" method="POST" style="display:inline;">
+                                                    <input type="hidden" name="pedido_id" value="{{ pedido.idPedido }}">
+                                                    <input type="hidden" name="nuevo_estado" value="2">
+                                                    <button type="submit" class="btn-action accept">
+                                                        <i class="fas fa-check"></i> Aceptar
+                                                    </button>
+                                                </form>
+                                            {% elif pedido.etapa and pedido.etapa.idEtapaPedido == 2 %}
+                                                <!-- De Aceptado a En preparación -->
+                                                <form action="{{ url_for('bodeguero.actualizar_estado') }}" method="POST" style="display:inline;">
+                                                    <input type="hidden" name="pedido_id" value="{{ pedido.idPedido }}">
+                                                    <input type="hidden" name="nuevo_estado" value="3">
+                                                    <button type="submit" class="btn-action ready">
+                                                        <i class="fas fa-cogs"></i> Preparar
+                                                    </button>
+                                                </form>
+                                            {% elif pedido.etapa and pedido.etapa.idEtapaPedido == 3 %}
+                                                <!-- De En preparación a Listo para entrega -->
+                                                <form action="{{ url_for('bodeguero.actualizar_estado') }}" method="POST" style="display:inline;">
+                                                    <input type="hidden" name="pedido_id" value="{{ pedido.idPedido }}">
+                                                    <input type="hidden" name="nuevo_estado" value="4">
+                                                    <button type="submit" class="btn-action dispatch">
+                                                        <i class="fas fa-truck-loading"></i> Listo para entrega
+                                                    </button>
+                                                </form>
+                                            {% else %}
+                                                <span class="no-action">Sin acciones</span>
+                                            {% endif %}
+                                        </td>
                                 </tr>
                                 {% else %}
                                 <tr>
@@ -149,32 +120,20 @@
                         </table>
                     </div>
                 </div>
-                
+
+            </div>
+        </div>
+    </div>
 
     <script src="{{ url_for('static', filename='js/bodeguero.js') }}"></script>
     <script>
-        // Manejo de pestañas
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', () => {
-                // Ocultar todos los contenidos
-                document.querySelectorAll('.tab-content').forEach(content => {
-                    content.classList.remove('active');
-                });
-                
-                // Desactivar todos los botones
-                document.querySelectorAll('.tab-btn').forEach(tabBtn => {
-                    tabBtn.classList.remove('active');
-                });
-                
-                // Activar el seleccionado
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                document.querySelectorAll('.tab-btn').forEach(tabBtn => tabBtn.classList.remove('active'));
                 btn.classList.add('active');
                 document.getElementById(btn.dataset.tab).classList.add('active');
             });
-        });
-
-        // Generar reporte
-        document.getElementById('generar-reporte')?.addEventListener('click', () => {
-            alert('Función de generar reporte estará disponible pronto');
         });
     </script>
 </body>

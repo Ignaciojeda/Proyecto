@@ -18,18 +18,6 @@
         </div>
         <h1 class="login-title">Iniciar Sesión</h1>
 
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <div class="message-container">
-                    {% for category, message in messages %}
-                        <div class="message {{ category }}">
-                            <i class="fas fa-{% if category == 'success' %}check-circle{% else %}exclamation-circle{% endif %}"></i>
-                            {{ message }}
-                        </div>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        {% endwith %}
 
         <!-- Formulario -->
         <form action="/" method="POST" class="login-form"> 

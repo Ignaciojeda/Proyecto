@@ -365,3 +365,24 @@ body {
         margin-bottom: 0.5rem;
     }
 }
+
+.status-badge.pendiente {
+    background-color: #f1c40f;
+    color: white;
+}
+.status-badge.aceptado {
+    background-color: #3498db;
+    color: white;
+}
+.status-badge.en-preparación {
+    background-color: #9b59b6;
+    color: white;
+}
+.status-badge.listo-para-entrega {
+    background-color: #2ecc71;
+    color: white;
+}
+.status-badge.entregado {
+    background-color: #7f8c8d;
+    color: white;
+}
