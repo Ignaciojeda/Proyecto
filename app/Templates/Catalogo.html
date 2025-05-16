@@ -22,6 +22,7 @@
         </nav>
     </header>
 
+
     <div class="filtros-container">
         <h2>Filtrar Productos</h2>
         <form method="get" action="{{ url_for('catalogo.catalogo') }}">
@@ -34,27 +35,6 @@
                             <option value="{{ c.nombreCategoria }}"
                                 {% if request.args.get('categoria') == c.nombreCategoria %}selected{% endif %}>
                                 {{ c.nombreCategoria }}
-                            </option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="filtro-group">
-                    <label for="precio">Rango de Precio</label>
-                    <select name="precio" id="precio">
-                        <option value="Todos" {% if not request.args.get('precio') or request.args.get('precio') == "Todos" %}selected{% endif %}>Todos</option>
-                        <option value="Menos de $10.000" {% if request.args.get('precio') == "Menos de $10.000" %}selected{% endif %}>Menos de $10.000</option>
-                        <option value="$10.000 - $50.000" {% if request.args.get('precio') == "$10.000 - $50.000" %}selected{% endif %}>$10.000 - $50.000</option>
-                        <option value="Más de $50.000" {% if request.args.get('precio') == "Más de $50.000" %}selected{% endif %}>Más de $50.000</option>
-                    </select>
-                </div>
-                <div class="filtro-group">
-                    <label for="marca">Marca</label>
-                    <select name="marca" id="marca">
-                        <option value="Todas" {% if not request.args.get('marca') or request.args.get('marca') == "Todas" %}selected{% endif %}>Todas</option>
-                        {% for m in marcas %}
-                            <option value="{{ m.nombreMarca }}"
-                                {% if request.args.get('marca') == m.nombreMarca %}selected{% endif %}>
-                                {{ m.nombreMarca }}
                             </option>
                         {% endfor %}
                     </select>
@@ -114,7 +94,19 @@
             </div>
             <div class="producto-info">
                 <h3>{{ producto.nombreProducto }}</h3>
-                <p class="precio">${{ producto.precio }}</p>
+                {% if moneda_seleccionada == 'CLP' %}
+                    <p class="precio">${{ "%.0f"|format(producto.precio) }} CLP</p>
+                {% else %}
+                    <p class="precio">
+                        {% if moneda_seleccionada in tasas_cambio %}
+                            {{ (producto.precio / tasas_cambio[moneda_seleccionada]['tasa']) | currency(moneda_seleccionada) }}
+                            <br>
+                            <small>(${{ "%.0f"|format(producto.precio) }} CLP)</small>
+                        {% else %}
+                            <span class="error">Tasa no disponible</span>
+                        {% endif %}
+                    </p>
+                {% endif %}
             </div>
         </a>
         <form action="{{ url_for('carrito.agregar_al_carrito', producto_id=producto.idProducto) }}" method="POST">
