@@ -99,54 +99,40 @@
         </form>
     </div>
 
-    <div class="catalogo-grid">
-        {% for producto in productos %}
-        <div class="producto">
+<div class="catalogo-grid">
+    {% for producto in productos %}
+    <div class="producto">
+        <a href="{{ url_for('catalogo.producto_detalle', producto_id=producto.idProducto) }}">
             <div class="image">
                 {% if producto.imagen %}
                     <img src="data:image/jpeg;base64,{{ producto.imagen | b64encode }}"
-                         alt="{{ producto.nombreProducto }}"
-                         class="product-image">
+                         alt="{{ producto.nombreProducto }}" class="product-image">
                 {% else %}
                     <img src="{{ url_for('static', filename='img/productos/default.jpeg') }}"
-                         alt="Imagen no disponible"
-                         class="product-image">
+                         alt="Imagen no disponible" class="product-image">
                 {% endif %}
             </div>
             <div class="producto-info">
                 <h3>{{ producto.nombreProducto }}</h3>
-                {% if moneda_seleccionada == 'CLP' %}
-                    <p class="precio">${{ "%.0f"|format(producto.precio) }} CLP</p>
-                {% else %}
-                    <p class="precio">
-                        {% if moneda_seleccionada in tasas_cambio %}
-                            {{ (producto.precio / tasas_cambio[moneda_seleccionada]['tasa']) | currency(moneda_seleccionada) }}
-                            <br>
-                            <small>(${{ "%.0f"|format(producto.precio) }} CLP)</small>
-                        {% else %}
-                            <span class="error">Tasa no disponible</span>
-                        {% endif %}
-                        <br>
-                        <small>(${{ "%.0f"|format(producto.precio) }} CLP)</small>
-                    </p>
-                {% endif %}
-                <form action="{{ url_for('carrito.agregar_al_carrito', producto_id=producto.idProducto) }}" method="POST">
-                    <input type="hidden" name="precio" value="{{ producto.precio }}">
-                    <label for="cantidad-{{ producto.idProducto }}">Cantidad:</label>
-                    <input 
-                        type="number" 
-                        name="cantidad" 
-                        id="cantidad-{{ producto.idProducto }}" 
-                        value="1" 
-                        min="1" 
-                        max="{{ producto.stock }}" 
-                        required>
-                    <button type="submit"><i class="fas fa-cart-plus"></i> Añadir al carrito</button>
-                </form>
+                <p class="precio">${{ producto.precio }}</p>
             </div>
-        </div>
-        {% endfor %}
+        </a>
+        <form action="{{ url_for('carrito.agregar_al_carrito', producto_id=producto.idProducto) }}" method="POST">
+            <input type="hidden" name="precio" value="{{ producto.precio }}">
+            <label for="cantidad-{{ producto.idProducto }}">Cantidad:</label>
+            <input 
+                type="number" 
+                name="cantidad" 
+                id="cantidad-{{ producto.idProducto }}" 
+                value="1" 
+                min="1" 
+                max="{{ producto.stock }}" 
+                required>
+            <button type="submit"><i class="fas fa-cart-plus"></i> Añadir al carrito</button>
+        </form>
     </div>
+    {% endfor %}
+</div>
 
     <div class="paginacion">
         <a href="#"><i class="fas fa-chevron-left"></i></a>
