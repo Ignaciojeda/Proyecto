@@ -71,24 +71,25 @@
 </div>
 
 
-        <div class="catalogo-grid">
-        {% for producto in productos %}
-        <div class="producto">
+<div class="catalogo-grid">
+    {% for producto in productos %}
+    <div class="producto">
+        <a href="{{ url_for('catalogo.producto_detalle', producto_id=producto.idProducto) }}">
             <div class="image">
                 {% if producto.imagen %}
                     <img src="data:image/jpeg;base64,{{ producto.imagen | b64encode }}"
-                         alt="{{ producto.nombreProducto }}"
-                         class="product-image">
+                         alt="{{ producto.nombreProducto }}" class="product-image">
                 {% else %}
                     <img src="{{ url_for('static', filename='img/productos/default.jpeg') }}"
-                         alt="Imagen no disponible"
-                         class="product-image">
+                         alt="Imagen no disponible" class="product-image">
                 {% endif %}
             </div>
             <div class="producto-info">
                 <h3>{{ producto.nombreProducto }}</h3>
                 <p class="precio">${{ producto.precio }}</p>
-                <form action="{{ url_for('carrito.agregar_al_carrito', producto_id=producto.idProducto) }}" method="POST">
+            </div>
+        </a>
+        <form action="{{ url_for('carrito.agregar_al_carrito', producto_id=producto.idProducto) }}" method="POST">
             <input type="hidden" name="precio" value="{{ producto.precio }}">
             <label for="cantidad-{{ producto.idProducto }}">Cantidad:</label>
             <input 
@@ -101,10 +102,9 @@
                 required>
             <button type="submit"><i class="fas fa-cart-plus"></i> Añadir al carrito</button>
         </form>
-            </div>
-        </div>
-        {% endfor %}
     </div>
+    {% endfor %}
+</div>
 
     <div class="paginacion">
         <a href="#"><i class="fas fa-chevron-left"></i></a>
