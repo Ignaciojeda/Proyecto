@@ -94,7 +94,6 @@
     </main>
 
     <script>
-        // Mostrar nombre del archivo seleccionado
         document.getElementById('imagen').addEventListener('change', function(e) {
             const fileName = e.target.files[0] ? e.target.files[0].name : 'Seleccionar imagen...';
             document.getElementById('file-name').textContent = fileName;
