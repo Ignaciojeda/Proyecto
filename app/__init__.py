@@ -83,6 +83,8 @@ def register_blueprints(app):
     from app.Controlador.Vista_Contador import contador_bp
     from app.Controlador.API.Divisas_Api import api_divisas_bp
     from app.Controlador.Registro_Admin import registra_bp
+    from app.Controlador.Vista_Contador import contador_bp
+
 
     # APIs (si están disponibles)
     try:
@@ -96,6 +98,7 @@ def register_blueprints(app):
     app.register_blueprint(auth_bp)
     app.register_blueprint(login_bp)
     app.register_blueprint(api_divisas_bp)
+    app.register_blueprint(contador_bp, url_prefix='/contador')
     app.register_blueprint(registra_bp, url_prefix='/registra')
     app.register_blueprint(catalogo_bp, url_prefix='/catalogo')
     app.register_blueprint(carrito_bp, url_prefix='/carrito')
@@ -106,7 +109,6 @@ def register_blueprints(app):
     app.register_blueprint(admin_bp, url_prefix='/admin')
     app.register_blueprint(producto_bp, url_prefix='/admin/productos')
     app.register_blueprint(bodeguero_bp, url_prefix='/bodeguero')
-    app.register_blueprint(contador_bp, url_prefix='/contador')
     
 
     # Registrar Webpay si está disponible

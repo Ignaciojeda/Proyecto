@@ -15,7 +15,7 @@ def login():
             elif current_user.tipo.descripcion == 'Cliente':
                 return redirect(url_for('home.home'))
             elif current_user.tipo.descripcion == 'Contador':
-                return redirect(url_for('auth.home_contador'))
+                return redirect(url_for('contador.dashboard'))
             elif current_user.tipo.descripcion == 'Bodeguero':
                 return redirect(url_for('bodeguero.dashboard'))
         else:
@@ -44,8 +44,8 @@ def login():
                         flash('Redirigiendo al panel de bodeguero...', 'info')
                         return redirect(url_for('bodeguero.dashboard'))
                     elif usuario.tipo.descripcion == 'Contador':
-                        flash('Redirigiendo al panel de cliente...', 'info')
-                        return redirect(url_for('auth.home_contador'))
+                        flash('Redirigiendo al panel de contador...', 'info')
+                        return redirect(url_for('contador.dashboard'))
                     elif usuario.tipo.descripcion == 'Vendedor':
                         flash('Redirigiendo al panel de cliente...', 'info')
                         return redirect(url_for('auth.home_vendedor'))                   
@@ -78,11 +78,6 @@ def home_admin():
     return render_template('Home_Admin.html')
 
 
-
-@auth_bp.route('/contador')
-@login_required
-def home_contador():
-    return render_template('Vista_Contador.html')
 
 @auth_bp.route('/vendedor')
 @login_required

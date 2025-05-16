@@ -6,13 +6,13 @@
     <title>Ferremas - Panel Contador</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='contador.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bodeguero.css') }}">
 </head>
 <body>
     <div class="dashboard-container">
         <header class="dashboard-header">
             <div class="header-left">
-                <h1><i class="fas fa-calculator"></i> Panel Contable</h1>
+                <h1><i class="fas fa-file-invoice-dollar"></i> Panel del Contador</h1>
             </div>
             <div class="header-right">
                 <span class="user-info">{{ current_user.nombre }}</span>
@@ -23,103 +23,72 @@
         </header>
 
         <div class="content-container">
-            <div class="stats-cards">
-                <div class="stat-card">
-                    <div class="stat-value">8</div>
-                    <div class="stat-label">Pendientes de Verificación</div>
-                    <i class="fas fa-clock stat-icon"></i>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">$1,250,000</div>
-                    <div class="stat-label">Ingresos Hoy</div>
-                    <i class="fas fa-dollar-sign stat-icon"></i>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">24</div>
-                    <div class="stat-label">Entregas Pendientes</div>
-                    <i class="fas fa-truck-loading stat-icon"></i>
-                </div>
-            </div>
-
             <div class="tabs-container">
                 <div class="tabs">
-                    <button class="tab-btn active" data-tab="pagos">Verificación de Pagos</button>
-                    <button class="tab-btn" data-tab="entregas">Registro de Entregas</button>
-                    <button class="tab-btn" data-tab="reportes">Reportes</button>
+                    <button class="tab-btn active" data-tab="pedidos">Pedidos Listos para Finalizar</button>
                 </div>
-                
-                <div class="tab-content active" id="pagos">
-                    <div class="filters">
-                        <select class="filter-select">
-                            <option>Todos los estados</option>
-                            <option>Pendientes</option>
-                            <option>Verificados</option>
-                            <option>Rechazados</option>
-                        </select>
-                        <input type="date" class="date-input">
-                        <button class="btn-primary"><i class="fas fa-filter"></i> Filtrar</button>
-                    </div>
-                    <div class="table-container">
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th>N° Transacción</th>
-                                    <th>Fecha</th>
-                                    <th>Cliente</th>
-                                    <th>Monto</th>
-                                    <th>Método</th>
-                                    <th>Estado</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>TRX-10025</td>
-                                    <td>15/06/2023</td>
-                                    <td>Juan Pérez</td>
-                                    <td>$125,000</td>
-                                    <td>Transferencia</td>
-                                    <td><span class="status-badge pending">Pendiente</span></td>
-                                    <td>
-                                        <button class="btn-action verify"><i class="fas fa-check-circle"></i> Verificar</button>
-                                        <button class="btn-action reject"><i class="fas fa-times-circle"></i> Rechazar</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                
-                <div class="tab-content" id="entregas">
+
+                <div class="tab-content active" id="pedidos">
                     <div class="table-container">
                         <table class="data-table">
                             <thead>
                                 <tr>
                                     <th>N° Pedido</th>
                                     <th>Cliente</th>
-                                    <th>Fecha Entrega</th>
+                                    <th>Productos</th>
+                                    <th>Fecha</th>
                                     <th>Estado</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                {% for pedido in pedidos %}
+                                    {% if pedido.etapa and pedido.etapa.idEtapaPedido == 4 %}
+                                    <tr>
+                                        <td>#{{ pedido.idPedido }}</td>
+                                        <td>{{ pedido.cliente.nombre if pedido.cliente else 'N/A' }}</td>
+                                        <td>{{ pedido.detalles|length }}</td>
+                                        <td>{{ pedido.fechaPedido.strftime('%d/%m/%Y %H:%M') if pedido.fechaPedido else 'N/A' }}</td>
+                                        <td>
+                                            <span class="status-badge listo-para-entrega">
+                                                {{ pedido.etapa.descripcion }}
+                                            </span>
+                                        </td>
+                                        <td class="actions-cell">
+                                            <form action="{{ url_for('contador.finalizar_pedido') }}" method="POST" style="display:inline;">
+                                                <input type="hidden" name="pedido_id" value="{{ pedido.idPedido }}">
+                                                <input type="hidden" name="nuevo_estado" value="5">
+                                                <button type="submit" class="btn-action finalize">
+                                                    <i class="fas fa-check-circle"></i> Finalizar
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    {% endif %}
+                                {% else %}
                                 <tr>
-                                    <td>#10025</td>
-                                    <td>Juan Pérez</td>
-                                    <td>15/06/2023</td>
-                                    <td><span class="status-badge delivered">Entregado</span></td>
-                                    <td>
-                                        <button class="btn-action register"><i class="fas fa-clipboard-check"></i> Registrar</button>
-                                    </td>
+                                    <td colspan="6" class="no-data">No hay pedidos listos para finalizar</td>
                                 </tr>
+                                {% endfor %}
                             </tbody>
                         </table>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
 
-    <script src="{{ url_for('static', filename='js/contador.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bodeguero.js') }}"></script>
+    <script>
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                document.querySelectorAll('.tab-btn').forEach(tabBtn => tabBtn.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById(btn.dataset.tab).classList.add('active');
+            });
+        });
+    </script>
 </body>
 </html>
