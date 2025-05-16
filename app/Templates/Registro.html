@@ -31,15 +31,7 @@
                 <label for="password">Contraseña:</label>
                 <input type="password" class="form-control" id="password" name="password" required>
             </div>
-            <div class="form-group">
-                <label for="tipoUsuario">Tipo de usuario:</label>
-                <select class="form-control" id="tipoUsuario" name="tipoUsuario" required>
-                    <option value="">Seleccione un tipo de usuario</option>
-                    {% for tipo in tipos_usuario %}
-                        <option value="{{ tipo.idTipoUsuario }}">{{ tipo.descripcion }}</option>
-                    {% endfor %}
-                </select>
-            </div>
+            <input type="hidden" name="tipoUsuario" value="1">
             <button type="submit" class="btn btn-primary">Registrar usuario</button>
             <button type="button" class="btn btn-secondary" onclick="window.history.back()">Regresar</button>
         </form>
