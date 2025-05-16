@@ -1,10 +1,20 @@
 from app import db
-from datetime import datetime
+from datetime import date
 
 class Comentario(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    producto_id = db.Column(db.Integer, db.ForeignKey('producto.idProducto'), nullable=False)
-    usuario = db.Column(db.String(120), nullable=False)
-    comentario = db.Column(db.Text, nullable=False)
-    calificacion = db.Column(db.Integer, nullable=False)  # Valor entre 1 y 5
-    fecha = db.Column(db.DateTime, default=datetime.utcnow)
+    __tablename__ = 'COMENTARIO'
+
+    idComentario = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    productoId = db.Column(db.Integer, db.ForeignKey('PRODUCTO.idProducto'), nullable=False)
+    usuarioId = db.Column(db.Integer, db.ForeignKey('Usuario.idUsuario'), nullable=False)
+    
+    comentario = db.Column(db.Text, nullable=False)  
+    calificacion = db.Column(db.Integer, nullable=False)
+    fecha = db.Column(db.Date, nullable=False, default=date.today)
+
+
+    producto = db.relationship('Producto', back_populates='comentarios')
+    usuario = db.relationship('Usuario', back_populates='comentarios')
+
+    def __repr__(self):
+        return f'<Comentario {self.idComentario} por Usuario {self.usuarioId} sobre Producto {self.productoId}>'

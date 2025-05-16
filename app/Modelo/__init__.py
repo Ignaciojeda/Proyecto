@@ -8,8 +8,10 @@ from .Producto import Producto
 from .Categoria import Categoria
 from .Inventario import Inventario
 from .Carrito import Carrito
+from .DetallePedido import DetallePedido
+from .Comentario import Comentario
 
 __all__ = [
     'Usuario', 'Pedido', 'Sucursal', 'EtapaPedido',
-    'Marca', 'TipoUsuario', 'Producto', 'Categoria', 'Inventario', 'Carrito'
+    'Marca', 'TipoUsuario', 'Producto', 'Categoria', 'Inventario', 'Carrito','DetallePedido', 'Comentario'
 ]

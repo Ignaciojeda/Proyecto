@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 from app import db
 from app.Modelo.Producto import Producto
 from app.Modelo.Carrito import Carrito
+from datetime import datetime  # 👈 Importamos datetime
 
 carrito_bp = Blueprint('carrito', __name__)
 
@@ -25,7 +26,11 @@ def ver_carrito():
             })
             total += subtotal
 
-    return render_template('Carrito.html', productos=productos, total=total)
+    # 👇 Creamos el buy_order único con timestamp
+    now_str = datetime.now().strftime('%Y%m%d%H%M%S')
+    buy_order = f"orden_{current_user.idUsuario}_{now_str}"
+
+    return render_template('Carrito.html', productos=productos, total=total, buy_order=buy_order)
 
 @carrito_bp.route('/agregar/<int:producto_id>', methods=['POST'])
 @login_required
@@ -33,12 +38,11 @@ def agregar_al_carrito(producto_id):
     cantidad = int(request.form.get('cantidad', 1))
     precio = int(request.form.get('precio'))
 
-    # Verificar si ya existe ese producto en el carrito del usuario
     carrito_existente = Carrito.query.filter_by(usuarioId=current_user.idUsuario, productoId=producto_id).first()
 
     if carrito_existente:
         carrito_existente.cantidad += cantidad
-        carrito_existente.precio = precio  # Puedes actualizar el precio si quieres
+        carrito_existente.precio = precio
     else:
         nuevo_carrito = Carrito(
             usuarioId=current_user.idUsuario,

@@ -2,8 +2,11 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ferremas - Mis Pedidos</title>
-    <link rel="stylesheet" href="css/pedidos.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='pedidos.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
     <header>
@@ -11,38 +14,66 @@
         <nav>
             <ul>
                 <li><a href="/home"><i class="fas fa-home"></i> Inicio</a></li>
-                <li><a href="/carrito">Carrito</a></li>
-                <li><a href="/pedidos">Mis Pedidos</a></li>
-                <li><a href="/perfil">Mi Perfil</a></li>
-                <li><a href="/logout">Cerrar Sesión</a></li>
+                <li><a href="{{ url_for('carrito.ver_carrito') }}"><i class="fas fa-shopping-cart"></i> Carrito</a></li>
+                <li><a href="/pedidos"><i class="fas fa-clipboard-list"></i> Mis Pedidos</a></li>
+                <li><a href="/perfil"><i class="fas fa-user"></i> Mi Perfil</a></li>
+                <li><a href="/logout"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
             </ul>
         </nav>
     </header>
 
-    <main>
+    <main class="pedidos-container">
         <h1>Historial de Pedidos</h1>
-        <div class="pedidos">
-            <article class="pedido">
+        
+        {% if not pedidos %}
+        <div class="no-pedidos">
+            <i class="fas fa-box-open"></i>
+            <p>No tienes pedidos registrados</p>
+            <a href="/catalogo" class="btn">Ir al catálogo</a>
+        </div>
+        {% else %}
+        <div class="pedidos-list">
+            {% for pedido in pedidos %}
+            <article class="pedido-card">
                 <div class="pedido-header">
-                    <span>Pedido #1001</span>
-                    <span>Fecha: 01/05/2023</span>
-                    <span>Estado: En preparación</span>
-                </div>
-                <div class="pedido-productos">
-                    <div class="producto">
-                        <img src="img/taladro.jpg" alt="Taladro">
-                        <div>
-                            <h4>Taladro Percutor 750W</h4>
-                            <p>1 x $89.990</p>
-                        </div>
+                    <div>
+                        <span class="pedido-id">Pedido #{{ pedido.idPedido }}</span>
+                        <span class="pedido-fecha">{{ pedido.fechaPedido.strftime('%d/%m/%Y') }}</span>
+                    </div>
+                    <div class="pedido-estado {{ pedido.etapa.descripcion.lower().replace(' ', '-') }}">
+                        {{ pedido.etapa.descripcion }}
                     </div>
                 </div>
-                <div class="pedido-total">
-                    <p>Total: $94.990</p>
-                    <button>Ver Detalles</button>
+                
+                <div class="pedido-productos">
+                    {% for detalle in pedido.detalles %}
+                    <div class="producto">
+                        {% if detalle.producto.imagen %}
+                            <img src="data:image/jpeg;base64,{{ detalle.producto.imagen | b64encode }}" alt="{{ detalle.producto.nombreProducto }}">
+                        {% else %}
+                            <img src="{{ url_for('static', filename='img/productos/default.jpeg') }}" alt="Imagen no disponible">
+                        {% endif %}
+                        <div class="producto-info">
+                            <h4>{{ detalle.producto.nombreProducto }}</h4>
+                            <p>{{ detalle.cantidad }} x ${{ "%.0f"|format(detalle.precio) }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <div class="pedido-footer">
+                    <div class="pedido-total">
+                        <span>Total:</span>
+                        <span>${{ "%.0f"|format(pedido.total) }}</span>
+                    </div>
+                    <a href="{{ url_for('pedidos.detalle_pedido', pedido_id=pedido.idPedido) }}" class="btn-detalle">
+                        Ver Detalles <i class="fas fa-chevron-right"></i>
+                    </a>
                 </div>
             </article>
+            {% endfor %}
         </div>
+        {% endif %}
     </main>
 </body>
 </html>

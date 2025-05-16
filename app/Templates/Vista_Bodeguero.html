@@ -12,51 +12,82 @@
     <div class="dashboard-container">
         <header class="dashboard-header">
             <div class="header-left">
-                <h1><i class="fas fa-boxes"></i> Panel de Bodega</h1>
+                <h1><i class="fas fa-boxes"></i> Panel de Bodega {% if sucursal %}- {{ sucursal.nombre }}{% endif %}</h1>
             </div>
             <div class="header-right">
                 <span class="user-info">{{ current_user.nombre }}</span>
-                <a href="/logout" class="logout-btn">
+                <a href="{{ url_for('auth.logout') }}" class="logout-btn">
                     <i class="fas fa-sign-out-alt"></i> Salir
                 </a>
             </div>
         </header>
 
         <div class="content-container">
+            <!-- Mensajes flash -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, message in messages %}
+                            <div class="flash-message {{ category }}">
+                                <i class="fas {% if category == 'success' %}fa-check-circle{% else %}fa-exclamation-circle{% endif %}"></i>
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
             <!-- Sección de Acciones Rápidas -->
             <div class="quick-actions">
-                <a href="/admin/productos" class="btn btn-primary">
+                <!-- Corregido: Cambiado a producto.registrar_producto -->
+                <a href="{{ url_for('producto.registrar_producto') }}" class="btn btn-primary">
                     <i class="fas fa-plus"></i> Agregar Producto
                 </a>
-                <button class="btn btn-secondary">
-                    <i class="fas fa-file-export"></i> Generar Reporte
-                </button>
             </div>
 
             <!-- Tarjetas Estadísticas -->
-            <div class="stats-cards">
-                <div class="stat-card">
-                    <div class="stat-value">12</div>
-                    <div class="stat-label">Pedidos Pendientes</div>
-                    <i class="fas fa-clipboard-list stat-icon"></i>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">5</div>
-                    <div class="stat-label">En Preparación</div>
-                    <i class="fas fa-box-open stat-icon"></i>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">8</div>
-                    <div class="stat-label">Listos para Despacho</div>
-                    <i class="fas fa-truck stat-icon"></i>
-                </div>
-            </div>
+
+                    <div class="stats-cards">
+                        <div class="stat-card">
+                            <div class="stat-value">
+                                {% if estados is defined and estados.Pendiente is defined %}
+                                    {{ estados.Pendiente }}
+                                {% else %}
+                                    0
+                                {% endif %}
+                            </div>
+                            <div class="stat-label">Pedidos Pendientes</div>
+                            <i class="fas fa-clipboard-list stat-icon"></i>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">
+                                {% if estados is defined and estados.get('En preparación') is not none %}
+                                    {{ estados['En preparación'] }}
+                                {% else %}
+                                    0
+                                {% endif %}
+                            </div>
+                            <div class="stat-label">En Preparación</div>
+                            <i class="fas fa-box-open stat-icon"></i>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">
+                                {% if estados is defined and estados['Listo para despacho'] is defined %}
+                                    {{ estados['Listo para despacho'] }}
+                                {% else %}
+                                    0
+                                {% endif %}
+                            </div>
+                            <div class="stat-label">Listos para Despacho</div>
+                            <i class="fas fa-truck stat-icon"></i>
+                        </div>
+                    </div>
 
             <!-- Pestañas de Contenido -->
             <div class="tabs-container">
                 <div class="tabs">
                     <button class="tab-btn active" data-tab="pedidos">Pedidos</button>
-                    <button class="tab-btn" data-tab="inventario">Inventario</button>
+                    
                 </div>
                 
                 <!-- Contenido de Pedidos -->
@@ -68,70 +99,82 @@
                                     <th>N° Pedido</th>
                                     <th>Cliente</th>
                                     <th>Productos</th>
+                                    <th>Fecha</th>
                                     <th>Estado</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                {% for pedido in pedidos %}
                                 <tr>
-                                    <td>#10025</td>
-                                    <td>Juan Pérez</td>
-                                    <td>3 productos</td>
-                                    <td><span class="status-badge pending">Pendiente</span></td>
+                                    <td>#{{ pedido.idPedido }}</td>
+                                    <td>{{ pedido.cliente.nombre if pedido.cliente else 'N/A' }}</td>
+                                    <td>{{ pedido.detalles|length }}</td>
+                                    <td>{{ pedido.fechaPedido.strftime('%d/%m/%Y %H:%M') if pedido.fechaPedido else 'N/A' }}</td>
                                     <td>
-                                        <button class="btn-action accept"><i class="fas fa-check"></i> Aceptar</button>
-                                        <button class="btn-action details"><i class="fas fa-eye"></i> Detalles</button>
+                                        <span class="status-badge {{ pedido.etapa.descripcion.lower().replace(' ', '-') if pedido.etapa else 'desconocido' }}">
+                                            {{ pedido.etapa.descripcion if pedido.etapa else 'Estado desconocido' }}
+                                        </span>
+                                    </td>
+                                    <td class="actions-cell">
+                                        {% if pedido.etapa and pedido.etapa.descripcion == 'Pendiente' %}
+                                        <form action="{{ url_for('bodeguero.actualizar_estado') }}" method="POST" style="display: inline;">
+                                            <input type="hidden" name="pedido_id" value="{{ pedido.idPedido }}">
+                                            <input type="hidden" name="nuevo_estado" value="2">
+                                            <button type="submit" class="btn-action accept">
+                                                <i class="fas fa-check"></i> Aceptar
+                                            </button>
+                                        </form>
+                                        {% elif pedido.etapa and pedido.etapa.descripcion == 'En preparación' %}
+                                        <form action="{{ url_for('bodeguero.actualizar_estado') }}" method="POST" style="display: inline;">
+                                            <input type="hidden" name="pedido_id" value="{{ pedido.idPedido }}">
+                                            <input type="hidden" name="nuevo_estado" value="3">
+                                            <button type="submit" class="btn-action ready">
+                                                <i class="fas fa-check-double"></i> Marcar listo
+                                            </button>
+                                        </form>
+                                        {% endif %}
+                                        <a href="{{ url_for('pedidos.detalle', id=pedido.idPedido) }}" class="btn-action details">
+                                            <i class="fas fa-eye"></i> Detalles
+                                        </a>
                                     </td>
                                 </tr>
+                                {% else %}
                                 <tr>
-                                    <td>#10026</td>
-                                    <td>María González</td>
-                                    <td>5 productos</td>
-                                    <td><span class="status-badge preparing">En preparación</span></td>
-                                    <td>
-                                        <button class="btn-action ready"><i class="fas fa-check-double"></i> Marcar listo</button>
-                                    </td>
+                                    <td colspan="6" class="no-data">No hay pedidos registrados</td>
                                 </tr>
+                                {% endfor %}
                             </tbody>
                         </table>
                     </div>
                 </div>
                 
-                <!-- Contenido de Inventario -->
-                <div class="tab-content" id="inventario">
-                    <div class="inventory-actions">
-                        <input type="text" placeholder="Buscar producto..." class="search-input">
-                    </div>
-                    <div class="table-container">
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th>Código</th>
-                                    <th>Producto</th>
-                                    <th>Stock</th>
-                                    <th>Ubicación</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>PRD-001</td>
-                                    <td>Taladro Percutor 750W</td>
-                                    <td>15</td>
-                                    <td>Bodega A, Estante 3</td>
-                                    <td>
-                                        <button class="btn-action edit"><i class="fas fa-edit"></i></button>
-                                        <button class="btn-action restock"><i class="fas fa-boxes"></i></button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <script src="{{ url_for('static', filename='js/bodega.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bodeguero.js') }}"></script>
+    <script>
+        // Manejo de pestañas
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Ocultar todos los contenidos
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Desactivar todos los botones
+                document.querySelectorAll('.tab-btn').forEach(tabBtn => {
+                    tabBtn.classList.remove('active');
+                });
+                
+                // Activar el seleccionado
+                btn.classList.add('active');
+                document.getElementById(btn.dataset.tab).classList.add('active');
+            });
+        });
+
+        // Generar reporte
+        document.getElementById('generar-reporte')?.addEventListener('click', () => {
+            alert('Función de generar reporte estará disponible pronto');
+        });
+    </script>
 </body>
 </html>
