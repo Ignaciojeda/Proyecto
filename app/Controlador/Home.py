@@ -9,7 +9,7 @@ home_bp = Blueprint('home', __name__)
 @login_required
 def home():
     try:
-        # Cargar los primeros 6 productos (puedes ajustar el límite)
+        
         productos = Producto.query.limit(6).all()
 
         return render_template('home.html', productos=productos)

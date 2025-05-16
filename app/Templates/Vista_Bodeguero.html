@@ -134,9 +134,10 @@
                                             </button>
                                         </form>
                                         {% endif %}
-                                        <a href="{{ url_for('pedidos.detalle', id=pedido.idPedido) }}" class="btn-action details">
+                                        <a href="{{ url_for('pedidos.detalle_pedido', pedido_id=pedido.idPedido) }}" class="btn-action details">
                                             <i class="fas fa-eye"></i> Detalles
                                         </a>
+
                                     </td>
                                 </tr>
                                 {% else %}
