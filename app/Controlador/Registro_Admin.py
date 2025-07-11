@@ -38,4 +38,5 @@ def registrar():
         flash('Registro exitoso. Por favor inicia sesión.', 'success')
         return redirect(url_for('login'))
     
-    return render_template('registro_admin.html')
+    tipos_usuario = TipoUsuario.query.all()
+    return render_template('registro_admin.html', tipos_usuario=tipos_usuario)
